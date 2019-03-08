@@ -1,0 +1,89 @@
+
+CNV <- data.frame(Chromosome=c(rep(12,2000)),
+                  Start=c(round(runif(n=2000,min=15000000,max=35000000))),
+                  End=c(round(runif(n=2000,min=1500000,max=35000000))),
+                  Score=c(round(runif(n=2000,min=1,max=12))),Gene=c(rep("gene",2000)),
+                  Cohort=sample(c("BRCA","AML","CML","CRC","GLIOMA"),size=2000,
+                                prob=c(0.45,0.2,0.05,0.15,0.15),replace = T),
+                  PID=c(stringi::stri_rand_strings(n=2000, length=9, pattern = "[A-Za-z0-9]")))
+
+CNV <- cbind(CNV,length=CNV$Start-CNV$End)
+CNV <- CNV[CNV$length <= 0,]
+CNV <- makeGRangesFromDataFrame(CNV , keep.extra.columns = TRUE)
+KRAS <- GRanges(seqnames =Rle(12) , ranges=IRanges(start=25204789,end=25250936))
+CNV.KRAS <- subsetByOverlaps(CNV,KRAS)
+
+
+
+
+CNV <- data.frame(Chromosome=c(rep(17,2000)),
+                  Start=c(round(runif(n=2000,min=1000000,max=35000000))),
+                  End=c(round(runif(n=2000,min=100000,max=35000000))),
+                  Score=c(round(runif(n=2000,min=1,max=12))),Gene=c(rep("gene",2000)),
+                  Cohort=sample(c("BRCA","AML","CML","CRC","GLIOMA"),size=2000,
+                                prob=c(0.45,0.2,0.05,0.15,0.15),replace = T),
+                  PID=c(stringi::stri_rand_strings(n=2000, length=9, pattern = "[A-Za-z0-9]")))
+CNV <- cbind(CNV,length=CNV$Start-CNV$End)
+CNV <- CNV[CNV$length <= 0,]
+CNV <- makeGRangesFromDataFrame(CNV , keep.extra.columns = TRUE)
+
+TP53 <- GRanges(seqnames = Rle(17) , ranges=IRanges(start=7661779 ,end=7687550))
+CNV.TP53 <- subsetByOverlaps(CNV,TP53)
+
+
+test_cnv <- new("CNV_single",name="CNV_test",matrix=CNV.TP53,gene_name="TP53")
+
+
+
+
+
+
+
+
+
+
+
+CNV1 <- data.frame(Chromosome=c(rep(12,2000)),
+                   Start=c(round(runif(n=2000,min=15000000,max=35000000))),
+                   End=c(round(runif(n=2000,min=1500000,max=35000000))),
+                   Score=sample(c(1:6),size=2000,
+                                prob=c(0.01,0.1,0.04,0.15,0.65,0.15),replace = TRUE),
+                   Gene=rep("KRAS",2000),
+                   Cohort=sample(c("BRCA","AML","CML","CRC","GLIOMA"),size=2000,
+                                 prob=c(0.45,0.2,0.05,0.15,0.15),replace = T),
+                   PID=c(stringi::stri_rand_strings(n=2000, length=9, pattern = "[A-Za-z0-9]")))
+
+CNV2 <- data.frame(Chromosome=c(rep(12,2000)),
+                   Start=c(round(runif(n=2000,min=13000000,max=34000000))),
+                   End=c(round(runif(n=2000,min=1300000,max=34000000))),
+                   Score=sample(c(1:6),size=2000,
+                                prob=c(0.15,0.5,0.1,0.05,0.15,0.05),replace = TRUE),
+                   Gene=rep("STK38L",2000),
+                   Cohort=sample(c("BRCA","AML","CML","CRC","GLIOMA"),size=2000,
+                                 prob=c(0.55,0.1,0.15,0.05,0.15),replace = T),
+                   PID=c(stringi::stri_rand_strings(n=2000, length=9, pattern = "[A-Za-z0-9]")))
+
+# subsetting positive length
+CNV1 <- cbind(CNV1,length=CNV1$Start-CNV1$End)
+CNV1 <- CNV1[CNV1$length <= 0,]
+
+CNV2 <- cbind(CNV2,length=CNV2$Start-CNV2$End)
+CNV2 <- CNV2[CNV2$length <= 0,]
+
+# creating GenomicRange data
+library(GenomicRanges)
+CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
+CNV2 <- makeGRangesFromDataFrame(CNV2 , keep.extra.columns = TRUE)
+KRAS <- GRanges(seqnames =Rle(12) , ranges=IRanges(start=25204789,end=25250936))
+STK38L <- GRanges(seqnames =Rle(12) , ranges=IRanges(start=27396901,end=27478892))
+
+# subsetting overlays with KRAS region
+CNV.KRAS <- subsetByOverlaps(CNV1,KRAS)
+CNV.STK38L <- subsetByOverlaps(CNV2,STK38L)
+
+
+#
+
+test_cnv <- new("CNV_single",name="CNV_test",matrix=CNV.KRAS,gene_name="KRAS")
+test_cnv_twin <- new("CNV_twin",name="Twin_Test",matrix_1=CNV.KRAS,matrix_2=CNV.STK38L,gene_name_1="KRAS",gene_name_2="STK38L")
+#bb <- plotCnvs.cohort(paralist=para1,SaveAsObject = SaveAsObject)
