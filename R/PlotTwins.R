@@ -4,17 +4,30 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   chroms_1 <- unlist(paralist["chrom_1"])
   starts_1 <- unlist(paralist["startPos_1"])
   ends_1 <- unlist(paralist["endPos_1"])
-  scores_1 <- unlist(paralist["score_1"])
+  rescores_1 <- unlist(paralist["rescore_1"])
   f.score_1 <- focallity.score(m=length(starts_1),starts = starts_1,ends = ends_1)
 
   chroms_2 <- unlist(paralist["chrom_2"])
   starts_2 <- unlist(paralist["startPos_2"])
   ends_2 <- unlist(paralist["endPos_2"])
-  scores_2 <- unlist(paralist["score_2"])
+  rescores_2 <- unlist(paralist["rescore_2"])
   f.score_2 <- focallity.score(m=length(starts_2),starts = starts_2,ends = ends_2)
 
+  sorting_1 <- unlist(paralist["sorting_1"])
+  sorting_2 <- unlist(paralist["sorting_2"])
+
+  cohort_1 <- unlist(paralist["cohort_1"])
+  cohort_2 <- unlist(paralist["cohort_2"])
+
+  pixel.per.cnv <- as.numeric(paralist["pixel.per.cnv"])
   cnv.number <- (length(chroms_1)+length(chroms_2)) # number of lines in input
   chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
+  gene.anno <- paralist$gene.anno
+  if(gene.anno!=""){gene.anno<-FALSE}
+  title <- paralist$title
+  color.method <- paralist$color.method
+
+  legend.type <- paralist$legend.type
 
   if (length(unique(chroms_1)) > 1){
     print(unique(chroms_1))
@@ -34,7 +47,8 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   # plot parameters -----------------------------------------------------------------------------------------------------------------
   plot.new()
-  png("t2.png",width = 1024,height=768,units = "px")
+  #png("t2.png",width = 1024,height=768,units = "px")
+  tiff(file="t2.tiff", width=12, height=8,units="in", compression="lzw", res=150)
 
   par(c(5,3,4,4))
   pixelPerChrom_1 <-  (pixel.per.cnv)*(length(chroms_1)+1)
@@ -43,7 +57,8 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   x.size <- pixelPerChrom
   y.size <- y+100
-  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
+       ylab="Chromosomal location",main=title)
   chrStr <- paste("chr",toString(chroms_1[1]))
   text(c(pixelPerChrom_1+(chromWidth/2)),c(0),labels=c(chrStr))
 
@@ -66,29 +81,62 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
     paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
   }
 
-  plotCnv(chroms_1,starts_1,ends_1,y,scores_1,pixel.per.cnv=pixel.per.cnv,method="by.length",color=color,score.values = score.values_1,n=n_1,startPoint=(pixelPerChrom_1),direction = "left")
-  plotCnv(chroms_2,starts_2,ends_2,y,scores_2,pixel.per.cnv=pixel.per.cnv,method="by.length",color=color,score.values = score.values_2,n=n_2,startPoint=(pixelPerChrom_1+chromWidth),direction = "right")
-
-  #plotCnv.cohort <- function(chroms,starts,ends,y,chromWidth,pixel.per.cnv,cohorts,startPoint,color,method)
+  plotCnv(chroms_1,starts_1,ends_1,y,scores_1,pixel.per.cnv=pixel.per.cnv,
+          sorting = sorting_1, cohort = cohort_1,
+          color.method="cohort",score.values = score.values_1,n=n_1,
+          startPoint=(pixelPerChrom_1),direction = "left")
+  plotCnv(chroms_2,starts_2,ends_2,y,scores_2,pixel.per.cnv=pixel.per.cnv,
+          sorting = sorting_2, cohort = cohort_2,
+          color.method="cohort",score.values = score.values_2,n=n_2,
+          startPoint=(pixelPerChrom_1+chromWidth),direction = "right")
 
   # legend parameters ------------------------------------------------------------------------------------------------------
-  df.color.ploidy <- data.frame(color=color[1:n], # colors according to getColor.ploidy/2
-                                score=score.values[1:n], # score according to
-                                names=legend.names[1:n])
 
-  data.score <- data.frame(score=c(sort(unique(scores)))) # unique and present scores of inout data
-  dtt <- df.color.ploidy[df.color.ploidy$score %in% data.score$score,] # subset only present scores of input data
-  color <- as.vector(dtt$color)
-  labs <- as.vector(dtt$names)
+
+  if(color.method == "ploidy"){
+    color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(7)
+    if(length(color)<6){color <- color.base}
+    if(n_1>=n_2){nmax=n_1}else{nmax=n_2}
+    #legend.names = unlist(paralist["legend.names"])
+    legend.names = c("deepdel","monodel","normal","gainlow","gainmid","gainhigh","unknown")
+    df.color.ploidy <- data.frame(color=color[1:7], # colors according to getColor.ploidy/2
+                                  score=c(1:7), # score according to ??
+                                  names=legend.names)
+    data.score <- data.frame(score=c(sort(unique(c(rescores_1,rescores_2))))) # unique and present scores of inout data
+    dtt <- df.color.ploidy[df.color.ploidy$score %in% data.score$score,] # subset only present scores of input data
+    color <- as.vector(dtt$color)
+    labs <- as.vector(dtt$names)
+    factor_1 <- rescores_1
+    factor_2 <- rescores_2
+
+  }else{
+    cohort.max <- unique(c(levels(cohort_1),levels(cohort_2)))
+    cohort.dim <- length(cohort.max)
+    color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(cohort.dim)
+    df.color.cohort <- data.frame(color=color.base[1:cohort.dim], # colors according to getColor.ploidy/2
+                                  score=cohort.max[1:cohort.dim], # score according to ??
+                                  names=cohort.max[1:cohort.dim])
+    dtt <- df.color.cohort
+    color <- as.vector(dtt$color)
+    labs <- as.vector(dtt$names)
+    factor_1 <- cohort_1
+    factor_2 <- cohort_2
+
+  }
+
+
+
+
+
 
   # legend position decision (top or bottom)
   centro <- c(125,93.3,91,50.4,48.4,61,59.9,45.6,49,40.2,53.7,35.8,17.9,17.6,19,36.6,24,17.2,26.5,27.5,13.2,14.7,60.6,12.5)*1000000
   length <- lengthChromosome(c(1:22,"X","Y"),"bases")/2
   genome <- data.frame(chromosome=c(1:22,"X","Y"), centromere=centro, length=length) # dataframe containing chromosome and centromere position info
 
-  mean.pos <- mean(c(starts,ends)) # mean position of all CNV´s
+  mean.pos <- mean(c(starts_1,ends_1)) # mean position of all CNV´s
   #centroo <- genome[genome$chromosome %in% chroms,] # centromere position in the current chromosome
-  half.length <- genome[genome$chromosome %in% chroms,] # half of the length of the current chromosome
+  half.length <- genome[genome$chromosome %in% chroms_1,] # half of the length of the current chromosome
 
   if(mean.pos < half.length$length) {
     xtr <- "bottomleft"
@@ -109,21 +157,25 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   }
 
+  print(legend.type)
+
   # legend type decision ----------------------------------------------------------------------------
-  if(legend=="missing" || legend==1){
+  if(legend.type=="normal"){
     legend(xtr,legend=labs,col=color,cex=0.75,pch=16) # normal legend
     legend(xtr2,legend=labs,col=color,cex=0.75,pch=16)
+    print("normal legend.")
   }
-  if(legend==2) {
+  if(legend.type =="pie") {
     par(new=T,mar=xtf )
-    pie(table(score_1),labels=labs,col=color,cex=0.52) # piechart legend
+    pie(table(factor_1),labels=labs,col=color,cex=0.52) # piechart legend
     par(new=T,mar=xtf2)
-    pie(table(score_2),labels=labs,col=color,cex=0.52)
+    pie(table(factor_2),labels=labs,col=color,cex=0.52)
+    print("pie plot legend.")
   } else{} # no legend
 
   dev.off()
   if(SaveAsObject==TRUE){
-    img <- readPNG("t2.png")
+    img <- readTIFF("t2.tiff")
     g <- rasterGrob(img, interpolate=TRUE)
     return(g)
   }

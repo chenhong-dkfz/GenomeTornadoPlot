@@ -9,7 +9,6 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,pixel.per.cnv,c
   ploidy.list <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
   ploidy.list <- 1:7
 
-  startPoint <- chromWidth
 
   if(method=="cohort"){
     class.list <- cohort.list

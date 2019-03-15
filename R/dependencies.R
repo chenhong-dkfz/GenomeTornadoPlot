@@ -51,3 +51,9 @@ GenomicRanges::GRanges
 #' @importFrom gridExtra grid.arrange
 #' @export
 gridExtra::grid.arrange
+
+library(tiff)
+
+#' @importFrom tiff readTIFF
+#' @export
+tiff::readTIFF

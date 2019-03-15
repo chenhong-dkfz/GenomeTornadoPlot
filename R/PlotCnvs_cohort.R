@@ -50,8 +50,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
 
   plot.new()
-  png("t1.png",width = 1024,height=768,units = "px")
-
+  #png("t1.png",width = 1024,height=768,units = "px")
+  tiff(file="t1.tiff", width=12, height=8,units="in", compression="lzw", res=150)
   par(c(5,3,4,4))
   pixelPerChrom <- chromWidth + (pixel.per.cnv)*(cnv.number+1)+10 # determines space between chromsomes
   x.size <- pixelPerChrom
@@ -133,10 +133,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   dev.off()
 
   if(SaveAsObject==TRUE){
-    img <- readPNG("t1.png")
+    img <- readTIFF("t1.tiff")
     g <- rasterGrob(img, interpolate=TRUE)
     return(g)
   }
 
 }
-

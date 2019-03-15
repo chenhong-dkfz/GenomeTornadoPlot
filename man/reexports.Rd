@@ -25,6 +25,7 @@
 \alias{makeGRangesFromDataFrame}
 \alias{GRanges}
 \alias{grid.arrange}
+\alias{readTIFF}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -41,5 +42,7 @@ below to see their documentation.
   \item{gridExtra}{\code{\link[gridExtra]{grid.arrange}}}
 
   \item{quantsmooth}{\code{\link[quantsmooth]{paintCytobands}}, \code{\link[quantsmooth]{lengthChromosome}}}
+
+  \item{tiff}{\code{\link[tiff]{readTIFF}}}
 }}
 
