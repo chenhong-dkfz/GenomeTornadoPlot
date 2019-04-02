@@ -51,8 +51,10 @@ data("cnv_KRAS",package = "tornado.test.1")
 knitr::kable(head(cnv_KRAS, 10))
 ```
 
+The **score** column records copy numbers of each CNV.
 
 
+The other parameters are defined:
 1. **gene_name_1**: the name of the first gene.
 1. **start_1**:the start position of the first gene.
 1. **end_1**:the end position of the first gene.
