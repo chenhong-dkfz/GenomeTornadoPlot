@@ -24,11 +24,13 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                           gene.anno,start.gene,end.gene,sort.method,color.method){
 
   CNV_1 <- CNV.input@matrix
+
+  print("new")
+
   # solid parameters
   chrom = as.vector(seqnames(CNV_1))
   start.CNV=start(CNV_1)
   end.CNV=end(CNV_1)
-  legend=2
 
   # initail
   index <- (end.CNV - start.CNV) < 10000000 # only events shorter than 10 M
@@ -36,15 +38,26 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   startPos <- start.CNV[index]
   endPos <- end.CNV[index]
 
-  if(missing(sort.method) & missing(color.method)){sort.method = "length"}
+  if(missing(sort.method) & missing(color.method)){
+    sort.method = "length"
+    color.method = "cohort"
+  }
   if(missing(sort.method)){sort.method = color.method}
   if(missing(color.method)){color.method = sort.method}
-
+  if(sort.method=="length"){color.method = "cohort"}
   score = CNV_1$Score
   cohort = CNV_1$Cohort
   pids = CNV_1$PID
 
-  rescore <- rep(100000000,m)
+  score = score[index]
+  cohort = cohort[index]
+  pids = pids[index]
+
+  print(sort.method)
+
+  rescore <- unlist(lapply(score,MapPloidyClasses))[index]
+  score.values <- as.character(sort(unique(rescore)))
+  n <- length(unique(rescore))
 
   if(sort.method=="length" & color.method=="length"){
     rescore <- rep(100000000,m)
@@ -60,13 +73,16 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   }
 
   if(sort.method=="ploidy" & color.method=="ploidy"){
-    if(missing(score)){score <- rep(100000000,length(index))}  # if no argument is given --> score is 4 (diploid)
+    # if(missing(score)){score <- rep(100000000,length(index))}  # if no argument is given --> score is 4 (diploid)
     rescore <- unlist(lapply(score,MapPloidyClasses))[index]
     score.values <- as.character(sort(unique(rescore)))
     n <- length(unique(rescore))
   }
 
 
+
+  print(rescore)
+  print("go")
 
   if(1>0){
     if(missing(gene.name)){gene.name <- "geneX"}
@@ -83,7 +99,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
         title <- paste(title,":",m,"events from",length(unique(pids[index])),"samples")
       } # normal title genereated when pids given
     }
-    if(missing(legend)){legend <- "missing"}
+    if(missing(legend)){legend <- "pie"}
     if(missing(legend.names)){
       legend.names <- c("unkown ploidy","0")
     }else{
@@ -119,6 +135,22 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
 
   ## sorting ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  # sorting.length <- order(endPos - startPos)
+  # if(missing(cohort)){sorting.cohort <- sorting.length}
+  # else{
+  #   cohort <- cohort[index]
+  #   sorting.cohort <-  order(cohort,endPos - startPos)
+  # }
+  # sorting.ploidy <-  order(rescore,endPos - startPos)
+  #
+  # if(color.method=="cohort"){
+  #   sorting.color <- sorting.cohort
+  # }else if(color.method=="ploidy"){
+  #   sorting.color <- sorting.ploidy
+  # }else{
+  #   sorting.color <- sorting.cohort
+  # }
+  #
   if(sort.method=="length"){
     sorting <- order(endPos - startPos) # sort by length
   }else if(sort.method=="cohort"){
@@ -127,6 +159,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
     }else{
       cohort <- cohort[index]
       sorting <- order(cohort,endPos - startPos)
+      print("sorted by cohort")
     }
   }else if(sort.method=="ploidy"){
     sorting <- order(rescore,endPos - startPos) # sort by score and then by length, sort by ploidy
@@ -136,6 +169,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   }else if(sort.method=="length" & color.method=="ploidy"){
     sorting <- order(endPos - startPos) # sort by length, color by ploidy
   }
+
   if(missing(start.gene)){start.gene <- "geneX"}
   if(missing(end.gene)){end.gene <- "geneX"}
 
@@ -143,12 +177,19 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   out.dir="default"
   out.fp <- out.dir
 
+  print("methods,sort")
+  print(sort.method)
+
+  print("methods,color")
+  print(color.method)
+
   paralist <- list("gene.name"=gene.name,"cnv.type"=cnv.type,"title"=title,"legend"=legend,
                    "legend.names"=legend.names,"file.type"=file.type,"out.dir"=out.dir,"pixel.per.cnv"=pixel.per.cnv,
                    "color"=color,"sorting"=sorting,"start.gene"=start.gene,"end.gene"=end.gene,"gene.anno"=gene.anno,
                    "chrom"=chrom,"start.CNV"=start.CNV,"end.CNV"=end.CNV,"rescore"=rescore,
                    "index"=index,"m"=m,"startPos"=startPos,"endPos"=endPos,
-                   "score"=score,"cohort"=cohort,"pids"=pids,
+                   "cohort"=cohort,"pids"=pids,
+                   #"sorting.color"=sorting.color,
                    "sort.method"=sort.method,"color.method"=color.method)
   return(paralist)
 }

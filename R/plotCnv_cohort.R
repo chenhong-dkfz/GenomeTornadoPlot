@@ -1,5 +1,5 @@
-
-plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,pixel.per.cnv,cohorts,startPoint,color,method){
+plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
+                           pixel.per.cnv,cohorts,startPoint,color,method){
   indX <- chroms == 'X'
   indY <- chroms == 'Y'
   len <- length(starts)
@@ -8,7 +8,8 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,pixel.per.cnv,c
   cohort.list <- sort(unique(cohorts))
   ploidy.list <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
   ploidy.list <- 1:7
-
+  print(color.value)
+  startPoint <- chromWidth
 
   if(method=="cohort"){
     class.list <- cohort.list
@@ -18,10 +19,21 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,pixel.per.cnv,c
     class <- score
   }
 
+  print(class.list)
+  print(score)
+  # sorting.color <- unlist(sorting.color)
+  #  print(sorting.color)
+  print("class")
+  print(class)
+
   # Autosomes
   for(index in 1:len){
     if(method!="length"){
+      #print(index)
+      #print(ends[index]-starts[index])
       class.index <- match(class[index],class.list)
+      #class.index <- class[sorting.color[index]]
+      print(class.index)
       x <- startPoint + pixel.per.cnv*index
       lines(c(x,x),c(y-starts[index],y-ends[index]),
             col=color.value[class.index],lwd=pixel.per.cnv)

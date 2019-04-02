@@ -1,4 +1,3 @@
-
 plotCnvs.cohort <- function(paralist,SaveAsObject){
   chrom = unlist(paralist["chrom"])
   startPos = unlist(paralist["startPos"])
@@ -22,22 +21,29 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   end.gene = unlist(paralist["end.gene"])
   sort.method = unlist(paralist["sort.method"])
   color.method = unlist(paralist["color.method"])
-  score = unlist(paralist["score"])
+  #score = unlist(paralist["score"])
   pids = unlist(paralist["pids"])
   cohort = unlist(paralist["cohort"])
-
-
+  rescore = unlist(paralist["rescore"])
+  sorting.color <- unlist(paralist["sorting.color"])
+  #print("sorting color")
+  #print(sorting.color)
+  sorting.plot.color <- cohort[sorting.color]
 
   chroms <- chrom[sorting]
   starts <- startPos[sorting]
   ends <- endPos[sorting]
   cohorts <- cohort[sorting]
+  rescore <- rescore[sorting]
   #cohorts <- rescore[sorting] #?
   cohorts <- droplevels.factor(cohorts, exclude = if(anyNA(levels(cohorts)))NULL else NA)  ## erase factor levels = 0 (turns out very important for color plotting)
   cnv.number <-  length(chroms) # number of lines in input
   chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
   f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
 
+  #print("compare")
+  #print(cohorts)
+  #print(sorting.plot.color)
 
   if (length(unique(chroms)) > 1){
     print(unique(chroms))
@@ -72,8 +78,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
 
   plotCnv.cohort(chroms,starts,ends,y,
-                 chromWidth=chromWidth,pixel.per.cnv=pixel.per.cnv,score=score,
-                 cohorts=cohort,startPoint=chromWidth,method=color.method,color=color)
+                 chromWidth=chromWidth,pixel.per.cnv=pixel.per.cnv,score=rescore,
+                 cohorts=cohorts,startPoint=chromWidth,method=color.method,color=color)
 
 
   # legend position decision (top or bottom)
@@ -99,13 +105,14 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
 
 
-
   # legend type decision ----------------------------------------------------------------------------
   if(color.method=="cohort" | color.method=="length"){
     legend.color <- GetColor(method="cohort",color=color,cohorts=cohort)
   }
   if(color.method=="ploidy"){
     legend.color <- GetColor(method="ploidy",color=color,cohorts=cohorts)
+    print(legend.color)
+    print("it is")
   }
 
   if(legend=="missing" || legend==1){
@@ -114,17 +121,20 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
   print(color.method)
   print(table(cohorts))
+  print(legend)
 
-  if(legend==2){
+  if(legend==2 || legend=="pie"){
     par(new=T,mar=xtf )
     #par(new=T,mar=c(2,12,10,1))
     if(color.method=="cohort" | color.method=="length"){
       pie(table(cohorts),col=legend.color,cex=1) # piechart legend
     }else if(color.method=="ploidy"){
-      tb <- table(score)
+      tb <- table(rescore)
+      print(rescore)
       dp.list <-c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
       for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
-      pie(tb,col=legend.color,cex=1)
+      legend.color.subset <- legend.color[sort(unique(rescore))]
+      pie(tb,col=legend.color.subset,cex=1)
     }
   }
 
@@ -139,3 +149,4 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
 
 }
+

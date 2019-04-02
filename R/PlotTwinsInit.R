@@ -7,12 +7,16 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   CNV_1 <- twin.cnv@matrix_1
   CNV_2 <- twin.cnv@matrix_2
 
+  print(sort.method)
+
   chrom_1 <- as.vector(seqnames(CNV_1))
   start.CNV_1 <- start(CNV_1)
   end.CNV_1 <- end(CNV_1)
   score_1 <- CNV_1$Score
   cohort_1 <- CNV_1$Cohort
   pids_1 <- CNV_1$PID
+
+
 
   chrom_2 <- as.vector(seqnames(CNV_2))
   start.CNV_2 <- start(CNV_2)
@@ -95,12 +99,11 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
     out.dir <- paste(out.dir,"_",gene.name_1,"&",gene.name_2,".","png",sep="")
   }
 
+
   ## default/optional parameter for pixel.per.cnv (default = 5)---------------------------------------------------------------------------------------------------------
   if(missing(pixel.per.cnv)){pixel.per.cnv <- 200/(m_1+m_2)}  ## better a equation dependened on the number of CNVs (index!)
   #pixel.per.cnv <- 200/(m_1+m_2)
   ## sorting ----------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
   if(sort.method=="length"){
     sorting_1 <- order(endPos_1 - startPos_1) # sort by length #### add ??
     sorting_2 <- order(endPos_2 - startPos_2)

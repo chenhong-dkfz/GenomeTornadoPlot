@@ -16,3 +16,7 @@ Imports:
     grDevices,
     GenomicRanges,
     gridExtra
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

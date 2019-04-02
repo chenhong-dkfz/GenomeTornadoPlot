@@ -1,4 +1,3 @@
-
 plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
                     color.method,color,score.values,n,startPoint,direction){
 
@@ -97,3 +96,4 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
     }
   }
 }
+
