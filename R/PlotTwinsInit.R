@@ -1,9 +1,8 @@
 PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
-                          out.dir,title,pixel.per.cnv,pids,
+                          out.dir,title,
                           legend.type,legend.names,color,score.values_1,score.values_2,
-                          n_1,n_2,display,gene.anno,cnv.type_1,cnv.type_2,
-                          start.gene_1,start.gene_2,
-                          end.gene_1,end.gene_2){
+                          gene.anno,cnv.type_1,cnv.type_2
+){
   CNV_1 <- twin.cnv@matrix_1
   CNV_2 <- twin.cnv@matrix_2
 
@@ -65,17 +64,25 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   cnv.type_2 <- gene.name_2   # assign gene.name to cnv.type --> can be replaced later on
 
   ## default/optional parameter for "pids" and "title" (default:"gene.name: m events from unkown amount of unique samples")---------------------------------------------------------
+  # if(missing(title)){
+  #   if(missing(pids)){
+  #     title <- paste(cnv.type_1,"&",cnv.type_2)
+  #   }else{
+  #     title <- paste(cnv.type_1,":",m_1,"events from",length(unique(pids[index_1])),"samples") } # normal title genereated when pids given
+  # }else{
+  #   if(missing(pids)){
+  #     title <- title
+  #   }else{
+  #     title <- paste(title,":",m_1,"events from",length(unique(pids_1[index_1])),"samples") } # normal title genereated when pids given
+  # }
+
   if(missing(title)){
-    if(missing(pids)){
-      title <- paste(cnv.type_1,"&",cnv.type_2)
-    }else{
-      title <- paste(cnv.type_1,":",m_1,"events from",length(unique(pids[index_1])),"samples") } # normal title genereated when pids given
+    title <- paste(cnv.type_1,"&",cnv.type_2)
   }else{
-    if(missing(pids)){
-      title <- title
-    }else{
-      title <- paste(title,":",m_1,"events from",length(unique(pids_1[index_1])),"samples") } # normal title genereated when pids given
+    title <- title
   }
+
+
 
   ## default/optional parameter for legend (default = "pie" ,otherwise processed to "normal legend")
   if(missing(legend.type)){
@@ -101,8 +108,8 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
 
 
   ## default/optional parameter for pixel.per.cnv (default = 5)---------------------------------------------------------------------------------------------------------
-  if(missing(pixel.per.cnv)){pixel.per.cnv <- 200/(m_1+m_2)}  ## better a equation dependened on the number of CNVs (index!)
-  #pixel.per.cnv <- 200/(m_1+m_2)
+  #if(missing(pixel.per.cnv)){pixel.per.cnv <- 200/(m_1+m_2)}  ## better a equation dependened on the number of CNVs (index!)
+  pixel.per.cnv <- 200/(m_1+m_2)
   ## sorting ----------------------------------------------------------------------------------------------------------------------------------------------------------
   if(sort.method=="length"){
     sorting_1 <- order(endPos_1 - startPos_1) # sort by length #### add ??
@@ -130,29 +137,29 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
     gene.anno <- ""
   }
 
-  if(missing(start.gene_1)){start.gene_1 <- "gene.name_1"}
-  if(missing(end.gene_1)){end.gene_1 <- "gene.name_1"}
-  if(missing(start.gene_2)){start.gene_2 <- "gene.name_2"}
-  if(missing(end.gene_2)){end.gene_2 <- "gene.name_2"}
+  #if(missing(start.gene_1)){start.gene_1 <- "gene.name_1"}
+  #if(missing(end.gene_1)){end.gene_1 <- "gene.name_1"}
+  #if(missing(start.gene_2)){start.gene_2 <- "gene.name_2"}
+  #if(missing(end.gene_2)){end.gene_2 <- "gene.name_2"}
 
 
 
   ## gene.anno TRUE but missing start/end.gene------------------------
-  if(missing(start.gene_1) & gene.anno == TRUE){
-    print("start.gene 1 argument is missing")
-  }
-
-  if(missing(end.gene_1) & gene.anno == TRUE){
-    print("end.gene 1 argument is missing")
-  }
-
-  if(missing(end.gene_2) & gene.anno == TRUE){
-    print("end.gene 2 argument is missing")
-  }
-
-  if(missing(end.gene_2) & gene.anno == TRUE){
-    print("end.gene 2 argument is missing")
-  }
+  # if(missing(start.gene_1) & gene.anno == TRUE){
+  #   print("start.gene 1 argument is missing")
+  # }
+  #
+  # if(missing(end.gene_1) & gene.anno == TRUE){
+  #   print("end.gene 1 argument is missing")
+  # }
+  #
+  # if(missing(end.gene_2) & gene.anno == TRUE){
+  #   print("end.gene 2 argument is missing")
+  # }
+  #
+  # if(missing(end.gene_2) & gene.anno == TRUE){
+  #   print("end.gene 2 argument is missing")
+  # }
 
 
   paralist <- list("gene.name_1"=gene.name_1,"gene.name_2"=gene.name_2,
@@ -162,7 +169,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
                    "legend.names"=legend.names,
                    "out.dir"=out.dir,"pixel.per.cnv"=pixel.per.cnv,
                    "color"=color,"sorting_1"=sorting_1,"sorting_2"=sorting_2,
-                   "start.gene_1"=start.gene_1,"end.gene_1"=end.gene_1,"start.gene_2"=start.gene_2,"end.gene_2"=end.gene_2,
+                   #"start.gene_1"=start.gene_1,"end.gene_1"=end.gene_1,"start.gene_2"=start.gene_2,"end.gene_2"=end.gene_2,
                    "gene.anno"=gene.anno,"n_1"=n_1,"n_2"=n_2,
                    "chrom_1"=chrom_1,"start.CNV_1"=start.CNV_1,"end.CNV_1"=end.CNV_1,"rescore_1"=rescore_1,
                    "chrom_2"=chrom_2,"start.CNV_2"=start.CNV_2,"end.CNV_2"=end.CNV_2,"rescore_2"=rescore_2,

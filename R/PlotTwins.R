@@ -18,6 +18,12 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   cohort_1 <- unlist(paralist["cohort_1"])
   cohort_2 <- unlist(paralist["cohort_2"])
 
+  print("cohort size:")
+  print(cohort_1)
+  print(cohort_2)
+
+
+
   pixel.per.cnv <- as.numeric(paralist["pixel.per.cnv"])
   cnv.number <- (length(chroms_1)+length(chroms_2)) # number of lines in input
   chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
@@ -80,12 +86,17 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
     paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
   }
 
+  cohort_max <- sort(unique(c(levels(cohort_1),levels(cohort_2))))
+  color.value <- GetColor(method=color.method,cohorts=cohort_max)
+
   plotCnv(chroms_1,starts_1,ends_1,y,scores_1,pixel.per.cnv=pixel.per.cnv,
-          sorting = sorting_1, cohort = cohort_1,
+          sorting = sorting_1, cohort = cohort_1,cohort_max = cohort_max,
+          color.value = color.value,
           color.method="cohort",score.values = score.values_1,n=n_1,
           startPoint=(pixelPerChrom_1),direction = "left")
   plotCnv(chroms_2,starts_2,ends_2,y,scores_2,pixel.per.cnv=pixel.per.cnv,
-          sorting = sorting_2, cohort = cohort_2,
+          sorting = sorting_2, cohort = cohort_2,cohort_max = cohort_max,
+          color.value = color.value,
           color.method="cohort",score.values = score.values_2,n=n_2,
           startPoint=(pixelPerChrom_1+chromWidth),direction = "right")
 
@@ -109,18 +120,16 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
     factor_2 <- rescores_2
 
   }else{
-    cohort.max <- unique(c(levels(cohort_1),levels(cohort_2)))
-    cohort.dim <- length(cohort.max)
-    color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(cohort.dim)
-    df.color.cohort <- data.frame(color=color.base[1:cohort.dim], # colors according to getColor.ploidy/2
-                                  score=cohort.max[1:cohort.dim], # score according to ??
-                                  names=cohort.max[1:cohort.dim])
+    #cohort.max <- unique(c(levels(cohort_1),levels(cohort_2)))
+    cohort.dim <- length(cohort_max)
+    df.color.cohort <- data.frame(color=color.value, # colors according to getColor.ploidy/2
+                                  score=cohort_max, # score according to ??
+                                  names=cohort_max)
     dtt <- df.color.cohort
     color <- as.vector(dtt$color)
     labs <- as.vector(dtt$names)
     factor_1 <- cohort_1
     factor_2 <- cohort_2
-
   }
 
 
@@ -141,7 +150,7 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
     xtr <- "bottomleft"
     xtr2 <- "bottomright"
     xtf <- c(4,5,20.5,22)
-    xtf2 <- c(4,24,20.5,3)
+    xtf2 <- c(4,24,20.5,0)
     text(c(pixelPerChrom_1/2),c(y-10),labels = paste("score: ",f.score_1),cex=0.75)
     text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(y-10),labels = paste("score: ",f.score_2),cex=0.75)
 
@@ -166,10 +175,21 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   }
   if(legend.type =="pie") {
     par(new=T,mar=xtf )
-    pie(table(factor_1),labels=labs,col=color,cex=0.52) # piechart legend
+
+    factor_1 <- droplevels.factor(factor_1, exclude = if(anyNA(levels(factor_1)))NULL else NA)
+    factor_2 <- droplevels.factor(factor_2, exclude = if(anyNA(levels(factor_2)))NULL else NA)
+
+    dtt_1 <- dtt[dtt$names%in%levels(factor_1),]
+    color_1 <- as.vector(dtt_1$color)
+    labs_1 <- dtt_1$score
+    pie(table(factor_1),labels=labs_1,col=color_1,cex=0.45,radius = 0.6) # piechart legend
+
     par(new=T,mar=xtf2)
-    pie(table(factor_2),labels=labs,col=color,cex=0.52)
-    print("pie plot legend.")
+    dtt_2 <- dtt[dtt$names%in%levels(factor_2),]
+    color_2 <- as.vector(dtt_2$color)
+    labs_2 <- dtt_2$score
+    pie(table(factor_2),labels=labs_2,col=color_2,cex=0.45,radius = 0.6)
+    print("pie plot legend！")
   } else{} # no legend
 
   dev.off()
@@ -181,4 +201,3 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
 
 }
-

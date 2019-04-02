@@ -24,9 +24,9 @@ MakeData <- function(CNV_1,
     if(missing(type)){
       print("filter disabled!")
     }else if(type=="dup"){
-      CNV_1 <- CNV_1[CNV_1$Score==4|CNV_1$Score==5|CNV_1$Score==6,]
+      CNV_1 <- CNV_1[CNV_1$Score>2,]
     }else if(type=="del"){
-      CNV_1 <- CNV_1[CNV_1$Score==1|CNV_1$Score==2,]
+      CNV_1 <- CNV_1[CNV_1$Score<2,]
     }
     CNV1 <- cbind(CNV_1,length=CNV_1$Start-CNV_1$End)
     CNV1 <- CNV1[CNV1$length <= 0,]
@@ -39,11 +39,11 @@ MakeData <- function(CNV_1,
     if(missing(type)){
       print("filter disabled!")
     }else if(type=="dup"){
-      CNV_1 <- CNV_1[CNV_1$Score==4|CNV_1$Score==5|CNV_1$Score==6,]
-      CNV_2 <- CNV_2[CNV_2$Score==4|CNV_2$Score==5|CNV_2$Score==6,]
+      CNV_1 <- CNV_1[CNV_1$Score>2,]
+      CNV_2 <- CNV_2[CNV_2$Score>2,]
     }else if(type=="del"){
-      CNV_1 <- CNV_1[CNV_1$Score==1|CNV_1$Score==2,]
-      CNV_2 <- CNV_2[CNV_2$Score==1|CNV_2$Score==2,]
+      CNV_1 <- CNV_1[CNV_1$Score<2,]
+      CNV_2 <- CNV_2[CNV_2$Score<2,]
     }
 
     CNV1 <- cbind(CNV_1,length=CNV_1$Start-CNV_1$End)

@@ -1,4 +1,5 @@
 plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
+                    cohort_max, color.value,
                     color.method,color,score.values,n,startPoint,direction){
 
 
@@ -10,7 +11,7 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
   ends <- ends[sorting]
   cohorts <- cohort[sorting]
   #cohorts <- rescore[sorting] #?
-  cohorts <- droplevels.factor(cohorts, exclude = if(anyNA(levels(cohorts)))NULL else NA)  ## erase factor levels = 0 (turns out very important for color plotting)
+  #cohorts <- droplevels.factor(cohorts, exclude = if(anyNA(levels(cohorts)))NULL else NA)  ## erase factor levels = 0 (turns out very important for color plotting)
   cnv.number <-  length(chroms) # number of lines in input
   #chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
   f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
@@ -19,9 +20,7 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
   indX <- chroms == 'X'
   indY <- chroms == 'Y'
 
-
-  color.value <- GetColor(method=color.method,color=color,cohorts=cohorts)
-  cohort.list <- sort(unique(cohorts))
+  cohort.list <- cohort_max
   ploidy.list <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
   ploidy.list <- 1:7
 
@@ -96,4 +95,3 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
     }
   }
 }
-
