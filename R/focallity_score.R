@@ -1,4 +1,4 @@
-# add log method
+# add new log method
 
 focallity.score <- function(m,ends,starts,method){
   if(missing(method)){method="normal"}
