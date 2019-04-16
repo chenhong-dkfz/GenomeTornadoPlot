@@ -19,12 +19,12 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
     class <- score
   }
 
-  print(class.list)
-  print(score)
+  #print(class.list)
+  #print(score)
   # sorting.color <- unlist(sorting.color)
   #  print(sorting.color)
-  print("class")
-  print(class)
+  #print("class")
+  #print(class)
 
   # Autosomes
   for(index in 1:len){
