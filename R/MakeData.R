@@ -28,7 +28,7 @@ MakeData <- function(CNV_1,
     }else if(type=="del"){
       CNV_1 <- CNV_1[CNV_1$Score<2,]
     }
-    CNV1 <- cbind(CNV_1,length=CNV_1$Start-CNV_1$End)
+    CNV1 <- cbind(CNV_1,length=CNV_1$End-CNV_1$Start)
     CNV1 <- CNV1[CNV1$length <= 0,]
     CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
     gene.position.1 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
@@ -46,13 +46,13 @@ MakeData <- function(CNV_1,
       CNV_2 <- CNV_2[CNV_2$Score<2,]
     }
 
-    CNV1 <- cbind(CNV_1,length=CNV_1$Start-CNV_1$End)
+    CNV1 <- cbind(CNV_1,length=CNV_1$End-CNV_1$Start)
     CNV1 <- CNV1[CNV1$length <= 0,]
     CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
     gene.position <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
     CNV.gene1 <- subsetByOverlaps(CNV1,gene.position)
 
-    CNV2 <- cbind(CNV_2,length=CNV_2$Start-CNV_2$End)
+    CNV2 <- cbind(CNV_2,length=CNV_2$End-CNV_2$Start)
     CNV2 <- CNV2[CNV2$length <= 0,]
     CNV2 <- makeGRangesFromDataFrame(CNV2 , keep.extra.columns = TRUE)
     gene.position.2 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_2,end=end_2))
