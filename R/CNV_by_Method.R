@@ -33,7 +33,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   end.CNV=end(CNV_1)
 
   # initail
-  index <- (end.CNV - start.CNV) < 10000000 # only events shorter than 10 M
+  index <- (end.CNV - start.CNV) < 100000000 # only events shorter than 10 M
   m <- sum(index)
   startPos <- start.CNV[index]
   endPos <- end.CNV[index]
@@ -55,7 +55,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
 
   print(sort.method)
 
-  rescore <- unlist(lapply(score,MapPloidyClasses))[index]
+  rescore <- unlist(lapply(score,MapPloidyClasses))
   score.values <- as.character(sort(unique(rescore)))
   n <- length(unique(rescore))
 
@@ -67,14 +67,14 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
 
   if(sort.method=="length" & color.method=="ploidy"){
     if(missing(score)){score <- rep(100000000,length(index))}  # if no argument is given --> score is 4 (diploid)
-    rescore <- unlist(lapply(score,MapPloidyClasses))[index]
+    rescore <- unlist(lapply(score,MapPloidyClasses))
     score.values <- as.character(sort(unique(rescore)))
     n <- length(unique(rescore))
   }
 
   if(sort.method=="ploidy" & color.method=="ploidy"){
     # if(missing(score)){score <- rep(100000000,length(index))}  # if no argument is given --> score is 4 (diploid)
-    rescore <- unlist(lapply(score,MapPloidyClasses))[index]
+    rescore <- unlist(lapply(score,MapPloidyClasses))
     score.values <- as.character(sort(unique(rescore)))
     n <- length(unique(rescore))
   }
