@@ -14,5 +14,8 @@ focallity.score <- function(m,ends,starts,method){
     scores <- log10(max.length)-log10(ends-starts)
     f.score <- sum(scores)
   }
+  if(method=="edge"){
+
+  }
   return(f.score)
 }

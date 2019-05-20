@@ -42,18 +42,34 @@ grDevices::pdf
 #' @export
 grDevices::rainbow
 
-#' @importFrom GenomicRanges makeGRangesFromDataFrame GRanges
+#' @importFrom GenomicRanges makeGRangesFromDataFrame GRanges seqnames
 #' @export
 GenomicRanges::makeGRangesFromDataFrame
 #' @export
 GenomicRanges::GRanges
+#' @export
+GenomicRanges::seqnames
 
 #' @importFrom gridExtra grid.arrange
 #' @export
 gridExtra::grid.arrange
 
-library(tiff)
+#' @importFrom grid rasterGrob
+#' @export
+grid::rasterGrob
+
 
 #' @importFrom tiff readTIFF
 #' @export
 tiff::readTIFF
+
+#' @importFrom IRanges IRanges
+#' @export
+IRanges::IRanges
+
+
+#' @importFrom S4Vectors Rle
+#' @export
+S4Vectors::Rle
+
+

@@ -24,8 +24,12 @@
 \alias{rainbow}
 \alias{makeGRangesFromDataFrame}
 \alias{GRanges}
+\alias{seqnames}
 \alias{grid.arrange}
+\alias{rasterGrob}
 \alias{readTIFF}
+\alias{IRanges}
+\alias{Rle}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -33,11 +37,17 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{GenomicRanges}{\code{\link[GenomicRanges]{makeGRangesFromDataFrame}}, \code{\link[GenomicRanges]{GRanges}}}
+  \item{GenomicRanges}{\code{\link[GenomicRanges]{makeGRangesFromDataFrame}}, \code{\link[GenomicRanges]{GRanges}}, \code{\link[GenomicRanges]{seqnames}}}
+
+  \item{IRanges}{\code{\link[IRanges]{IRanges}}}
+
+  \item{S4Vectors}{\code{\link[S4Vectors]{Rle}}}
 
   \item{grDevices}{\code{\link[grDevices]{colorRampPalette}}, \code{\link[grDevices]{dev.off}}, \code{\link[grDevices]{gray.colors}}, \code{\link[grDevices]{palette}}, \code{\link[grDevices]{pdf}}, \code{\link[grDevices]{rainbow}}}
 
   \item{graphics}{\code{\link[graphics]{plot}}, \code{\link[graphics]{legend}}, \code{\link[graphics]{axis}}, \code{\link[graphics]{boxplot}}, \code{\link[graphics]{lines}}, \code{\link[graphics]{par}}, \code{\link[graphics]{pie}}, \code{\link[graphics]{polygon}}, \code{\link[graphics]{text}}, \code{\link[graphics]{plot.new}}, \code{\link[graphics]{rect}}}
+
+  \item{grid}{\code{\link[grid]{rasterGrob}}}
 
   \item{gridExtra}{\code{\link[gridExtra]{grid.arrange}}}
 
