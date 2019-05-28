@@ -15,7 +15,10 @@ Imports:
     graphics,
     grDevices,
     GenomicRanges,
-    gridExtra
+    gridExtra,
+    IRanges,
+    S4Vectors,
+    tiff
 Suggests: 
     knitr,
     rmarkdown
