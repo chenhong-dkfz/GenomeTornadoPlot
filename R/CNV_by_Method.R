@@ -151,13 +151,22 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   #   sorting.color <- sorting.cohort
   # }
   #
+
+  print("i am here!")
   if(sort.method=="length"){
+    print("sort.method=length!!!")
     sorting <- order(endPos - startPos) # sort by length
   }else if(sort.method=="cohort"){
     if(missing(cohort)){
       print("use CNV.by.ploidy or CNV.by.length functions")
     }else{
+      print("way2")
+      print(length(cohort))
       cohort <- cohort[index]
+      print(length(cohort))
+      print(length(endPos))
+      print(length(startPos))
+
       sorting <- order(cohort,endPos - startPos)
       print("sorted by cohort")
     }

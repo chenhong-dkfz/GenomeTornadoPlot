@@ -25,10 +25,13 @@
 \alias{makeGRangesFromDataFrame}
 \alias{GRanges}
 \alias{seqnames}
+\alias{start}
+\alias{end}
 \alias{grid.arrange}
 \alias{rasterGrob}
 \alias{readTIFF}
 \alias{IRanges}
+\alias{subsetByOverlaps}
 \alias{Rle}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -37,9 +40,9 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{GenomicRanges}{\code{\link[GenomicRanges]{makeGRangesFromDataFrame}}, \code{\link[GenomicRanges]{GRanges}}, \code{\link[GenomicRanges]{seqnames}}}
+  \item{GenomicRanges}{\code{\link[GenomicRanges]{makeGRangesFromDataFrame}}, \code{\link[GenomicRanges]{GRanges}}, \code{\link[GenomicRanges]{seqnames}}, \code{\link[GenomicRanges]{start}}, \code{\link[GenomicRanges]{end}}}
 
-  \item{IRanges}{\code{\link[IRanges]{IRanges}}}
+  \item{IRanges}{\code{\link[IRanges]{IRanges}}, \code{\link[IRanges]{subsetByOverlaps}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors]{Rle}}}
 
