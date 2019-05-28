@@ -42,19 +42,19 @@ below to see their documentation.
 \describe{
   \item{GenomicRanges}{\code{\link[GenomicRanges]{makeGRangesFromDataFrame}}, \code{\link[GenomicRanges]{GRanges}}, \code{\link[GenomicRanges]{seqnames}}, \code{\link[GenomicRanges]{start}}, \code{\link[GenomicRanges]{end}}}
 
-  \item{graphics}{\code{\link[graphics]{plot}}, \code{\link[graphics]{legend}}, \code{\link[graphics]{axis}}, \code{\link[graphics]{boxplot}}, \code{\link[graphics]{lines}}, \code{\link[graphics]{par}}, \code{\link[graphics]{pie}}, \code{\link[graphics]{polygon}}, \code{\link[graphics]{text}}, \code{\link[graphics]{plot.new}}, \code{\link[graphics]{rect}}}
+  \item{IRanges}{\code{\link[IRanges]{IRanges}}, \code{\link[IRanges]{subsetByOverlaps}}}
+
+  \item{S4Vectors}{\code{\link[S4Vectors]{Rle}}}
 
   \item{grDevices}{\code{\link[grDevices]{colorRampPalette}}, \code{\link[grDevices]{dev.off}}, \code{\link[grDevices]{gray.colors}}, \code{\link[grDevices]{palette}}, \code{\link[grDevices]{pdf}}, \code{\link[grDevices]{rainbow}}}
+
+  \item{graphics}{\code{\link[graphics]{plot}}, \code{\link[graphics]{legend}}, \code{\link[graphics]{axis}}, \code{\link[graphics]{boxplot}}, \code{\link[graphics]{lines}}, \code{\link[graphics]{par}}, \code{\link[graphics]{pie}}, \code{\link[graphics]{polygon}}, \code{\link[graphics]{text}}, \code{\link[graphics]{plot.new}}, \code{\link[graphics]{rect}}}
 
   \item{grid}{\code{\link[grid]{rasterGrob}}}
 
   \item{gridExtra}{\code{\link[gridExtra]{grid.arrange}}}
 
-  \item{IRanges}{\code{\link[IRanges]{IRanges}}, \code{\link[IRanges]{subsetByOverlaps}}}
-
   \item{quantsmooth}{\code{\link[quantsmooth]{paintCytobands}}, \code{\link[quantsmooth]{lengthChromosome}}}
-
-  \item{S4Vectors}{\code{\link[S4Vectors]{Rle}}}
 
   \item{tiff}{\code{\link[tiff]{readTIFF}}}
 }}

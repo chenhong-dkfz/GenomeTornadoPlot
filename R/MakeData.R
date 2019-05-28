@@ -53,7 +53,7 @@ MakeData <- function(CNV_1,
     CNV.gene1 <- subsetByOverlaps(CNV1,gene.position)
 
     CNV2 <- cbind(CNV_2,length=CNV_2$End-CNV_2$Start)
-    CNV2 <- CNV2[CNV2$length <= 0,]
+    CNV2 <- CNV2[CNV2$length >= 0,]
     CNV2 <- makeGRangesFromDataFrame(CNV2 , keep.extra.columns = TRUE)
     gene.position.2 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_2,end=end_2))
     CNV.gene2 <- subsetByOverlaps(CNV2,gene.position.2)

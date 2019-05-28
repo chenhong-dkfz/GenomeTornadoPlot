@@ -21,8 +21,8 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,pids,ti
                                                         out.dir,file.type,pixel.per.cnv,color,display,
                                                         gene.anno,start.gene,end.gene,color.method,sort.method,SaveAsObject){
   paralist0 <- PlotTwinsInit(twin.cnv=object,
-                             pids=pids,title=title,legend.type=legend.type,legend.names=legend.names,
-                             out.dir=out.dir,pixel.per.cnv=pixel.per.cnv,color=color,display=display,
+                             title=title,legend.type=legend.type,legend.names=legend.names,
+                             out.dir=out.dir,color=color,
                              gene.anno=gene.anno,start.gene,end.gene,
                              color.method=color.method,sort.method=sort.method)
   if(SaveAsObject==TRUE){
