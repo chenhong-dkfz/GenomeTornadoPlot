@@ -1,11 +1,19 @@
+# GetColor: return a list of colors for CNVs
+# method: the method of color arrangement. "confidence","ploidy","cohort","length","factor"
+# score: ploidy of variation
+# color: tbd
+# score.values: tbd
+# n: tbd
+# greyscale: return color or only greyscale
+# cohorts: cohort list for the study
+
+
 GetColor <- function(method,score,color,score.values,n,greyscale,cohorts){
   if(missing(score)){score=0}
   if(missing(score.values)){score.values=0}
   if(missing(n)){n=0}
   if(missing(greyscale)){greyscale=FALSE}
   if(missing(cohorts)){cohort=c("all_patients")}
-
-
   switch(method,
 
          "confidence" = {

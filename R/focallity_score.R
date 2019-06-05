@@ -1,6 +1,6 @@
 # add new log method
 
-focallity.score <- function(m,ends,starts,method){
+focallity.score <- function(m,ends,starts,method,gene.start,gene.end){
   if(missing(method)){method="normal"}
   if(method=="normal"){
     mean.length <-  (sum(ends - starts))/m

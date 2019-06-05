@@ -18,7 +18,10 @@ MakeData <- function(CNV_1,
                      gene_name_1,start_1,end_1,
                      CNV_2,
                      gene_name_2,start_2,end_2,
-                     chrom,type){
+                     chrom,type,max.length){
+  if(missing(max.length)){
+    max.length = 10000000
+  }
 
   if(missing(CNV_2)){
     if(missing(type)){
@@ -30,6 +33,7 @@ MakeData <- function(CNV_1,
     }
     CNV1 <- cbind(CNV_1,length=CNV_1$End-CNV_1$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]
+    CNV1 <- CNV1[CNV1$length <= max.length,]
     CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
     gene.position.1 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
     CNV.gene1 <- subsetByOverlaps(CNV1,gene.position.1)
@@ -48,12 +52,14 @@ MakeData <- function(CNV_1,
 
     CNV1 <- cbind(CNV_1,length=CNV_1$End-CNV_1$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]
+    CNV1 <- CNV1[CNV1$length <= max.length,]
     CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
     gene.position <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
     CNV.gene1 <- subsetByOverlaps(CNV1,gene.position)
 
     CNV2 <- cbind(CNV_2,length=CNV_2$End-CNV_2$Start)
     CNV2 <- CNV2[CNV2$length >= 0,]
+    CNV2 <- CNV2[CNV2$length <= max.length,]
     CNV2 <- makeGRangesFromDataFrame(CNV2 , keep.extra.columns = TRUE)
     gene.position.2 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_2,end=end_2))
     CNV.gene2 <- subsetByOverlaps(CNV2,gene.position.2)
