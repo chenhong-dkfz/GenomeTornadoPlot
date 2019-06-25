@@ -17,7 +17,8 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   cohort_1 <- unlist(paralist["cohort_1"])
   cohort_2 <- unlist(paralist["cohort_2"])
-
+  cohort_1 <- factor(cohort_1)
+  cohort_2 <- factor(cohort_2)
   print("cohort size:")
   print(cohort_1)
   print(cohort_2)
@@ -89,12 +90,12 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   cohort_max <- sort(unique(c(levels(cohort_1),levels(cohort_2))))
   color.value <- GetColor(method=color.method,cohorts=cohort_max)
 
-  plotCnv(chroms_1,starts_1,ends_1,y,scores_1,pixel.per.cnv=pixel.per.cnv,
+  plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
           sorting = sorting_1, cohort = cohort_1,cohort_max = cohort_max,
           color.value = color.value,
           color.method="cohort",score.values = score.values_1,n=n_1,
           startPoint=(pixelPerChrom_1),direction = "left")
-  plotCnv(chroms_2,starts_2,ends_2,y,scores_2,pixel.per.cnv=pixel.per.cnv,
+  plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
           sorting = sorting_2, cohort = cohort_2,cohort_max = cohort_max,
           color.value = color.value,
           color.method="cohort",score.values = score.values_2,n=n_2,
