@@ -70,10 +70,12 @@ GetColor <- function(method,score,color,score.values,n,greyscale,cohorts){
          },
 
          "length" = {
+           if(missing(color)){color="black"}
            color.value <- color
          },
 
          "factor" = {
+           if(missing(color)){color="black"}
            color.value <- "black"
          }
   )
