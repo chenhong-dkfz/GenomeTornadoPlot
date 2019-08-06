@@ -14,7 +14,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   score_1 <- CNV_1$Score
   cohort_1 <- CNV_1$Cohort
   pids_1 <- CNV_1$PID
-
+  rep_1 <- CNV_1$rep
 
 
   chrom_2 <- as.vector(seqnames(CNV_2))
@@ -23,6 +23,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   score_2 <- CNV_2$Score
   cohort_2 <- CNV_2$Cohort
   pids_2 <- CNV_2$PID
+  rep_2 <- CNV_2$rep
 
   gene.name_1 <- as.character(twin.cnv@gene_name_1)
   gene.name_2 <- as.character(twin.cnv@gene_name_2)
@@ -55,6 +56,9 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   score.values_2 <- as.character(sort(unique(rescore_2)))
   n_2 <- length(unique(rescore_2))
 
+  repeat_1 <- rep_1[index_1]
+  repeat_2 <- rep_2[index_2]
+
   cohort_1 <- cohort_1[index_1]
   cohort_2 <- cohort_2[index_2]
   ## default/optional parameter for gene name (default = "geneX")-------------------------------------------------------------------------------------------------------
@@ -62,6 +66,10 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   cnv.type_1 <- gene.name_1   # assign gene.name to cnv.type --> can be replaced later on
   if(missing(gene.name_2)){gene.name_2 <- "geneY"}
   cnv.type_2 <- gene.name_2   # assign gene.name to cnv.type --> can be replaced later on
+
+
+
+
 
   ## default/optional parameter for "pids" and "title" (default:"gene.name: m events from unkown amount of unique samples")---------------------------------------------------------
   # if(missing(title)){
@@ -176,7 +184,9 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
                    "index_1"=index_1,"index_2"=index_2,"m_1"=m_1,"m_2"=m_2,
                    "sort.method"=sort.method,"color.method"=color.method,
                    "startPos_1"=startPos_1,"endPos_1"=endPos_1,
-                   "startPos_2"=startPos_2,"endPos_2"=endPos_2)
+                   "startPos_2"=startPos_2,"endPos_2"=endPos_2,
+                   "repeat_1"=repeat_1,"repeat_2"=repeat_2
+  )
 
 
 }

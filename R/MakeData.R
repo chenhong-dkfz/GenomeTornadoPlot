@@ -23,7 +23,7 @@ MakeData <- function(CNV_1,
     max.length = 10000000
   }
 
-  if(missing(CNV_2)){
+  if(missing(CNV_2)){   # in case there is only one gene of interests
     if(missing(type)){
       print("filter disabled!")
     }else if(type=="dup"){
@@ -39,7 +39,7 @@ MakeData <- function(CNV_1,
     CNV.gene1 <- subsetByOverlaps(CNV1,gene.position.1)
     cnv_data <- new("CNV_single",name="CNV_test",matrix=CNV.gene1,gene_name=gene_name_1)
 
-  }else{
+  }else{   # in case there are two genes of interests
     if(missing(type)){
       print("filter disabled!")
     }else if(type=="dup"){
@@ -53,16 +53,31 @@ MakeData <- function(CNV_1,
     CNV1 <- cbind(CNV_1,length=CNV_1$End-CNV_1$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]
     CNV1 <- CNV1[CNV1$length <= max.length,]
-    CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
-    gene.position <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
-    CNV.gene1 <- subsetByOverlaps(CNV1,gene.position)
 
     CNV2 <- cbind(CNV_2,length=CNV_2$End-CNV_2$Start)
     CNV2 <- CNV2[CNV2$length >= 0,]
     CNV2 <- CNV2[CNV2$length <= max.length,]
+
+
+    CNV1$comp <- paste(CNV1$Start,CNV1$End,CNV1$PID,sep="_")
+    CNV2$comp <- paste(CNV2$Start,CNV2$End,CNV2$PID,sep="_")
+    CNV1$rep <- CNV1$comp %in% CNV2$comp
+    CNV2$rep <- CNV2$comp %in% CNV1$comp
+    CNV1[CNV1$rep=="TRUE","rep"]<- "C1"
+    CNV2[CNV2$rep=="TRUE","rep"]<- "C2"
+    CNV1[CNV1$rep=="FALSE","rep"]<- "U1"
+    CNV2[CNV2$rep=="FALSE","rep"]<- "U2"
+
+
+
+    CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
+    gene.position <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
+    CNV.gene1 <- subsetByOverlaps(CNV1,gene.position)
+
     CNV2 <- makeGRangesFromDataFrame(CNV2 , keep.extra.columns = TRUE)
     gene.position.2 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_2,end=end_2))
     CNV.gene2 <- subsetByOverlaps(CNV2,gene.position.2)
+
     cnv_data <- new("CNV_twin",name="Twin_Test",matrix_1=CNV.gene1,
                     matrix_2=CNV.gene2,gene_name_1=gene_name_1,gene_name_2=gene_name_2)
   }

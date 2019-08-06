@@ -145,8 +145,171 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   if(SaveAsObject==TRUE){
     img <- readTIFF("t1.tiff")
     g <- rasterGrob(img, interpolate=TRUE)
-    return(g)
+
   }
 
-}
 
+  # both side #
+  # plot parameters -----------------------------------------------------------------------------------------------------------------
+
+
+  del.index <- rescore<3
+  dup.index <- rescore>3
+
+  chroms_1 <- chroms[del.index]
+  cnv.type_1 <- cnv.type
+  cohort_1 <- cohorts[del.index]
+  starts_1 <- starts[del.index]
+  ends_1 <- ends[del.index]
+  rescores_1 <- rescore[del.index]
+  #sorting_1 <- sorting[del.index]
+  sorting_1 <- order(cohort_1,ends_1 - starts_1)
+  score.values_1 <- score.values[del.index]
+
+  chroms_2 <- chroms[dup.index]
+  cnv.type_2 <- cnv.type
+  cohort_2 <- cohorts[dup.index]
+  starts_2 <- starts[dup.index]
+  ends_2 <- ends[dup.index]
+  rescores_2 <- rescore[dup.index]
+  sorting_2 <- order(cohort_2,ends_2 - starts_2)
+  score.values_2 <- score.values[dup.index]
+
+  plot.new()
+  #png("t4.png",width = 1024,height=768,units = "px")
+  tiff(file="t4.tiff", width=12, height=8,units="in", compression="lzw", res=150)
+
+  par(c(5,3,4,4))
+  pixelPerChrom_1 <-  (pixel.per.cnv)*(length(chroms_1)+1)
+  pixelPerChrom_2 <-  (pixel.per.cnv)*(length(chroms_2)+1)
+  pixelPerChrom <- chromWidth+pixelPerChrom_1+pixelPerChrom_2+10 # determines space between chromsomes
+
+  x.size <- pixelPerChrom
+  y.size <- y+100
+  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
+       ylab="Chromosomal location",main=title)
+  chrStr <- paste("chr",toString(chroms_1[1]))
+  text(c(pixelPerChrom_1+(chromWidth/2)),c(0),labels=c(chrStr))
+
+  if(gene.anno == TRUE){
+    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
+    m_1 <- mean(start.gene_1,end.gene_1)
+    m_2 <- mean(start.gene_2,end.gene_2)
+
+    text(c(pixelPerChrom_1+chromWidth+15),c(y-m_1+(y*0.045)),labels=c(cnv.type_1),cex=0.7)
+    rect(pixelPerChrom_1+1,y-m_1,pixelPerChrom_1+chromWidth-1,y-m_1,col="gray50", border = "gray50")
+    lines(c(pixelPerChrom_1+chromWidth+7,pixelPerChrom_1+chromWidth+4),c(y-m_1+(y*0.03),y-m_1),col="gray50")
+    lines(c(pixelPerChrom_1+chromWidth+4,pixelPerChrom_1+chromWidth+1),c(y-m_1,y-m_1),col="gray50")
+
+    text(c(pixelPerChrom_1-15),c(y-m_2-(y*0.045)),labels=c(cnv.type_2),cex=0.7)
+    rect(pixelPerChrom_1+1,y-m_2,pixelPerChrom_1+chromWidth-1,y-m_2,col="gray50", border = "gray50")
+    lines(c(pixelPerChrom_1-7,pixelPerChrom_1-4),c(y-m_2-(y*0.03),y-m_2),col="gray50")
+    lines(c(pixelPerChrom_1-4,pixelPerChrom_1-1),c(y-m_2,y-m_2),col="gray50")
+
+  }else{
+    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
+  }
+
+  cohort_max <- sort(unique(c(levels(cohort_1),levels(cohort_2))))
+  color.value <- GetColor(method=color.method,cohorts=cohort_max)
+
+
+
+
+
+  plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
+          sorting = sorting_1, cohort = cohort_1,cohort_max = cohort_max,
+          color.value = color.value,
+          color.method="cohort",score.values = score.values_1,n=n_1,
+          startPoint=(pixelPerChrom_1),direction = "left")
+  plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
+          sorting = sorting_2, cohort = cohort_2,cohort_max = cohort_max,
+          color.value = color.value,
+          color.method="cohort",score.values = score.values_2,n=n_2,
+          startPoint=(pixelPerChrom_1+chromWidth),direction = "right")
+
+  # legend parameters ------------------------------------------------------------------------------------------------------
+
+
+
+  #cohort.max <- unique(c(levels(cohort_1),levels(cohort_2)))
+  cohort.dim <- length(cohort_max)
+  df.color.cohort <- data.frame(color=color.value, # colors according to getColor.ploidy/2
+                                score=cohort_max, # score according to ??
+                                names=cohort_max)
+  dtt <- df.color.cohort
+  color <- as.vector(dtt$color)
+  labs <- as.vector(dtt$names)
+  factor_1 <- cohort_1
+  factor_2 <- cohort_2
+
+
+
+
+
+  # legend position decision (top or bottom)
+  centro <- c(125,93.3,91,50.4,48.4,61,59.9,45.6,49,40.2,53.7,35.8,17.9,17.6,19,36.6,24,17.2,26.5,27.5,13.2,14.7,60.6,12.5)*1000000
+  length <- lengthChromosome(c(1:22,"X","Y"),"bases")/2
+  genome <- data.frame(chromosome=c(1:22,"X","Y"), centromere=centro, length=length) # dataframe containing chromosome and centromere position info
+
+  mean.pos <- mean(c(starts_1,ends_1)) # mean position of all CNV´s
+  #centroo <- genome[genome$chromosome %in% chroms,] # centromere position in the current chromosome
+  half.length <- genome[genome$chromosome %in% chroms_1,] # half of the length of the current chromosome
+
+  if(mean.pos < half.length$length) {
+    xtr <- "bottomleft"
+    xtr2 <- "bottomright"
+    #xtf <- c(4,5,20.5,22)
+    #xtf2 <- c(4,24,20.5,0)
+    text(c(pixelPerChrom_1/2),c(y-10),labels = "deletions",cex=0.75)
+    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(y-10),labels = "duplications",cex=0.75)
+
+  }    # mean start end smaller than subset chrom centromer
+  if(mean.pos > half.length$length){
+    xtr <- "topleft"
+    xtr2 <- "topright"
+    xtf <- c(21.5,5,4,22)
+    xtf2 <- c(21.5,24,4,3)
+    text(c(pixelPerChrom_1/2),c(10),labels = "deletions",cex=0.75)
+    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(10),labels = "duplications",cex=0.75)
+
+  }
+
+  print(legend.type)
+
+  # legend type decision ----------------------------------------------------------------------------
+  if(legend.type=="normal"){
+    legend(xtr,legend=labs,col=color,cex=0.75,pch=16) # normal legend
+    legend(xtr2,legend=labs,col=color,cex=0.75,pch=16)
+    print("normal legend.")
+  }
+  if(legend.type =="pie") {
+    par(new=T,mar=xtf )
+
+    factor_1 <- droplevels.factor(factor_1, exclude = if(anyNA(levels(factor_1)))NULL else NA)
+    factor_2 <- droplevels.factor(factor_2, exclude = if(anyNA(levels(factor_2)))NULL else NA)
+
+    dtt_1 <- dtt[dtt$names%in%levels(factor_1),]
+    color_1 <- as.vector(dtt_1$color)
+    labs_1 <- dtt_1$score
+    pie(table(factor_1),labels=labs_1,col=color_1,cex=0.45,radius = 0.6) # piechart legend
+
+    par(new=T,mar=xtf2)
+    dtt_2 <- dtt[dtt$names%in%levels(factor_2),]
+    color_2 <- as.vector(dtt_2$color)
+    labs_2 <- dtt_2$score
+    pie(table(factor_2),labels=labs_2,col=color_2,cex=0.45,radius = 0.6)
+    print("pie plot legend！")
+  } else{} # no legend
+
+  dev.off()
+
+  if(SaveAsObject==TRUE){
+    img <- readTIFF("t4.tiff")
+    h <- rasterGrob(img, interpolate=TRUE)
+  }
+  results <- list(g,h)
+  return(results)
+
+
+}

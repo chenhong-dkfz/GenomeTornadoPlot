@@ -30,7 +30,9 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,pids,
                              out.dir,file.type,pixel.per.cnv,color,display,
                              gene.anno,start.gene,end.gene,color.method,sort.method)
   if(SaveAsObject==TRUE){
-    plot0 <- plotCnvs.cohort(paralist=paralist0,SaveAsObject = SaveAsObject)
+    plotlist0 <- plotCnvs.cohort(paralist=paralist0,SaveAsObject = SaveAsObject)
+    #plot0 <- plotlist0[[1]]
+    #plot1 <- plotlist0[[2]]
   }else{
     print("Output image is saved!!")
   }

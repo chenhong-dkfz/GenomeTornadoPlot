@@ -26,6 +26,16 @@ GetColor <- function(method,score,color,score.values,n,greyscale,cohorts){
            )
          },
 
+         "repeat" = {
+           color.value <- "black"
+           switch (score,
+                   "U1" = {color.value = "red"},
+                   "C1" = {color.value = "grey"},
+                   "U2" = {color.value = "blue"}
+           )
+           color.value <- c("red","grey","grey","blue")
+         },
+
          "ploidy" = {
            color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(7)
            if(missing(color)){
@@ -81,3 +91,4 @@ GetColor <- function(method,score,color,score.values,n,greyscale,cohorts){
   )
   return(color.value)
 }
+
