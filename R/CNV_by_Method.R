@@ -133,26 +133,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
     }
   }
 
-  ## sorting ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  # sorting.length <- order(endPos - startPos)
-  # if(missing(cohort)){sorting.cohort <- sorting.length}
-  # else{
-  #   cohort <- cohort[index]
-  #   sorting.cohort <-  order(cohort,endPos - startPos)
-  # }
-  # sorting.ploidy <-  order(rescore,endPos - startPos)
-  #
-  # if(color.method=="cohort"){
-  #   sorting.color <- sorting.cohort
-  # }else if(color.method=="ploidy"){
-  #   sorting.color <- sorting.ploidy
-  # }else{
-  #   sorting.color <- sorting.cohort
-  # }
-  #
-
-  print("i am here!")
   if(sort.method=="length"){
     print("sort.method=length!!!")
     sorting <- order(endPos - startPos) # sort by length
@@ -160,7 +141,6 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
     if(missing(cohort)){
       print("use CNV.by.ploidy or CNV.by.length functions")
     }else{
-      print("way2")
       print(length(cohort))
       cohort <- cohort[index]
       print(length(cohort))

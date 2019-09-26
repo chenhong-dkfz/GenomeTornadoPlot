@@ -35,15 +35,10 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   ends <- endPos[sorting]
   cohorts <- cohort[sorting]
   rescore <- rescore[sorting]
-  #cohorts <- rescore[sorting] #?
   cohorts <- droplevels.factor(cohorts, exclude = if(anyNA(levels(cohorts)))NULL else NA)  ## erase factor levels = 0 (turns out very important for color plotting)
   cnv.number <-  length(chroms) # number of lines in input
   chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
   f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
-
-  #print("compare")
-  #print(cohorts)
-  #print(sorting.plot.color)
 
   if (length(unique(chroms)) > 1){
     print(unique(chroms))
@@ -56,7 +51,6 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
 
   plot.new()
-  #png("t1.png",width = 1024,height=768,units = "px")
   tiff(file="t1.tiff", width=12, height=8,units="in", compression="lzw", res=150)
   par(c(5,3,4,4))
   pixelPerChrom <- chromWidth + (pixel.per.cnv)*(cnv.number+1)+10 # determines space between chromsomes
@@ -139,7 +133,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
 
   # ploidy print pass
-  #
+
   dev.off()
 
   if(SaveAsObject==TRUE){
@@ -339,6 +333,5 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
   results <- list(g,h)
   return(results)
-
 
 }
