@@ -176,8 +176,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   score.values_2 <- score.values[dup.index]
 
   plot.new()
-  #png("t4.png",width = 1024,height=768,units = "px")
-  tiff(file="t4.tiff", width=12, height=8,units="in", compression="lzw", res=150)
+  #png("t5.png",width = 1024,height=768,units = "px")
+  tiff(file="t5.tiff", width=12, height=8,units="in", compression="lzw", res=150)
 
   par(c(5,3,4,4))
   pixelPerChrom_1 <-  (pixel.per.cnv)*(length(chroms_1)+1)
@@ -284,28 +284,57 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     print("normal legend.")
   }
   if(legend.type =="pie") {
-    par(new=T,mar=xtf )
+    xtf2 <- c(21.5,24,4,3)
 
-    factor_1 <- droplevels.factor(factor_1, exclude = if(anyNA(levels(factor_1)))NULL else NA)
-    factor_2 <- droplevels.factor(factor_2, exclude = if(anyNA(levels(factor_2)))NULL else NA)
+    info1 <- factor_1
+    info2 <- factor_2
+    t1<-table(info1)
+    t2<-table(info2)
+    df01 <- data.frame(t1)
+    rownames(df01) <- df01$info1
+    df02 <- data.frame(t2)
+    rownames(df02) <- df02$info2
 
-    dtt_1 <- dtt[dtt$names%in%levels(factor_1),]
-    color_1 <- as.vector(dtt_1$color)
-    labs_1 <- dtt_1$score
-    pie(table(factor_1),labels=labs_1,col=color_1,cex=0.45,radius = 0.6) # piechart legend
+    cohort_total <- unique(c(names(t1),names(t2)))
+    df_cohort_total <- data.frame(matrix(rep(0,2*length(cohort_total)),ncol = 2))
+    df_cohort_total$cohort <- cohort_total
+    rownames(df_cohort_total)<-cohort_total
 
-    par(new=T,mar=xtf2)
-    dtt_2 <- dtt[dtt$names%in%levels(factor_2),]
-    color_2 <- as.vector(dtt_2$color)
-    labs_2 <- dtt_2$score
-    pie(table(factor_2),labels=labs_2,col=color_2,cex=0.45,radius = 0.6)
+    df_cohort_total1<-merge(df_cohort_total,df01,by="row.names",all.x=T)
+    df_cohort_total2<-merge(df_cohort_total,df02,by="row.names",all.x=T)
+    freqs <- cbind(df_cohort_total1$Freq,df_cohort_total2$Freq)
+    rownames(freqs) <- cohort_total
+    freqs[is.na(freqs)] <- 0
+
+    freqs <- freqs[order(-freqs[,1],freqs[,2]),]
+    test0 <- t(freqs)
+
+    if(mean.pos < half.length$length) {
+      sub.position <- c(.75, 1, .3, .7)
+    }    # mean start end smaller than subset chrom centromer
+    if(mean.pos > half.length$length){
+      sub.position <- c(.75, 1, .6, 1)
+    }
+
+
+    par(fig = sub.position , mar=c(0,0,5,5), new=TRUE)
+    barplot(test0,
+            #main="Deletions and Duplications",
+            horiz=TRUE,
+            xlab="cohorts", col=c("darkblue","red"),las=1,
+            cex.main=0.5,cex.axis = 0.5,cex.names = 0.5,
+            #legend = c("deletion","duplication"),
+            beside=TRUE)
+    legend("right",legend=c("DEL","DUP"),col=c("darkblue","red"),
+           cex=0.5,pch=16,bty="n",text.width=2)
+
     print("pie plot legend！")
   } else{} # no legend
 
   dev.off()
 
   if(SaveAsObject==TRUE){
-    img <- readTIFF("t4.tiff")
+    img <- readTIFF("t5.tiff")
     h <- rasterGrob(img, interpolate=TRUE)
   }
   results <- list(g,h)

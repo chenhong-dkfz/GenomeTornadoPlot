@@ -15,6 +15,8 @@ focallity.score <- function(m,ends,starts,method,gene.start,gene.end){
     f.score <- sum(scores)
   }
   if(method=="edge"){
+    # first calculate b side
+
 
   }
   return(f.score)
