@@ -19,6 +19,10 @@ MakeData <- function(CNV_1,
                      CNV_2,
                      gene_name_2,start_2,end_2,
                      chrom,type,max.length){
+
+  #fixx <- read.table(tornado.test.1:::gencode.v19.genes.bed)
+  #print(fixx[1,])
+
   if(missing(max.length)){
     max.length = 10000000
   }
