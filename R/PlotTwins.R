@@ -4,13 +4,13 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   starts_1 <- unlist(paralist["startPos_1"])
   ends_1 <- unlist(paralist["endPos_1"])
   rescores_1 <- unlist(paralist["rescore_1"])
-  f.score_1 <- focallity.score(m=length(starts_1),starts = starts_1,ends = ends_1)
+  f.score_1 <- unlist(paralist["f.score_1"])
 
   chroms_2 <- unlist(paralist["chrom_2"])
   starts_2 <- unlist(paralist["startPos_2"])
   ends_2 <- unlist(paralist["endPos_2"])
   rescores_2 <- unlist(paralist["rescore_2"])
-  f.score_2 <- focallity.score(m=length(starts_2),starts = starts_2,ends = ends_2)
+  f.score_2 <- unlist(paralist["f.score_2"])
 
   sorting_1 <- unlist(paralist["sorting_1"])
   sorting_2 <- unlist(paralist["sorting_2"])

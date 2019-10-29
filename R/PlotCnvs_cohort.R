@@ -29,6 +29,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   #print("sorting color")
   #print(sorting.color)
   sorting.plot.color <- cohort[sorting.color]
+  f.score <- unlist(paralist["f.score"])
 
   chroms <- chrom[sorting]
   starts <- startPos[sorting]
@@ -38,7 +39,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   cohorts <- droplevels.factor(cohorts, exclude = if(anyNA(levels(cohorts)))NULL else NA)  ## erase factor levels = 0 (turns out very important for color plotting)
   cnv.number <-  length(chroms) # number of lines in input
   chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
-  f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
+  #f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
 
   if (length(unique(chroms)) > 1){
     print(unique(chroms))

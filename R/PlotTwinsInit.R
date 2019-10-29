@@ -6,6 +6,9 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   CNV_1 <- twin.cnv@matrix_1
   CNV_2 <- twin.cnv@matrix_2
 
+  f.score_1 <- twin.cnv@gene_score_1
+  f.score_2 <- twin.cnv@gene_score_2
+
   print(sort.method)
 
   chrom_1 <- as.vector(seqnames(CNV_1))
@@ -185,7 +188,8 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
                    "sort.method"=sort.method,"color.method"=color.method,
                    "startPos_1"=startPos_1,"endPos_1"=endPos_1,
                    "startPos_2"=startPos_2,"endPos_2"=endPos_2,
-                   "repeat_1"=repeat_1,"repeat_2"=repeat_2
+                   "repeat_1"=repeat_1,"repeat_2"=repeat_2,
+                   "f.score_1"=f.score_1,"f.score_2"=f.score_2
   )
 
 

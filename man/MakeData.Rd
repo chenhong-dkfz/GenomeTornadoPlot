@@ -4,29 +4,28 @@
 \alias{MakeData}
 \title{Generate input data for tornado plot}
 \usage{
-MakeData(CNV_1, gene_name_1, start_1, end_1, CNV_2, gene_name_2, start_2,
-  end_2, chrom, type, max.length)
+MakeData(CNV, gene_name_1, gene_name_2, type, max.length)
 }
 \arguments{
-\item{CNV_1}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}
+\item{CNV}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}
 
 \item{gene_name_1}{character, the name of first gene}
 
-\item{start_1}{numeric, start point of the first gene}
-
-\item{end_1}{numeric, end point of the first gene}
-
-\item{CNV_2}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}
-
 \item{gene_name_2}{character, the name of second gene}
 
+\item{type}{character, "dup" for all duplications, "del" for all deletions. default none.}
+
+\item{CNV}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}
+
+\item{start_1}{numeric, start point of the first gene}
+
 \item{start_2}{numeric, start point of the second gene}
+
+\item{end_1}{numeric, end point of the first gene}
 
 \item{end_2}{numeric, end point of the second gene}
 
 \item{chrom}{character, chromosome id of both genes}
-
-\item{type}{character, "dup" for all duplications, "del" for all deletions. default none.}
 }
 \description{
 Generate input data for tornado plot

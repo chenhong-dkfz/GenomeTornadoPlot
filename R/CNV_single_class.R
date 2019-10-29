@@ -7,5 +7,6 @@ CNV_single = setClass("CNV_single",
                       slots = list(
                         name = "character",
                         matrix = "GenomicRanges",
-                        gene_name = "character"
+                        gene_name = "character",
+                        gene_score = "numeric"
                       ))

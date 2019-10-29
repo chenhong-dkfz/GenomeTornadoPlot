@@ -24,6 +24,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                           gene.anno,start.gene,end.gene,sort.method,color.method){
 
   CNV_1 <- CNV.input@matrix
+  f.score <- CNV.input@gene_score
 
   print("new")
 
@@ -179,7 +180,8 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                    "index"=index,"m"=m,"startPos"=startPos,"endPos"=endPos,
                    "cohort"=cohort,"pids"=pids,
                    #"sorting.color"=sorting.color,
-                   "sort.method"=sort.method,"color.method"=color.method)
+                   "sort.method"=sort.method,"color.method"=color.method,
+                   "f.score"=f.score)
   return(paralist)
 }
 
