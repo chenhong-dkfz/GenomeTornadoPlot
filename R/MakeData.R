@@ -25,7 +25,8 @@ MakeData <- function(CNV,
     max.length = 10000000
   }
   gene_coordinates = gencode.v19.genes
-
+  print("test0")
+  print(nrow(gene_coordinates))
   if(missing(gene_name_2)){   # in case there is only one gene of interests
 
     idx_gene_1 <- which(gene_coordinates$gene==gene_name_1)[1]

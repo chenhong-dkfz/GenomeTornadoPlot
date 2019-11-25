@@ -49,7 +49,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
   y <- lengthChromosome(chroms[1],"bases") + 10000000
 
-
+  legend.type = legend
 
   plot.new()
   tiff(file="t1.tiff", width=12, height=8,units="in", compression="lzw", res=150)
@@ -158,7 +158,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   ends_1 <- ends[del.index]
   rescores_1 <- rescore[del.index]
   #sorting_1 <- sorting[del.index]
-  sorting_1 <- order(cohort_1,ends_1 - starts_1)
+  sorting_1 <- order(ends_1 - starts_1,cohort_1)
   score.values_1 <- score.values[del.index]
 
   chroms_2 <- chroms[dup.index]
@@ -167,7 +167,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   starts_2 <- starts[dup.index]
   ends_2 <- ends[dup.index]
   rescores_2 <- rescore[dup.index]
-  sorting_2 <- order(cohort_2,ends_2 - starts_2)
+  sorting_2 <- order(ends_2 - starts_2,cohort_2)
   score.values_2 <- score.values[dup.index]
 
   plot.new()
