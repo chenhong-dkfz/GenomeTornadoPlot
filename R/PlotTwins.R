@@ -12,6 +12,8 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   rescores_2 <- unlist(paralist["rescore_2"])
   f.score_2 <- unlist(paralist["f.score_2"])
 
+  chroms <- chroms_1
+
   sorting_1 <- unlist(paralist["sorting_1"])
   sorting_2 <- unlist(paralist["sorting_2"])
 
@@ -25,6 +27,10 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   repeat_1 <- unlist(paralist["repeat_1"])
   repeat_2 <- unlist(paralist["repeat_2"])
+
+
+  gene.name_1 <- unlist(paralist["gene.name_1"])
+  gene.name_2 <- unlist(paralist["gene.name_2"])
 
   pixel.per.cnv <- as.numeric(paralist["pixel.per.cnv"])
   cnv.number <- (length(chroms_1)+length(chroms_2)) # number of lines in input
@@ -265,6 +271,7 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   # legend type decision ----------------------------------------------------------------------------
 
   if(2==2 || legend=="pie"){
+    legend.color <- c("red","grey","blue")
     par(new=T,mar=xtf )
     #par(new=T,mar=c(2,12,10,1))
     repu <- repeats!="C2"

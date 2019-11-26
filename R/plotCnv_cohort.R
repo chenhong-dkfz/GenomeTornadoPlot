@@ -3,7 +3,7 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
   indX <- chroms == 'X'
   indY <- chroms == 'Y'
   len <- length(starts)
-  if(missing(rep)){
+  if(missing(rep)|is.null(rep) == TRUE){
     rep<-""
   }else{
     rep0 <- factor(rep,levels = c("U1","C1","C2","U2"))

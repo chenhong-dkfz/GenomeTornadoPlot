@@ -123,8 +123,9 @@ MakeData <- function(CNV,
                                         gene_coordinates = gencode.v19.genes)
     fscore.cnv2 <- focallity.score.edge(gene_name_2,cnv_file = CNV,
                                         gene_coordinates = gencode.v19.genes)
-    cnv_data <- new("CNV_twin",name="Twin_Test",matrix_1=CNV.gene1,
-                    matrix_2=CNV.gene2,gene_name_1=gene_name_1,gene_name_2=gene_name_2,
+    cnv_data <- new("CNV_twin",name="Twin_Test",matrix_1=CNV1,
+                    matrix_2=CNV2,gene_name_1=gene_name_1,gene_name_2=gene_name_2,
+
                     gene_score_1 = fscore.cnv1, gene_score_2 = fscore.cnv2)
   }
   return(cnv_data)
