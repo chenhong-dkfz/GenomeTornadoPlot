@@ -17,14 +17,14 @@
 MakeData <- function(CNV,
                      gene_name_1,
                      gene_name_2,
-                     type,max.length){
+                     type,max.length,score.method){
 
-  data("gencode.v19.genes",package = "tornado.test.1")
+  data("genes",package = "tornado.test.1")
 
   if(missing(max.length)){
     max.length = 10000000
   }
-  gene_coordinates = gencode.v19.genes
+  gene_coordinates = genes
   print("test0")
   print(nrow(gene_coordinates))
   if(missing(gene_name_2)){   # in case there is only one gene of interests
@@ -46,6 +46,11 @@ MakeData <- function(CNV,
     }else if(type=="del"){
       CNV <- CNV[CNV$Score<2,]
     }
+
+    if(missing(score.method)){
+      score.method = "normal"
+    }
+
     CNV1 <- cbind(CNV,length=CNV$End-CNV$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]
     CNV1 <- CNV1[CNV1$length <= max.length,]
@@ -120,9 +125,9 @@ MakeData <- function(CNV,
 
 
     fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,
-                                        gene_coordinates = gencode.v19.genes)
+                                        gene_coordinates = gencode.v19.genes,method=score.method)
     fscore.cnv2 <- focallity.score.edge(gene_name_2,cnv_file = CNV,
-                                        gene_coordinates = gencode.v19.genes)
+                                        gene_coordinates = gencode.v19.genes,method=score.method)
     cnv_data <- new("CNV_twin",name="Twin_Test",matrix_1=CNV1,
                     matrix_2=CNV2,gene_name_1=gene_name_1,gene_name_2=gene_name_2,
 
