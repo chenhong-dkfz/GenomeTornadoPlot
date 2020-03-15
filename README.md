@@ -23,11 +23,11 @@ TornadoPlot package can be applied to your CNV data. Basically, you can use `Mak
 To run `MakeData` function:
 
 ```
-data <- MakeData(CNV_1,gene_name_1,start_1,end_1,CNV_2, gene_name_2,start_2,end_2, chrom, type)
+data <- MakeData(CNV,gene_name_1,gene_name_2,type)
 
 ```
 
-Here **CNV_1** is your input data frame of CNV information. The input table should be like this:
+Here **CNV** is your input data frame of CNV information. The input table should be like this:
 
 
 ```{r, echo=FALSE, results='asis'}
@@ -41,15 +41,10 @@ The **score** column records copy numbers of each CNV.
 The other parameters are defined:
 
 1. **gene_name_1**: the name of the first gene.
-1. **start_1**:the start position of the first gene.
-1. **end_1**:the end position of the first gene.
 1. **gene_name_2**: the name of the second gene, optional.
-1. **start_2**:the start position of the second gene, optional.
-1. **end_2**:the end position of the second gene, optional.
-1. **chrom**:the chromosome where genes are located.
 1. **type**:CNV type filter, optional.
 
-if gene_name_2,start_2 and end_2 are given by user, `MakeData` function will generate an object for single-gene cnv, otherwise would make an object for twin-gene cnvs. 
+if gene_name_2 is not given by user, `MakeData` function will generate an object for single-gene cnv, otherwise it would make an object for twin-gene cnvs. 
 
 
 
@@ -70,7 +65,7 @@ cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsO
 You can simply use the following code to make a tornado plot:
 ```
 data("cnv_KRAS",package = "tornado.test.1")
-data_kras <-  MakeData(CNV_1=cnv_KRAS,gene_name_1 = "KRAS",start_1 = 25204789, end_1 = 25250936, chrom = 12)
+data_kras <-  MakeData(CNV_1=cnv_KRAS,gene_name_1 = "KRAS")
 plot_kras <- TornadoPlots(data_kras,gene.name="KRAS",sort.method="cohort",,SaveAsObject=T)
 grid.arrange(plot_kras)
 ```
