@@ -1,4 +1,5 @@
 plotCnvs.cohort <- function(paralist,SaveAsObject){
+  gene_name = unlist(paralist["gene.name"])
   chrom = unlist(paralist["chrom"])
   startPos = unlist(paralist["startPos"])
   endPos = unlist(paralist["endPos"])
@@ -31,50 +32,90 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   sorting.plot.color <- cohort[sorting.color]
   f.score <- unlist(paralist["f.score"])
 
+  # original
+
   chroms <- chrom[sorting]
   starts <- startPos[sorting]
   ends <- endPos[sorting]
   cohorts <- cohort[sorting]
   rescore <- rescore[sorting]
   cohorts <- droplevels.factor(cohorts, exclude = if(anyNA(levels(cohorts)))NULL else NA)  ## erase factor levels = 0 (turns out very important for color plotting)
-  cnv.number <-  length(chroms) # number of lines in input
-  chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
+
+
+
+
+  # single side #
+  # plot parameters ---------------------------------------------------------------------
+
+  if(cnv.type=="dup"){
+  del_dup.index <- rescore>3
+  }else{
+  del_dup.index <- rescore<3
+  }
+
+  chroms_0 <- chroms[del_dup.index]
+  cohort_0 <- cohorts[del_dup.index]
+  starts_0 <- starts[del_dup.index]
+  ends_0 <- ends[del_dup.index]
+  rescores_0 <- rescore[del_dup.index]
+  #sorting_1 <- sorting[del.index]
+  sorting_0 <- order(ends_0 - starts_0,cohort_0)
+  score.values_0 <- score.values[del_dup.index]
+
+  cnv.number_0 <-  length(chroms_0) # number of lines in input
+  chromWidth_0 <- round((pixel.per.cnv * cnv.number_0) * 0.1)
+
+  cohort_0 <- droplevels.factor(cohort_0, exclude = if(anyNA(levels(cohort_0)))NULL else NA)
+
+
   #f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
 
-  if (length(unique(chroms)) > 1){
-    print(unique(chroms))
+  if (length(unique(chroms_0)) > 1){
+    print(unique(chroms_0))
     print("More than one chromosome id - use other function")
     return()
   }
 
-  y <- lengthChromosome(chroms[1],"bases") + 10000000
+  y <- lengthChromosome(chroms_0[1],"bases") + 10000000
+
 
   legend.type = legend
 
   plot.new()
   tiff(file="t1.tiff", width=12, height=8,units="in", compression="lzw", res=150)
   par(c(5,3,4,4))
-  pixelPerChrom <- chromWidth + (pixel.per.cnv)*(cnv.number+1)+10 # determines space between chromsomes
+  pixelPerChrom <- chromWidth_0 + (pixel.per.cnv)*(cnv.number_0+1)+10 # determines space between chromsomes
   x.size <- pixelPerChrom
   y.size <- y+100
-  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="SVs",ylab="Chromosomal location",main=title)
-  chrStr <- paste("chr",toString(chroms[1]))
-  text(c((chromWidth/2)),c(0),labels=c(chrStr))
+  nsample <- length(chroms_0)
+  if(cnv.type=="dup"){
+    tcnv = "duplication"
+  }else{
+    tcnv = "deletion"
+  }
+  ncohort <- length(unique(cohort_0))
+  print(cohort_0)
+
+  print(cohorts)
+  title <- paste0(gene_name,": ",nsample," ",tcnv," events from ",ncohort," cohorts")
+  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+  chrStr <- paste("chr",toString(chroms_0[1]))
+  text(c((chromWidth_0/2)),c(0),labels=c(chrStr))
   if(gene.anno == TRUE)    ###added RT gene.anno arg
   {
     m <- mean(start.gene,end.gene)
     text(c(-1),c(y-m+(y*0.035)),labels=c(cnv.type),cex=0.5)
-    paintCytobands(chroms[1],pos=c(chromWidth,y),units="bases",width=chromWidth-7,orientation="v",legend=FALSE)
-    rect(7,y-start.gene,chromWidth-1,y-end.gene,col="gray50", border = "gray50")
+    paintCytobands(chroms_0[1],pos=c(chromWidth_0,y),units="bases",width=chromWidth_0-7,orientation="v",legend=FALSE)
+    rect(7,y-start.gene,chromWidth_0-1,y-end.gene,col="gray50", border = "gray50")
     lines(c(0.6,2.25),c(y-m+(y*0.02),y-m),col="gray50")
     lines(c(2.25,5),c(y-m,y-m),col="gray50")
   }else{
-    paintCytobands(chroms[1],pos=c(chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
+    paintCytobands(chroms_0[1],pos=c(chromWidth_0,y),units="bases",width=chromWidth_0,orientation="v",legend=FALSE)
   }
 
-  plotCnv.cohort(chroms,starts,ends,y,
-                 chromWidth=chromWidth,pixel.per.cnv=pixel.per.cnv,score=rescore,
-                 cohorts=cohorts,startPoint=chromWidth,method=color.method,color=color)
+  plotCnv.cohort(chroms_0,starts_0,ends_0,y,
+                 chromWidth=chromWidth_0,pixel.per.cnv=pixel.per.cnv,score=rescore_0,
+                 cohorts=cohort_0,startPoint=chromWidth_0,method=color.method)
 
 
   # legend position decision (top or bottom)
@@ -82,9 +123,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   length <- lengthChromosome(c(1:22,"X","Y"),"bases")/2
   genome <- data.frame(chromosome=c(1:22,"X","Y"), centromere=centro, length=length) # dataframe containing chromosome and centromere position info
 
-  mean.pos <- mean(c(starts,ends)) # mean position of all CNV´s
+  mean.pos <- mean(c(starts_0,ends_0)) # mean position of all CNV´s
   #centroo <- genome[genome$chromosome %in% chroms,] # centromere position in the current chromosome
-  half.length <- genome[genome$chromosome %in% chroms,] # half of the length of the current chromosome
+  half.length <- genome[genome$chromosome %in% chroms_0,] # half of the length of the current chromosome
 
   # mean CNV is over the centromere -> legend is plotted bottomright
   if(mean.pos < half.length$length){
@@ -102,10 +143,10 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
   # legend type decision ----------------------------------------------------------------------------
   if(color.method=="cohort" | color.method=="length"){
-    legend.color <- GetColor(method="cohort",color=color,cohorts=cohort)
+    legend.color <- GetColor(method="cohort",color=color,cohorts=cohort_0)
   }
   if(color.method=="ploidy"){
-    legend.color <- GetColor(method="ploidy",color=color,cohorts=cohorts)
+    legend.color <- GetColor(method="ploidy",color=color,cohorts=cohort_0)
     print(legend.color)
     print("it is")
   }
@@ -115,20 +156,20 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
 
   print(color.method)
-  print(table(cohorts))
+  print(table(cohort_0))
   print(legend)
 
   if(legend==2 || legend=="pie"){
     par(new=T,mar=xtf )
     #par(new=T,mar=c(2,12,10,1))
     if(color.method=="cohort" | color.method=="length"){
-      pie(table(cohorts),col=legend.color,cex=1) # piechart legend
+      pie(table(cohort_0),col=legend.color,cex=1) # piechart legend
     }else if(color.method=="ploidy"){
-      tb <- table(rescore)
-      print(rescore)
+      tb <- table(rescore_0)
+      print(rescore_0)
       dp.list <-c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
       for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
-      legend.color.subset <- legend.color[sort(unique(rescore))]
+      legend.color.subset <- legend.color[sort(unique(rescore_0))]
       pie(tb,col=legend.color.subset,cex=1)
     }
   }
@@ -142,6 +183,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     g <- rasterGrob(img, interpolate=TRUE)
 
   }
+
+
 
 
   # both side #
@@ -181,6 +224,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
   x.size <- pixelPerChrom
   y.size <- y+100
+  ndel <- length(starts_1)
+  ndup <- length(starts_2)
+  title <- paste0(gene_name,": ",ndel," deletions and ",ndup," duplications")
   plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
        ylab="Chromosomal location",main=title)
   chrStr <- paste("chr",toString(chroms_1[1]))

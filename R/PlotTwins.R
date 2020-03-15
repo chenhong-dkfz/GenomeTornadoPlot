@@ -217,7 +217,7 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   pixelPerChrom <- chromWidth + (pixel.per.cnv)*(cnv.number+1)+10 # determines space between chromsomes
   x.size <- pixelPerChrom
   y.size <- y+100
-  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="SVs",ylab="Chromosomal location",main=title)
+  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
   chrStr <- paste("chr",toString(chroms[1]))
   text(c((chromWidth/2)),c(0),labels=c(chrStr))
   if(gene.anno == TRUE)    ###added RT gene.anno arg

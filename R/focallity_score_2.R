@@ -3,19 +3,6 @@
 
 focallity.score.edge <- function(gene_name,method,filter,cnv_file,gene_coordinates,max.length){
   if(missing(method)){method="edge"}
-  if(method=="normal"){
-    mean.length <-  (sum(ends - starts))/m
-    range <- range(ends - starts)
-    range.length <- range[2]-range[1]
-    mean.score <- round(mean(range.length/(ends - starts)),2)
-    f.score <- mean.score
-  }
-  if(method=="log"){
-    max.length <- max(abs(ends-starts))
-    scores <- log10(max.length)-log10(ends-starts)
-    f.score <- sum(scores)
-  }
-  if(method=="edge"){
     # if gene_1 is not unique in list, pick the first one
     # check gene_1 is the gene at the end of chromosome
     idx_gene_1 <- which(gene_coordinates$gene==gene_name)[1]
@@ -116,7 +103,13 @@ focallity.score.edge <- function(gene_name,method,filter,cnv_file,gene_coordinat
       focal.scores_r <- (log10(max.length_r)-log10(ends_r-starts_r))*(scores_r+1)
       f.score_d <- 0.5*(sum(focal.scores_l)+sum(focal.scores_r))
     }
-    f.score <- f.score1 - f.score_d
-  }
+    if(method=="edge")
+    {
+      f.score <- f.score1 - f.score_d
+    }else{
+      f.score <- f.score1
+    }
+
+  f.score <- round(f.score,2)
   return(f.score)
 }

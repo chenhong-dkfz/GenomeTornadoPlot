@@ -4,7 +4,8 @@
 \alias{MakeData}
 \title{Generate input data for tornado plot}
 \usage{
-MakeData(CNV, gene_name_1, gene_name_2, type, max.length, score.method)
+MakeData(CNV, gene_name_1, gene_name_2, score.type, max.length,
+  score.method, cohort_thredshold)
 }
 \arguments{
 \item{CNV}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}
@@ -12,8 +13,6 @@ MakeData(CNV, gene_name_1, gene_name_2, type, max.length, score.method)
 \item{gene_name_1}{character, the name of first gene}
 
 \item{gene_name_2}{character, the name of second gene}
-
-\item{type}{character, "dup" for all duplications, "del" for all deletions. default none.}
 
 \item{CNV}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}
 
@@ -26,6 +25,8 @@ MakeData(CNV, gene_name_1, gene_name_2, type, max.length, score.method)
 \item{end_2}{numeric, end point of the second gene}
 
 \item{chrom}{character, chromosome id of both genes}
+
+\item{type}{character, "dup" for all duplications, "del" for all deletions. default none.}
 }
 \description{
 Generate input data for tornado plot

@@ -20,11 +20,12 @@
 #'
 #'
 CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
-                          out.dir,file.type,pixel.per.cnv,color,display,
+                          out.dir,file.type,pixel.per.cnv,color,display,cnv.type,
                           gene.anno,start.gene,end.gene,sort.method,color.method){
 
   CNV_1 <- CNV.input@matrix
   f.score <- CNV.input@gene_score
+  gene.name <- CNV.input@gene_name
 
   print("new")
 
@@ -45,7 +46,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   }
   if(missing(sort.method)){sort.method = color.method}
   if(missing(color.method)){color.method = sort.method}
-  if(sort.method=="length"){color.method = "cohort"}
+  #if(sort.method=="length"){color.method = "cohort"}
   score = CNV_1$Score
   cohort = CNV_1$Cohort
   pids = CNV_1$PID
@@ -82,22 +83,21 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
 
 
 
-  print(rescore)
-  print("go")
 
   if(1>0){
     if(missing(gene.name)){gene.name <- "geneX"}
-    cnv.type <- gene.name
+    #gene.name = gene_name
+    if(missing(cnv.type)){cnv.type <- "del"}
     if(missing(title)){
       if(missing(pids)){
         title <- cnv.type
       }else{
-        title <- paste(cnv.type,":",m,"events from",length(unique(pids[index])),"samples") } # normal title genereated when pids given
+        title <- paste(gene.name,":",m," ",cnv.type," events from",length(unique(pids[index])),"samples") } # normal title genereated when pids given
     }else{
       if(missing(pids)){
         title <- title
       }else{
-        title <- paste(title,":",m,"events from",length(unique(pids[index])),"samples")
+        title <- paste(gene.name,":",m," ",cnv.type," events from",length(unique(pids[index])),"samples")
       } # normal title genereated when pids given
     }
     if(missing(legend)){legend <- "pie"}
@@ -111,7 +111,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
     }  ## better a equation dependened on the number of CNVs (index!)
     ## color ------------------------------------------------------------------------------------------------------------------------------------------------------------
     if(missing(color)){
-      color <- "steelblue3"
+      color <- "1"
     }else{
       color <- color
     }
@@ -160,8 +160,8 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
     sorting <- order(endPos - startPos) # sort by length, color by ploidy
   }
 
-  if(missing(start.gene)){start.gene <- "geneX"}
-  if(missing(end.gene)){end.gene <- "geneX"}
+  if(missing(start.gene)){start.gene <- gene.name}
+  if(missing(end.gene)){end.gene <- gene.name}
 
   file.type="default"
   out.dir="default"
