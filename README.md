@@ -36,7 +36,7 @@ BiocManager::install(c(“GenomicRanges”,”quantsmooth"))
 2. Copy the HTTPS link.
 3. Open a terminal and type:
 ```bash
-git clone https://github.com/YoannPa/https://github.com/chenhong-dkfz/tornado.test.1
+git clone https://github.com/chenhong-dkfz/tornado.test.1
 ```
 4. Open the folder tornado.test.1 and open the “tornado.test.1.Rproj” file in RStudio.
 5. In the RStudio console, type:
