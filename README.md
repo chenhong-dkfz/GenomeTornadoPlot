@@ -1,10 +1,10 @@
 
 
-## About TornadoPlot
+## GenomeTornadoPlot
 
 The TornadoPlot package is used to visualise copy number variations (or any other types of structure variations as well) which overlap with one or two genes in one chromosomes.A focallity score is also calculated for all CNVs overlapping with the target gene. 
 
-With `TornadoPlot` function, you are able to:
+With `GenomeTornadoPlot` Package, you are able to:
 - visualise alternatively selected CNVs overlapping with gene(s) in cohort level
 - calculate focallity scores by different methods
 - graphically compare CNVs between neighbour genes
@@ -12,9 +12,34 @@ With `TornadoPlot` function, you are able to:
 
 ## Download and installation
 
-You can download TornadoPlot by downloading it from github:
+Before installing the GenomeTornadoPlot, please install all the dependencies firstly.
 
-https://github.com/chenhong-dkfz/tornado.test.1
+```R
+inst.pkgs = c('ggplot2', 'data.table', 'devtools',
+	      'ggplot2', 'grid', 'gridExtra', ‘IRanges’,’tiff')
+install.packages(inst.pkgs)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c(“GenomicRanges”,”quantsmooth"))
+```
+## Workflow
+<p align="center">
+<img src="image/workflow.png">
+</p>
+
+
+## Installing
+1. In the Git repository click on "Clone or Download".
+2. Copy the HTTPS link.
+3. Open a terminal and type:
+```bash
+git clone https://github.com/YoannPa/https://github.com/chenhong-dkfz/tornado.test.1
+```
+4. Open the folder tornado.test.1 and open the “tornado.test.1.Rproj” file in RStudio.
+5. In the RStudio console, type:
+```R
+devtools::install()
+```
 
 ## Usage
 
@@ -23,7 +48,7 @@ TornadoPlot package can be applied to your CNV data. Basically, you can use `Mak
 To run `MakeData` function:
 
 ```
-data <- MakeData(CNV,gene_name_1,gene_name_2,type)
+data <- MakeData(CNV,gene_name_1,gene_name_2,score.type="del")
 
 ```
 
@@ -34,6 +59,18 @@ Here **CNV** is your input data frame of CNV information. The input table should
 data("cnv_KRAS",package = "tornado.test.1")
 knitr::kable(head(cnv_KRAS, 10))
 ```
+| Chromosome|    Start|      End| Score|Gene |Cohort |PID       |
+|----------:|--------:|--------:|-----:|:----|:------|:---------|
+|         12| 29700429| 12145150|     5|KRAS |AML    |pid001 |
+|         12| 21073451|  1777272|     5|KRAS |BRCA   |pid002 |
+|         12| 32285455| 18368484|     5|KRAS |CRC    |pid003 |
+|         12| 24497489| 20635970|     5|KRAS |CRC    |pid004 |
+|         12| 23188787| 31463459|     4|KRAS |AML    |pid005 |
+|         12| 25224933|  7439941|     6|KRAS |CRC    |pid006 |
+|         12| 24801696| 11310196|     5|KRAS |CRC    |pid007 |
+|         12| 24459199| 27108934|     5|KRAS |GLIOMA |pid008 |
+|         12| 30812917| 17582810|     4|KRAS |BRCA   |pid009 |
+|         12| 21706333| 14115764|     5|KRAS |CRC    |pid010 |
 
 The **score** column records copy numbers of each CNV.
 
@@ -42,7 +79,7 @@ The other parameters are defined:
 
 1. **gene_name_1**: the name of the first gene.
 1. **gene_name_2**: the name of the second gene, optional.
-1. **type**:CNV type filter, optional.
+1. **score.type**: type of CNV which are computed for focallity scores, "del" as default.
 
 if gene_name_2 is not given by user, `MakeData` function will generate an object for single-gene cnv, otherwise it would make an object for twin-gene cnvs. 
 
@@ -66,8 +103,41 @@ You can simply use the following code to make a tornado plot:
 ```
 data("cnv_KRAS",package = "tornado.test.1")
 data_kras <-  MakeData(CNV_1=cnv_KRAS,gene_name_1 = "KRAS")
-plot_kras <- TornadoPlots(data_kras,gene.name="KRAS",sort.method="cohort",,SaveAsObject=T)
-grid.arrange(plot_kras)
+plot_kras <- TornadoPlots(data_kras,gene.name="KRAS",sort.method="cohort",SaveAsObject=T)
+grid.arrange(plot_kras[[1]])
 ```
+Plot standard Genome Tornado Plot:
+<p align="center">
+<img src="image/example_tornadoplot.png">
+</p>
+
+Plot mixed plot:
+```
+grid.arrage(plot_kras[[2]])
+```
+<p align="center">
+<img src="image/example_mixedplot.png">
+</p>
+
+```
+data("cnv_GENEA",package = "tornado.test.1")
+data_twin <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
+plot_twin <- TornadoPlots(data_twin,sort.method="cohort",SaveAsObject=T)
+```
+Plot twin plot:
+```
+grid.arrange(plot_twin[[1]])
+```
+<p align="center">
+<img src="image/example_twinplot.png">
+</p>
+
+plot deletion/duplication plot:
+```
+grid.arrange(plot_twin[[2]])
+```
+<p align="center">
+<img src="image/example_del_dup_plot.png">
+</p>
 
 
