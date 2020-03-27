@@ -100,13 +100,13 @@ MakeData <- function(CNV,
     end_2 <- as.numeric(as.character(gene_coordinates[idx_gene_2,"end"]))
 
 
-    if(missing(type)){
-      print("filter disabled!")
-    }else if(type=="dup"){
-      CNV <- CNV[CNV$Score>2,]
-    }else if(type=="del"){
-      CNV <- CNV[CNV$Score<2,]
-    }
+    # if(missing(cnv.type)){
+    #   print("filter disabled!")
+    # }else if(type=="dup"){
+    #   CNV <- CNV[CNV$Score>2,]
+    # }else if(type=="del"){
+    #   CNV <- CNV[CNV$Score<2,]
+    # }
 
     CNV1 <- cbind(CNV,length=CNV$End-CNV$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]
