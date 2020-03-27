@@ -102,7 +102,7 @@ cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsO
 
 ## Example
 
-You can simply use the following code to make a tornado plot:
+You can simply use the following code to make a tornado plot. The first example is for a single gene.
 ```R
 data("cnv_GENEA",package = "tornado.test.1")
 data_genea <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
@@ -130,6 +130,8 @@ grid.arrage(plot_genea[[2]])
 <img src="image/example_del_dup_plot.png">
 </p>
 
+
+We can also apply GenomeTornadoPlot for gene pairs.
 ```R
 data("MLLT3_CDKN2A",package = "tornado.test.1")
 data_twin <-  MakeData(CNV_1=MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
@@ -151,4 +153,31 @@ grid.arrange(plot_twin[[2]])
 <img src="image/example_mixedplot.png">
 </p>
 
+In addition, the mixed plot shows the proportion of events are overlapped or invidually affect one single gene.
 
+## References
+
+[1]G.R. Bignell, C.D. Greenman, H. Davies, A.P. Butler
+Signatures of mutation and selection in the cancer genome
+Nature, 463 (2010), pp. 893-898
+
+[2]M. Bierkens, O. Krijgsman, S.M. Wilting, L. Bosch, A. Jaspers, G.A. Meijer, et al.
+Focal aberrations indicate EYA2and hsa-miR-375as oncogene and tumor suppressor in cervical carcinogenesis
+Genes Chromosom. Cancer, 52 (2012), pp. 56-68
+
+[3]C. Garnis, W.W. Lockwood, E. Vucic, Y. Ge, L. Girard, J.D. Minna, et al.
+High resolution analysis of non-small cell lung cancer cell lines by whole genome tiling path array CGH
+Int. J. Cancer, 118 (2005), pp. 1556-1564
+
+[4]R.J. Leary, J.C. Lin, J. Cummins, S. Boca, L.D. Wood, D.W. Parsons, et al.
+Integrated analysis of homozygous deletions, focal amplifications, and sequence alterations in breast and colorectal cancers
+Proc. Natl. Acad. Sci. U. S. A., 105 (2008), pp. 16224-16229
+
+[5]Meuwissen R, Linn SC, Linnoila RI, Zevenhoven J, Mooi WJ, Berns A. Induction of small cell lung cancer by somatic inactivation of both Trp53 and Rb1 in a conditional mouse model. Cancer Cell. 2003;4(3):181–9.
+
+[6]Campbell, P. J. et al. Pan-cancer analysis of whole genomes. bioRxiv (2017).
+
+[7]Cancer Genome Atlas Research Network, Weinstein JN, Collisson EA, et al. The Cancer Genome Atlas Pan-Cancer analysis project. Nat Genet. 2013;45(10):1113–1120. doi:10.1038/ng.2764
+
+## Licence
+tbd
