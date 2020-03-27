@@ -2,7 +2,7 @@
 
 ## GenomeTornadoPlot
 
-The TornadoPlot package is used to visualise copy number variations (or any other types of structure variations as well) which overlap with one or two genes in one chromosomes.A focallity score is also calculated for all CNVs overlapping with the target gene. 
+The TornadoPlot package is used to visualise copy number variations (or any other types of structure variations as well) which overlap with one or two genes in one chromosomes.A focallity score is also calculated for all CNVs overlapping with the target gene. The higher the focallity score is, the more possible that the gene is affected by focal events. (Please pay attention that the score relys on data, so it only make sense to compare scores which are generated from one dataset.)
 
 With `GenomeTornadoPlot` Package, you are able to:
 - visualise alternatively selected CNVs overlapping with gene(s) in cohort level
@@ -112,30 +112,27 @@ If what you need is just the focallity score, just use the following command:
 data_genea@gene_score
 ```
 
-Plot standard Genome Tornado Plot:
-
-Colourful lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions.
-The pie chart stand for the cohort contribution of the events.
-The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.
-The score below the graph is the “focallity score” of the gene.
-
-
+If you want to go further, try printing a standard Genome Tornado Plot:
 ```R
 grid.arrange(plot_genea[[1]])
 ```
 <p align="center">
 <img src="image/example_tornadoplot.png">
 </p>
+Colourful lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions.
+The pie chart stand for the cohort contribution of the events.
+The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.
+The score below the graph is the “focallity score” of the gene.
 
 
-Plot deletion/duplication plot:
+In some cases, a gene plays different roles in differnt cohorts. A deletion/duplication plot would be helpful to see identify that.
 ```R
 grid.arrage(plot_genea[[2]])
 ```
 <p align="center">
 <img src="image/example_del_dup_plot.png">
 </p>
-
+Interesting, you could find in some cohorts, this gene are mainly duplicated. But in some others, deletions are more frequent.
 
 We can also apply GenomeTornadoPlot for gene pairs.
 ```R
