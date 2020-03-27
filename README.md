@@ -15,8 +15,7 @@ With `GenomeTornadoPlot` Package, you are able to:
 Before installing the GenomeTornadoPlot, please install all the dependencies firstly.
 
 ```R
-dependencies.packages = c('ggplot2', 'data.table', 'devtools',
-	      'grid', 'gridExtra',’tiff')
+dependencies.packages = c('ggplot2', 'data.table', 'devtools','grid', 'gridExtra',’tiff')
 	      
 install.packages(dependencies.packages)
 
