@@ -15,10 +15,10 @@ With `GenomeTornadoPlot` Package, you are able to:
 Before installing the GenomeTornadoPlot, please install all the dependencies firstly.
 
 ```R
-inst.pkgs = c('ggplot2', 'data.table', 'devtools',
+dependencies.packages = c('ggplot2', 'data.table', 'devtools',
 	      'grid', 'gridExtra',’tiff')
 	      
-install.packages(inst.pkgs)
+install.packages(dependencies.packages)
 
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
