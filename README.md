@@ -16,14 +16,14 @@ Before installing the GenomeTornadoPlot, please install all the dependencies fir
 
 ```R
 inst.pkgs = c('ggplot2', 'data.table', 'devtools',
-	      'ggplot2', 'grid', 'gridExtra', ‘IRanges’,’tiff')
+	      'grid', 'gridExtra',’tiff')
 	      
 install.packages(inst.pkgs)
 
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
     
-BiocManager::install(c(“GenomicRanges”,”quantsmooth"))
+BiocManager::install(c(“GenomicRanges”,”quantsmooth","IRanges"))
 ```
 ## Workflow
 <p align="center">
