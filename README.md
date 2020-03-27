@@ -2,7 +2,7 @@
 
 ## GenomeTornadoPlot
 
-The TornadoPlot package is used to visualise copy number variations (or any other types of structure variations as well) which overlap with one or two genes in one chromosomes.A focallity score is also calculated for all CNVs overlapping with the target gene. The higher the focallity score is, the more possible that the gene is affected by focal events. (Please pay attention that the score relys on data, so it only make sense to compare scores which are generated from one dataset.)
+The TornadoPlot package is used to visualise copy number variations (or any other types of structure variations as well) which overlap with one or two genes in one chromosomes.A focallity score is also calculated for all CNVs overlapping with the target gene. The higher the focallity score is, the more possible that the gene is affected by focal events. (Please pay attention that the score relys on data, so it only makes sense to compare scores which are generated from one dataset.)
 
 With `GenomeTornadoPlot` Package, you are able to:
 - visualise alternatively selected CNVs overlapping with gene(s) in cohort level
