@@ -104,14 +104,14 @@ cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsO
 
 You can simply use the following code to make a tornado plot:
 ```R
-data("cnv_KRAS",package = "tornado.test.1")
-data_kras <-  MakeData(CNV_1=cnv_KRAS,gene_name_1 = "KRAS")
-plot_kras <- TornadoPlots(data_kras,gene.name="KRAS",sort.method="cohort",SaveAsObject=T)
+data("cnv_GENEA",package = "tornado.test.1")
+data_genea <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
+plot_genea <- TornadoPlots(data_genea,gene.name="GENEA",sort.method="cohort",SaveAsObject=T)
 ```
 Plot standard Genome Tornado Plot:
 
 ```R
-grid.arrange(plot_kras[[1]])
+grid.arrange(plot_genea[[1]])
 ```
 <p align="center">
 <img src="image/example_tornadoplot.png">
@@ -124,15 +124,15 @@ The score below the graph is the “focallity score” of the gene.
 
 Plot deletion/duplication plot:
 ```R
-grid.arrage(plot_kras[[2]])
+grid.arrage(plot_genea[[2]])
 ```
 <p align="center">
 <img src="image/example_del_dup_plot.png">
 </p>
 
 ```R
-data("cnv_GENEA",package = "tornado.test.1")
-data_twin <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
+data("MLLT3_CDKN2A",package = "tornado.test.1")
+data_twin <-  MakeData(CNV_1=MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
 plot_twin <- TornadoPlots(data_twin,sort.method="cohort",SaveAsObject=T)
 ```
 Plot twin plot:
