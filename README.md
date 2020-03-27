@@ -107,6 +107,11 @@ data("cnv_GENEA",package = "tornado.test.1")
 data_genea <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
 plot_genea <- TornadoPlots(data_genea,gene.name="GENEA",sort.method="cohort",SaveAsObject=T)
 ```
+If what you need is just the focallity score, just use the following command:
+```R
+data_genea@gene_score
+```
+
 Plot standard Genome Tornado Plot:
 
 Colourful lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions.
