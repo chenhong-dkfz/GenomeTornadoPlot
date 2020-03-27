@@ -110,6 +110,12 @@ plot_genea <- TornadoPlots(data_genea,gene.name="GENEA",sort.method="cohort",Sav
 ```
 Plot standard Genome Tornado Plot:
 
+Colourful lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions.
+The pie chart stand for the cohort contribution of the events.
+The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.
+The score below the graph is the “focallity score” of the gene.
+
+
 ```R
 grid.arrange(plot_genea[[1]])
 ```
@@ -117,10 +123,6 @@ grid.arrange(plot_genea[[1]])
 <img src="image/example_tornadoplot.png">
 </p>
 
-Colourful lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions.
-The pie chart stand for the cohort contribution of the events.
-The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.
-The score below the graph is the “focallity score” of the gene.
 
 Plot deletion/duplication plot:
 ```R
