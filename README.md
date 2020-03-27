@@ -117,12 +117,17 @@ grid.arrange(plot_kras[[1]])
 <img src="image/example_tornadoplot.png">
 </p>
 
-Plot mixed plot:
+Colourful lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions.
+The pie chart stand for the cohort contribution of the events.
+The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.
+The score below the graph is the “focallity score” of the gene.
+
+Plot deletion/duplication plot:
 ```R
 grid.arrage(plot_kras[[2]])
 ```
 <p align="center">
-<img src="image/example_mixedplot.png">
+<img src="image/example_del_dup_plot.png">
 </p>
 
 ```R
@@ -138,12 +143,12 @@ grid.arrange(plot_twin[[1]])
 <img src="image/example_twinplot.png">
 </p>
 
-plot deletion/duplication plot:
+plot mixed plot:
 ```R
 grid.arrange(plot_twin[[2]])
 ```
 <p align="center">
-<img src="image/example_del_dup_plot.png">
+<img src="image/example_mixedplot.png">
 </p>
 
 
