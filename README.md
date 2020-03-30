@@ -2,28 +2,27 @@
 
 ## GenomeTornadoPlot
 
-The TornadoPlot package is used to visualise copy number variations (or any other types of structure variations as well) which overlap with one or two genes in one chromosomes.A focallity score is also calculated for all CNVs overlapping with the target gene. 
+The TornadoPlot package allow users to visualize copy number variations (CNVs), and many other types of structure variations as well, which overlap with one or two genes **(Why 1 or 2 genes and not more than this ?)** in one chromosomes **(Do the genes have to be located on the same chromosome ?)**. For all CNVs overlapping with the target gene a focallity score is also calculated **(Formula ?)**. Higher the focallity score is, more **probable/plausible** it is that the gene is affected by focal events. (It is important to mention that the score relies on data, so it only makes sense to compare scores which are generated from one dataset.**(I don't understand what you mean.)**)
 
-With `GenomeTornadoPlot` Package, you are able to:
-- visualise alternatively selected CNVs overlapping with gene(s) in cohort level
-- calculate focallity scores by different methods
-- graphically compare CNVs between neighbour genes
+With the `GenomeTornadoPlot` package, you are able to:
+- visualize alternatively selected CNVs overlapping with gene(s) at the cohort level.
+- calculate focallity scores by different methods.
+- graphically compare CNVs between neighbour genes **(What do you mean by "compare" ?)**.
 
 
 ## Download and installation
 
-Before installing the GenomeTornadoPlot, please install all the dependencies firstly.
+Prior to installing GenomeTornadoPlot, please install all dependencies as following:
 
 ```R
-inst.pkgs = c('ggplot2', 'data.table', 'devtools',
-	      'ggplot2', 'grid', 'gridExtra', ‘IRanges’,’tiff')
+dependencies.packages = c('ggplot2', 'data.table', 'devtools','grid', 'gridExtra','tiff')
 	      
-install.packages(inst.pkgs)
+install.packages(dependencies.packages)
 
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
     
-BiocManager::install(c(“GenomicRanges”,”quantsmooth"))
+BiocManager::install(c('GenomicRanges','quantsmooth','IRanges'))
 ```
 ## Workflow
 <p align="center">
@@ -34,9 +33,9 @@ BiocManager::install(c(“GenomicRanges”,”quantsmooth"))
 ## Installing
 1. In the Git repository click on "Clone or Download".
 2. Copy the HTTPS link.
-3. Open a terminal and type:
+3. Open a terminal and type or paste:
 ```bash
-git clone https://github.com/YoannPa/https://github.com/chenhong-dkfz/tornado.test.1
+git clone https://github.com/chenhong-dkfz/tornado.test.1
 ```
 4. Open the folder tornado.test.1 and open the “tornado.test.1.Rproj” file in RStudio.
 5. In the RStudio console, type:
@@ -46,19 +45,19 @@ devtools::install()
 
 ## Usage
 
-TornadoPlot package can be applied to your CNV data. Basically, you can use `MakeData` function to convert data.frame object to standard input object of `TornadoPlot` function. 
+The TornadoPlot **(the current name of your package is tornado.test.1 ! Don't forget to change it to TornadoPlot)** package can be applied to your CNV data. Basically, you can use `MakeData()` function to convert data.frame object to standard input object of `TornadoPlot()` function **(There is a TornadoPlots() function with an "s". However there is no help available for the TornadoPlots() function. In your package help you have 2 helps with the same names "TornadoPlots-method". It is unclear to me what you tried to do here.)**. 
 
-To run `MakeData` function:
+To run `MakeData()` function **(This part is already in the package help. It is okay to write it again here, but showing how to use it with some dummy data would be better. I also believe that the README is not suiting for a tutorial: in R you can write down a complete tutorial in a vignette document. I would advise to do it this way.)**:
 
-```
+```R
+library(tornado.test.1)
 data <- MakeData(CNV,gene_name_1,gene_name_2,score.type="del")
 
 ```
 
-Here **CNV** is your input data frame of CNV information. The input table should be like this:
+Here **CNV** is a BED format data.frame. The data.frame should look like this:
 
-
-```{r, echo=FALSE, results='asis'}
+```R
 data("cnv_KRAS",package = "tornado.test.1")
 knitr::kable(head(cnv_KRAS, 10))
 ```
@@ -75,72 +74,119 @@ knitr::kable(head(cnv_KRAS, 10))
 |         12| 30812917| 17582810|     4|KRAS |BRCA   |pid009 |
 |         12| 21706333| 14115764|     5|KRAS |CRC    |pid010 |
 
-The **score** column records copy numbers of each CNV.
+The **Score** column records copy numbers of each CNV **(So is it copy numbers for each CNV, or focallity score ?)**.
 
 
-The other parameters are defined:
+The other parameters are defined as following:
 
 1. **gene_name_1**: the name of the first gene.
-1. **gene_name_2**: the name of the second gene, optional.
-1. **score.type**: type of CNV which are computed for focallity scores, "del" as default.
+1. **gene_name_2**: the name of the second gene (optional).
+1. **score.type**: type of CNV which are computed for focallity scores, "del" as default**(I don't understand.)**.
 
-if gene_name_2 is not given by user, `MakeData` function will generate an object for single-gene cnv, otherwise it would make an object for twin-gene cnvs. 
+If gene_name_2 is not given by user, `MakeData()` function will generate an object for single-gene CNV. Otherwise it would make an object for twin-gene CNVs **(what do you mean by "twin-gene CNVs" ?)**. 
 
+**(Maybe you should write something little to link TornadoPlots() with previous step.)**
 
-
-```
+```R
 cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsObject)
 ```
-1. **data**: generated by `MakeData` function.
-1. **legend**: could be set to "pie" and "normal", optional.
-#1. **out.dir**: path to save the output tornado plot, optional.
-#1. **file.type**: set the format of output tornado plot. The plot is defaultly saved in tiff format, optional.
+1. **data**: a data.frame generated by `MakeData()` function.
+1. **legend**: could be set to "pie" or "normal" (optional) **(What does "normal" looks like ?)**.
 1. **color**: a vector of CNV colors, optional.
 1. **color.method**: how to color the CNVs. It could be "cohort" or "ploidy", optional.
-1. **sort.method**: how to sort the CNVs. It could be "length",cohort" or "ploidy", optional.
-1. **SaveAsObject**: if it is TRUE, return an rastergrob object. Otherwise the function only save the plot in file without return anything.
+1. **sort.method**: how to sort the CNVs. It could be "length", "cohort" or "ploidy" (optional).
+1. **SaveAsObject**: if TRUE, returns an rastergrob object. if FALSE the function only saves the plot **(Maybe it should print a message like "plot saved as <filename>.")**.
 
 ## Example
 
-You can simply use the following code to make a tornado plot:
+You can simply use the following code to make a tornado plot. The first example is for a single gene.
+```R
+data("cnv_GENEA", package = "tornado.test.1")
+data_genea <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
+plot_genea <- TornadoPlots(data_genea,gene.name="GENEA",sort.method="cohort",SaveAsObject=TRUE)
 ```
-data("cnv_KRAS",package = "tornado.test.1")
-data_kras <-  MakeData(CNV_1=cnv_KRAS,gene_name_1 = "KRAS")
-plot_kras <- TornadoPlots(data_kras,gene.name="KRAS",sort.method="cohort",SaveAsObject=T)
-grid.arrange(plot_kras[[1]])
+If what you need is just the focallity score, just use the following command:
+```R
+data_genea@gene_score
 ```
-Plot standard Genome Tornado Plot:
+
+If you want to go further, try printing a standard Genome Tornado Plot:
+```R
+grid.arrange(plot_genea[[1]])
+```
+
 <p align="center">
 <img src="image/example_tornadoplot.png">
 </p>
 
-Plot mixed plot:
+
+Colored lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions **(I don't understand the part "and the start and position corresponding to the chromosome show the event positions")**.  
+The pie chart stand for the cohort contribution of the events **(Tip: pie charts are widely used in infographics. But people usually have difficulties to guess percentages of each shares if it is not explicitly writen. Instead of pie charts, I recommend the use of a vertical dodge barplot graduated on Y-axis from 0% to 100%.)**.  
+The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.  
+The score below the graph is the “focallity score” of the gene **(This is too small, increase font size. It should explicitly display "Focallity score = <score>". How is the order of the lines set ?)**.  
+
+
+In some cases, a gene plays different roles in different cohorts. A deletion/duplication plot helps identifying that.
+```R
+grid.arrage(plot_genea[[2]])
 ```
-grid.arrage(plot_kras[[2]])
-```
+
+
 <p align="center">
-<img src="image/example_mixedplot.png">
+<img src="image/example_del_dup_plot.png">
 </p>
 
-```
-data("cnv_GENEA",package = "tornado.test.1")
-data_twin <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
+
+Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others **(Give few cohort names; The score is not displayed here.)**.
+
+We can also apply GenomeTornadoPlot for gene pairs.
+```R
+data("MLLT3_CDKN2A",package = "tornado.test.1")
+data_twin <-  MakeData(CNV_1=MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
 plot_twin <- TornadoPlots(data_twin,sort.method="cohort",SaveAsObject=T)
 ```
 Plot twin plot:
-```
+```R
 grid.arrange(plot_twin[[1]])
 ```
 <p align="center">
 <img src="image/example_twinplot.png">
 </p>
 
-plot deletion/duplication plot:
-```
+In addition, the mixed plot shows the proportion of CNVs which overlap gene 1 alone, gene 2 alone or both genes.  
+plot mixed plot:
+```R
 grid.arrange(plot_twin[[2]])
 ```
 <p align="center">
-<img src="image/example_del_dup_plot.png">
+<img src="image/example_mixedplot.png">
 </p>
 
 
+
+## References
+
+[1]G.R. Bignell, C.D. Greenman, H. Davies, A.P. Butler
+Signatures of mutation and selection in the cancer genome
+Nature, 463 (2010), pp. 893-898
+
+[2]M. Bierkens, O. Krijgsman, S.M. Wilting, L. Bosch, A. Jaspers, G.A. Meijer, et al.
+Focal aberrations indicate EYA2and hsa-miR-375as oncogene and tumor suppressor in cervical carcinogenesis
+Genes Chromosom. Cancer, 52 (2012), pp. 56-68
+
+[3]C. Garnis, W.W. Lockwood, E. Vucic, Y. Ge, L. Girard, J.D. Minna, et al.
+High resolution analysis of non-small cell lung cancer cell lines by whole genome tiling path array CGH
+Int. J. Cancer, 118 (2005), pp. 1556-1564
+
+[4]R.J. Leary, J.C. Lin, J. Cummins, S. Boca, L.D. Wood, D.W. Parsons, et al.
+Integrated analysis of homozygous deletions, focal amplifications, and sequence alterations in breast and colorectal cancers
+Proc. Natl. Acad. Sci. U. S. A., 105 (2008), pp. 16224-16229
+
+[5]Meuwissen R, Linn SC, Linnoila RI, Zevenhoven J, Mooi WJ, Berns A. Induction of small cell lung cancer by somatic inactivation of both Trp53 and Rb1 in a conditional mouse model. Cancer Cell. 2003;4(3):181–9.
+
+[6]Campbell, P. J. et al. Pan-cancer analysis of whole genomes. bioRxiv (2017).
+
+[7]Cancer Genome Atlas Research Network, Weinstein JN, Collisson EA, et al. The Cancer Genome Atlas Pan-Cancer analysis project. Nat Genet. 2013;45(10):1113–1120. doi:10.1038/ng.2764
+
+## Licence
+tbd
