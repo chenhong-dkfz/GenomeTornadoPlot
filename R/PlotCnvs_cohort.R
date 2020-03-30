@@ -151,8 +151,10 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     print("it is")
   }
 
-  if(legend=="missing" || legend==1){
-    legend(xtr,legend=unique(cohorts),col=GetColor(color=color,cohorts=cohorts,q=F,method="by.cohort"),cex=0.75,pch=16) # normal legend
+  if(legend=="missing" || legend==1||legend=="normal"){
+    legend(xtr,legend=labs,col=legend.color,cex=0.75,pch=16) # normal legend
+    print("normal legend.")
+    #legend(xtr,legend=unique(cohorts),col=GetColor(color=color,cohorts=cohorts,q=F,method="by.cohort"),cex=0.75,pch=16) # normal legend
   }
 
   print(color.method)
