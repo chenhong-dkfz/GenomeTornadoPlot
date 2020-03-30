@@ -83,7 +83,7 @@ The other parameters are defined as following:
 1. **gene_name_2**: the name of the second gene (optional).
 1. **score.type**: type of CNV which are computed for focallity scores, "del" as default**(I don't understand.)**.
 
-if gene_name_2 is not given by user, `MakeData()` function will generate an object for single-gene CNV. Otherwise it would make an object for twin-gene CNVs **(what do you mean by "twin-gene CNVs" ?)**. 
+If gene_name_2 is not given by user, `MakeData()` function will generate an object for single-gene CNV. Otherwise it would make an object for twin-gene CNVs **(what do you mean by "twin-gene CNVs" ?)**. 
 
 **(Maybe you should write something little to link TornadoPlots() with previous step.)**
 
@@ -114,22 +114,29 @@ If you want to go further, try printing a standard Genome Tornado Plot:
 ```R
 grid.arrange(plot_genea[[1]])
 ```
+
 <p align="center">
 <img src="image/example_tornadoplot.png">
 </p>
-Colored lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions **(I don't understand the part "and the start and position corresponding to the chromosome show the event positions")**.
-The pie chart stand for the cohort contribution of the events **(Tip: pie charts are widely used in infographics. But people usually have difficulties to guess percentages of each shares if it is not explicitly writen. Instead of pie charts, I recommend the use of a vertical dodge barplot graduated on Y-axis from 0% to 100%.)**.
-The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.
-The score below the graph is the “focallity score” of the gene (**This is too small, increase font size. It should explicitly display "Focallity score = <score>". How is the order of the lines set ?**).
+
+
+Colored lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions **(I don't understand the part "and the start and position corresponding to the chromosome show the event positions")**.  
+The pie chart stand for the cohort contribution of the events **(Tip: pie charts are widely used in infographics. But people usually have difficulties to guess percentages of each shares if it is not explicitly writen. Instead of pie charts, I recommend the use of a vertical dodge barplot graduated on Y-axis from 0% to 100%.)**.  
+The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.  
+The score below the graph is the “focallity score” of the gene **(This is too small, increase font size. It should explicitly display "Focallity score = <score>". How is the order of the lines set ?)**.  
 
 
 In some cases, a gene plays different roles in different cohorts. A deletion/duplication plot helps identifying that.
 ```R
 grid.arrage(plot_genea[[2]])
 ```
+
+
 <p align="center">
 <img src="image/example_del_dup_plot.png">
 </p>
+
+
 Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others **(Give few cohort names; The score is not displayed here.)**.
 
 We can also apply GenomeTornadoPlot for gene pairs.
