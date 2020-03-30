@@ -101,9 +101,9 @@ cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsO
 
 You can simply use the following code to make a tornado plot. The first example is for a single gene.
 ```R
-data("cnv_GENEA", package = "tornado.test.1")
-data_genea <-  MakeData(CNV_1=cnv_GENEA,gene_name_1 = "GENEA")
-plot_genea <- TornadoPlots(data_genea,gene.name="GENEA",sort.method="cohort",SaveAsObject=TRUE)
+data("cnv_STK38L", package = "tornado.test.1")
+data_genea <-  MakeData(CNV=cnv_STK38L,gene_name_1 = "STK38L")
+plot_genea <- TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE)
 ```
 If what you need is just the focallity score, just use the following command:
 ```R
@@ -116,7 +116,7 @@ grid.arrange(plot_genea[[1]])
 ```
 
 <p align="center">
-<img src="image/example_tornadoplot.png">
+<img src="image/stk38L_tornado.png">
 </p>
 
 
@@ -133,7 +133,7 @@ grid.arrage(plot_genea[[2]])
 
 
 <p align="center">
-<img src="image/example_del_dup_plot.png">
+<img src="image/stk38l_dupdel.png">
 </p>
 
 
@@ -142,7 +142,7 @@ Here, the gene of interest is duplicated in most cohorts, whereas deletions are 
 We can also apply GenomeTornadoPlot for gene pairs.
 ```R
 data("MLLT3_CDKN2A",package = "tornado.test.1")
-data_twin <-  MakeData(CNV_1=MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
+data_twin <-  MakeData(CNV_1=cnv_MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
 plot_twin <- TornadoPlots(data_twin,sort.method="cohort",SaveAsObject=T)
 ```
 Plot twin plot:
