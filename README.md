@@ -30,7 +30,6 @@ score.edge = (2*S<sub>gene</sub> - S<sub>neighbour_1</sub> -S<sub>neighbour_2</s
 where neighbour 1 and neighbour 2 are neighbour genes of the target gene, if the target gene is at edge of chromosome, the only neighbour gene counts as both neighbour 1 and 2.
 
 Users can choose if they want to calculate the standard or the edge focallity socre. 
-
 Please notice that the focallity score of each gene is calculated by the data you give. 
 
 ## Download and installation
