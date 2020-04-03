@@ -70,6 +70,7 @@ devtools::install()
 Here we just make a brief quick start to the functions in `GenomeTornadoPlot` with minimal parameters.
 For more information, please check the user manual and package help.
 
+### step 0:
 Firstly, you can prepare a BED-like data, and import it to R session.
 In R, it should be a data frame and look like this:
 
@@ -95,7 +96,8 @@ The **CN** column records copy numbers of each CNV event**.
 After preparing the data, we can apply 
 Plot to our data
 
- Step 1:  run the  `MakeData()` function:
+ ### Step 1: 
+ Run the  `MakeData()` function:
 
 ```R
 library(tornado.test.1)
@@ -115,7 +117,8 @@ The other parameters are defined as following:
 
 Here **data** is an R object containing information of the CNV of selected genes. And it should be input of step 2.
 
-Step 2: run the `TornadoPlots()` function:
+### Step 2:
+Run the `TornadoPlots()` function:
 
 ```R
 cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsObject)
