@@ -66,7 +66,7 @@ devtools::install()
 
 ## Quick Start
 
-Here we just make a brief quick start to the functions in **GenomeTornadoPlot** with minimal parameters.
+Here we just make a brief quick start to the functions in `GenomeTornadoPlot` with minimal parameters.
 For more information, please check the user manual and package help.
 
 Firstly, you can prepare a BED-like data, and import it to R session.
@@ -91,7 +91,8 @@ knitr::kable(head(cnv_KRAS, 10))
 
 The **CN** column records copy numbers of each CNV event**.
 
-After preparing the data, we can apply GenomeTornadoPlot to our data
+After preparing the data, we can apply 
+Plot to our data
 
  Step 1:  run the  `MakeData()` function:
 
@@ -170,9 +171,9 @@ grid.arrage(plot_genea[[2]])
 </p>
 
 
-Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others **(Give few cohort names; The score is not displayed here.)**.
+Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others.
 
-We can also apply GenomeTornadoPlot for gene pairs.
+We can also apply `GenomeTornadoPlot` for gene pairs.
 ```R
 data("MLLT3_CDKN2A",package = "tornado.test.1")
 data_twin <-  MakeData(CNV_1=cnv_MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
