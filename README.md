@@ -10,9 +10,9 @@ The GenomeTornadoPlot package allow users to visualize copy number variations (C
 Focal copy number variations pinpoint driver genes. More specifically, oncogenes and tumor suppressor genes are more often affected by these events than neighbouring passenger. Furthermore, detection of multigenic minimally deleted regions enable the detection of synergistic co-mutations. 
 
 With the `GenomeTornadoPlot` package, you are able to:
-visualize alternatively selected CNVs overlapping with selected gene at the cohort level.
-visualize CNVs of two selected genes in the same chromosome and compare these events 
-- calculate focallity scores with different methods.
+- visualize alternatively selected CNVs overlapping with selected gene at the cohort level as **tornado plots**.
+- visualize CNVs of two selected genes in the same chromosome and compare these events 
+- calculate **focallity scores** with different methods.
 
 ## Algorithms of focallity score
 
