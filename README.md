@@ -66,7 +66,8 @@ devtools::install()
 
 ## Quick Start
 
-The GenomeTornadoPlot package can be applied to your CNV data. Basically, you can use `MakeData()` function to convert data.frame object to standard input object of `TornadoPlot()` function.
+Here we just make a brief quick start to the functions in **GenomeTornadoPlot** with minimal parameters.
+For more information, please check the user manual and package help.
 
 Firstly, you can prepare a BED-like data, and import it to R session.
 In R, it should be a data frame and look like this:
