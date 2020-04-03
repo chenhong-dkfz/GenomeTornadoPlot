@@ -18,7 +18,8 @@ visualize CNVs of two selected genes in the same chromosome and compare these ev
 
 In general, we assume that genes with comparably more focal events than broad ones have higher scores. 
 Here we define the focallity score by:
-s = \sum_{i = 1}^{m} log(L<sub>max</sub>-L<sub>i</sub>)$
+<img src="http://www.sciweavers.org/tex2img.php?eq=S%20%3D%20%20%24%5Csum_%7Bi%20%3D%201%7D%5E%7Bm%7D%20log%28L_%7Bmax%7D-L_i%29%24&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0" align="center" border="0" alt="S =  $\sum_{i = 1}^{m} log(L_{max}-L_i)$" width="186" height="26" />
+
 where m is the total number of focal variation events, L<sub>max</sub> is the length of longest focal variation event.
 
 To erase the impact of neighbour genes, we implemented another algorithm and call it edge score.  It is define as:
