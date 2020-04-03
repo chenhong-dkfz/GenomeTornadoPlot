@@ -2,13 +2,35 @@
 
 ## GenomeTornadoPlot
 
-The TornadoPlot package allow users to visualize copy number variations (CNVs), and many other types of structure variations as well, which overlap with one or two genes **(Why 1 or 2 genes and not more than this ?)** in one chromosomes **(Do the genes have to be located on the same chromosome ?)**. For all CNVs overlapping with the target gene a focallity score is also calculated **(Formula ?)**. Higher the focallity score is, more **probable/plausible** it is that the gene is affected by focal events. (It is important to mention that the score relies on data, so it only makes sense to compare scores which are generated from one dataset.**(I don't understand what you mean.)**)
+The GenomeTornadoPlot package allow users to visualize copy number variations (CNVs), and many other types of structure variations as well, which overlap with one or two genes in one chromosomes. For all CNVs overlapping with the target gene a focallity score is also calculated. Higher the focallity score is, more probable it is that the gene is affected by focal events.
+
+
+## Motivation
+
+Focal copy number variations pinpoint driver genes. More specifically, oncogenes and tumor suppressor genes are more often affected by these events than neighbouring passenger. Furthermore, detection of multigenic minimally deleted regions enable the detection of synergistic co-mutations. 
 
 With the `GenomeTornadoPlot` package, you are able to:
-- visualize alternatively selected CNVs overlapping with gene(s) at the cohort level.
-- calculate focallity scores by different methods.
-- graphically compare CNVs between neighbour genes **(What do you mean by "compare" ?)**.
+visualize alternatively selected CNVs overlapping with selected gene at the cohort level.
+visualize CNVs of two selected genes in the same chromosome and compare these events 
+- calculate focallity scores with different methods.
 
+## Algorithms of focallity score
+
+In general, we assume that genes with comparably more focal events than broad ones have higher scores. 
+
+Here we define the focallity score by:
+
+s = $\sum_{i = 1}^{m} log(L<sub>max</sub>-L<sub>i</sub>)$
+
+where m is the total number of focal variation events, L<sub>max</sub> is the length of longest focal variation event.
+
+To erase the impact of neighbour genes, we implemented another algorithm and call it edge score.  It is define as:
+
+score.edge = (2*S<sub>gene</sub> - S<sub>neighbour_1</sub> -S<sub>neighbour_2</sub>)/2
+
+where neighbour 1 and neighbour 2 are neighbour genes of the target gene, if the target gene is at edge of chromosome, the only neighbour gene counts as both neighbour 1 and 2.
+
+Please notice that the focallity 
 
 ## Download and installation
 
@@ -43,25 +65,18 @@ git clone https://github.com/chenhong-dkfz/tornado.test.1
 devtools::install()
 ```
 
-## Usage
+## Quick Start
 
-The TornadoPlot **(the current name of your package is tornado.test.1 ! Don't forget to change it to TornadoPlot)** package can be applied to your CNV data. Basically, you can use `MakeData()` function to convert data.frame object to standard input object of `TornadoPlot()` function **(There is a TornadoPlots() function with an "s". However there is no help available for the TornadoPlots() function. In your package help you have 2 helps with the same names "TornadoPlots-method". It is unclear to me what you tried to do here.)**. 
+The GenomeTornadoPlot package can be applied to your CNV data. Basically, you can use `MakeData()` function to convert data.frame object to standard input object of `TornadoPlot()` function.
 
-To run `MakeData()` function **(This part is already in the package help. It is okay to write it again here, but showing how to use it with some dummy data would be better. I also believe that the README is not suiting for a tutorial: in R you can write down a complete tutorial in a vignette document. I would advise to do it this way.)**:
-
-```R
-library(tornado.test.1)
-data <- MakeData(CNV,gene_name_1,gene_name_2,score.type="del")
-
-```
-
-Here **CNV** is a BED format data.frame. The data.frame should look like this:
+Firstly, you can prepare a BED-like data, and import it to R session.
+In R, it should be a data frame and look like this:
 
 ```R
 data("cnv_KRAS",package = "tornado.test.1")
 knitr::kable(head(cnv_KRAS, 10))
 ```
-| Chromosome|    Start|      End| Score|Gene |Cohort |PID       |
+| Chromosome|    Start|      End| CN|Gene |Cohort |PID       |
 |----------:|--------:|--------:|-----:|:----|:------|:---------|
 |         12| 29700429| 12145150|     5|KRAS |AML    |pid001 |
 |         12| 21073451|  1777272|     5|KRAS |BRCA   |pid002 |
@@ -74,32 +89,50 @@ knitr::kable(head(cnv_KRAS, 10))
 |         12| 30812917| 17582810|     4|KRAS |BRCA   |pid009 |
 |         12| 21706333| 14115764|     5|KRAS |CRC    |pid010 |
 
-The **Score** column records copy numbers of each CNV **(So is it copy numbers for each CNV, or focallity score ?)**.
+The **CN** column records copy numbers of each CNV event**.
+
+After preparing the data, we can apply GenomeTornadoPlot to our data
+
+ Step 1:  run the  `MakeData()` function:
+
+```R
+library(tornado.test.1)
+data <- MakeData(CNV,gene_name_1,gene_name_2)
+
+```
+
+Here **CNV** is a BED-like data.frame you just imported.
+
+
 
 
 The other parameters are defined as following:
 
 1. **gene_name_1**: the name of the first gene.
 1. **gene_name_2**: the name of the second gene (optional).
-1. **score.type**: type of CNV which are computed for focallity scores, "del" as default**(I don't understand.)**.
 
-If gene_name_2 is not given by user, `MakeData()` function will generate an object for single-gene CNV. Otherwise it would make an object for twin-gene CNVs **(what do you mean by "twin-gene CNVs" ?)**. 
+Here **data** is an R object containing information of the CNV of selected genes. And it should be input of step 2.
 
-**(Maybe you should write something little to link TornadoPlots() with previous step.)**
+Step 2: run the `TornadoPlots()` function:
 
 ```R
 cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsObject)
 ```
-1. **data**: a data.frame generated by `MakeData()` function.
-1. **legend**: could be set to "pie" or "normal" (optional) **(What does "normal" looks like ?)**.
+1. **data**: R object generated by `MakeData()` function.
+1. **legend**: could be set to “pie”(default) or "barplot" (optional).
 1. **color**: a vector of CNV colors, optional.
-1. **color.method**: how to color the CNVs. It could be "cohort" or "ploidy", optional.
-1. **sort.method**: how to sort the CNVs. It could be "length", "cohort" or "ploidy" (optional).
-1. **SaveAsObject**: if TRUE, returns an rastergrob object. if FALSE the function only saves the plot **(Maybe it should print a message like "plot saved as <filename>.")**.
+1. **color.method**: how to color the CNVs. It could be “cohort”(default) or “ploidy”(optional).
+1. **sort.method**: how to sort the CNVs. It could be “length”(defult), "cohort" or "ploidy" (optional).
+**SaveAsObject**: if TRUE, returns an rastergrob object. if FALSE the function only saves the plot.
+
+Here **cnv.plot** is a list, containing output of plots.
+
+In the first step, if you give only **gene_name_1**, you will get a standard tornado plot and “dup_del ” plot for this gene after you finish step 2. Otherwise, if you also give the *gene_name_2*, you will get a “twin” plot and a “mixed” plot.
 
 ## Example
 
-You can simply use the following code to make a tornado plot. The first example is for a single gene.
+Here you can simply use the following code to make a tornado plot. Dummy data is attached in the package. The first example is for a single gene. 
+
 ```R
 data("cnv_STK38L", package = "tornado.test.1")
 data_genea <-  MakeData(CNV=cnv_STK38L,gene_name_1 = "STK38L")
@@ -120,10 +153,10 @@ grid.arrange(plot_genea[[1]])
 </p>
 
 
-Colored lines stand for CNV events, and the start and position corresponding to the chromosome show the event positions **(I don't understand the part "and the start and position corresponding to the chromosome show the event positions")**.  
-The pie chart stand for the cohort contribution of the events **(Tip: pie charts are widely used in infographics. But people usually have difficulties to guess percentages of each shares if it is not explicitly writen. Instead of pie charts, I recommend the use of a vertical dodge barplot graduated on Y-axis from 0% to 100%.)**.  
+Colored lines stand for CNV events. In the plot, you can easily find out their locations in chromosomes.
+The pie chart stand for the cohort contribution of the events.
 The colors in this example stand for cohort. But users can also change parameter and make the color for copy numbers or length.  
-The score below the graph is the “focallity score” of the gene **(This is too small, increase font size. It should explicitly display "Focallity score = <score>". How is the order of the lines set ?)**.  
+The score below the graph is the “focallity score” of the gene.  
 
 
 In some cases, a gene plays different roles in different cohorts. A deletion/duplication plot helps identifying that.
@@ -164,6 +197,7 @@ grid.arrange(plot_twin[[2]])
 
 
 
+
 ## References
 
 [1]G.R. Bignell, C.D. Greenman, H. Davies, A.P. Butler
@@ -189,4 +223,4 @@ Proc. Natl. Acad. Sci. U. S. A., 105 (2008), pp. 16224-16229
 [7]Cancer Genome Atlas Research Network, Weinstein JN, Collisson EA, et al. The Cancer Genome Atlas Pan-Cancer analysis project. Nat Genet. 2013;45(10):1113–1120. doi:10.1038/ng.2764
 
 ## Licence
-tbd
+GPL-3.0
