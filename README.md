@@ -24,10 +24,12 @@ Here we define the focallity score by:
 where m is the total number of focal variation events, L<sub>max</sub> is the length of longest focal variation event.
 
 To erase the impact of neighbour genes, we implemented another algorithm and call it edge score.  It is define as:
+
 score.edge = (2*S<sub>gene</sub> - S<sub>neighbour_1</sub> -S<sub>neighbour_2</sub>)/2
+
 where neighbour 1 and neighbour 2 are neighbour genes of the target gene, if the target gene is at edge of chromosome, the only neighbour gene counts as both neighbour 1 and 2.
 
-Please notice that the focallity 
+Please notice that the focallity score of each gene is calculated by the data you give. 
 
 ## Download and installation
 
