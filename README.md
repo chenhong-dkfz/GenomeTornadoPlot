@@ -17,17 +17,19 @@ visualize CNVs of two selected genes in the same chromosome and compare these ev
 ## Algorithms of focallity score
 
 In general, we assume that genes with comparably more focal events than broad ones have higher scores. 
-Here we define the focallity score by:
+Here we define the standard focallity score by:
 
 <img src="https://bit.ly/2waFzdX" align="center" border="0" alt="S =  $\sum_{i = 1}^{m} log(L_{max}-L_i)$" width="186" height="26" />
 
 where m is the total number of focal variation events, L<sub>max</sub> is the length of longest focal variation event.
 
-To erase the impact of neighbour genes, we implemented another algorithm and call it edge score.  It is define as:
+To erase the impact of neighbour genes, we implemented another algorithm and call it "edge score".  It is defined as:
 
 score.edge = (2*S<sub>gene</sub> - S<sub>neighbour_1</sub> -S<sub>neighbour_2</sub>)/2
 
 where neighbour 1 and neighbour 2 are neighbour genes of the target gene, if the target gene is at edge of chromosome, the only neighbour gene counts as both neighbour 1 and 2.
+
+Users can choose if they want to calculate the standard or the edge focallity socre. 
 
 Please notice that the focallity score of each gene is calculated by the data you give. 
 
