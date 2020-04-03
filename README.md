@@ -1,6 +1,6 @@
 
 
-## GenomeTornadoPlot
+# GenomeTornadoPlot
 
 The GenomeTornadoPlot package allow users to visualize copy number variations (CNVs), and many other types of structure variations as well, which overlap with one or two genes in one chromosomes. For all CNVs overlapping with the target gene a focallity score is also calculated. Higher the focallity score is, more probable it is that the gene is affected by focal events.
 
