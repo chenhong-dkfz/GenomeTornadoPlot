@@ -215,6 +215,10 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   sorting_2 <- order(ends_2 - starts_2,cohort_2)
   score.values_2 <- score.values[dup.index]
 
+  cnv.number_d <-  length(chroms_1)+length(chroms_2) # number of lines in input
+  chromWidth_d <- round((pixel.per.cnv * cnv.number_d) * 0.1)
+
+
   plot.new()
   #png("t5.png",width = 1024,height=768,units = "px")
   tiff(file="t5.tiff", width=12, height=8,units="in", compression="lzw", res=150)
@@ -222,7 +226,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   par(c(5,3,4,4))
   pixelPerChrom_1 <-  (pixel.per.cnv)*(length(chroms_1)+1)
   pixelPerChrom_2 <-  (pixel.per.cnv)*(length(chroms_2)+1)
-  pixelPerChrom <- chromWidth+pixelPerChrom_1+pixelPerChrom_2+10 # determines space between chromsomes
+  pixelPerChrom <- chromWidth_d+pixelPerChrom_1+pixelPerChrom_2+10 # determines space between chromsomes
 
   x.size <- pixelPerChrom
   y.size <- y+100
@@ -232,25 +236,25 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
        ylab="Chromosomal location",main=title)
   chrStr <- paste("chr",toString(chroms_1[1]))
-  text(c(pixelPerChrom_1+(chromWidth/2)),c(0),labels=c(chrStr))
+  text(c(pixelPerChrom_1+(chromWidth_d/2)),c(0),labels=c(chrStr))
 
   if(gene.anno == TRUE){
-    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
+    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth_d,y),units="bases",width=chromWidth_d,orientation="v",legend=FALSE)
     m_1 <- mean(start.gene_1,end.gene_1)
     m_2 <- mean(start.gene_2,end.gene_2)
 
-    text(c(pixelPerChrom_1+chromWidth+15),c(y-m_1+(y*0.045)),labels=c(cnv.type_1),cex=0.7)
-    rect(pixelPerChrom_1+1,y-m_1,pixelPerChrom_1+chromWidth-1,y-m_1,col="gray50", border = "gray50")
-    lines(c(pixelPerChrom_1+chromWidth+7,pixelPerChrom_1+chromWidth+4),c(y-m_1+(y*0.03),y-m_1),col="gray50")
-    lines(c(pixelPerChrom_1+chromWidth+4,pixelPerChrom_1+chromWidth+1),c(y-m_1,y-m_1),col="gray50")
+    text(c(pixelPerChrom_1+chromWidth_d+15),c(y-m_1+(y*0.045)),labels=c(cnv.type_1),cex=0.7)
+    rect(pixelPerChrom_1+1,y-m_1,pixelPerChrom_1+chromWidth_d-1,y-m_1,col="gray50", border = "gray50")
+    lines(c(pixelPerChrom_1+chromWidth_d+7,pixelPerChrom_1+chromWidth_d+4),c(y-m_1+(y*0.03),y-m_1),col="gray50")
+    lines(c(pixelPerChrom_1+chromWidth_d+4,pixelPerChrom_1+chromWidth_d+1),c(y-m_1,y-m_1),col="gray50")
 
     text(c(pixelPerChrom_1-15),c(y-m_2-(y*0.045)),labels=c(cnv.type_2),cex=0.7)
-    rect(pixelPerChrom_1+1,y-m_2,pixelPerChrom_1+chromWidth-1,y-m_2,col="gray50", border = "gray50")
+    rect(pixelPerChrom_1+1,y-m_2,pixelPerChrom_1+chromWidth_d-1,y-m_2,col="gray50", border = "gray50")
     lines(c(pixelPerChrom_1-7,pixelPerChrom_1-4),c(y-m_2-(y*0.03),y-m_2),col="gray50")
     lines(c(pixelPerChrom_1-4,pixelPerChrom_1-1),c(y-m_2,y-m_2),col="gray50")
 
   }else{
-    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
+    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth_d,y),units="bases",width=chromWidth_d,orientation="v",legend=FALSE)
   }
 
   cohort_max <- sort(unique(c(levels(cohort_1),levels(cohort_2))))
@@ -269,7 +273,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
           sorting = sorting_2, cohort = cohort_2,cohort_max = cohort_max,
           color.value = color.value,
           color.method="cohort",score.values = score.values_2,n=n_2,
-          startPoint=(pixelPerChrom_1+chromWidth),direction = "right")
+          startPoint=(pixelPerChrom_1+chromWidth_d),direction = "right")
 
   # legend parameters ------------------------------------------------------------------------------------------------------
 
@@ -305,7 +309,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     #xtf <- c(4,5,20.5,22)
     #xtf2 <- c(4,24,20.5,0)
     text(c(pixelPerChrom_1/2),c(y-10),labels = "deletions",cex=0.75)
-    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(y-10),labels = "duplications",cex=0.75)
+    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(y-10),labels = "duplications",cex=0.75)
 
   }    # mean start end smaller than subset chrom centromer
   if(mean.pos > half.length$length){
@@ -314,7 +318,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     xtf <- c(21.5,5,4,22)
     xtf2 <- c(21.5,24,4,3)
     text(c(pixelPerChrom_1/2),c(10),labels = "deletions",cex=0.75)
-    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(10),labels = "duplications",cex=0.75)
+    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(10),labels = "duplications",cex=0.75)
 
   }
 
