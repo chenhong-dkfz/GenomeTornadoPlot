@@ -22,16 +22,6 @@ knitr::opts_chunk$set(
 
 The GenomeTornadoPlot package allow users to visualize copy number variations (CNVs), and many other types of structure variations as well, which overlap with one or two genes in one chromosomes. For all CNVs overlapping with the target gene a focallity score is also calculated. Higher the focallity score is, more probable it is that the gene is affected by focal events.
 
-
-## Motivation
-
-Focal copy number variations pinpoint driver genes. More specifically, oncogenes and tumor suppressor genes are more often affected by these events than neighbouring passenger. Furthermore, detection of multigenic minimally deleted regions enable the detection of synergistic co-mutations. 
-
-With the `GenomeTornadoPlot` package, you are able to:
-- visualize alternatively selected CNVs overlapping with selected gene at the cohort level as **tornado plots**.
-- visualize CNVs of two selected genes in the same chromosome and compare these events 
-- calculate **focallity scores** with different methods.
-
 ## Algorithms of focallity score
 
 In general, we assume that genes with comparably more focal events than broad ones have higher scores. 
@@ -64,10 +54,10 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     
 BiocManager::install(c('GenomicRanges','quantsmooth','IRanges'))
 ```
-## Workflow
-<p align="center">
-<img src="image/workflow.png">
-</p>
+<!-- ## Workflow -->
+<!-- <p align="center"> -->
+<!-- <img src="image/workflow.png"> -->
+<!-- </p> -->
 
 
 ## Installing
@@ -90,7 +80,9 @@ For more information, please check the user manual and package help.
 
 ### step 0:
 Firstly, you can prepare a BED-like data, and import it to R session.
-In R, it should be a data frame and look like this:
+You can generate it from files of other format, such as vcf or maf. Just make sure that column names must contain "Chromosome", "Start", "End", "CN", "Gene", "Cohort" and "PID". 
+
+In R, it should be a data frame and it looks like this:
 
 ```R
 data("cnv_KRAS",package = "tornado.test.1")
@@ -111,27 +103,26 @@ knitr::kable(head(cnv_KRAS, 10))
 
 The **CN** column records copy numbers of each CNV event**.
 
-After preparing the data, we can apply 
-Plot to our data
+After preparing the data, we can apply functions to our data
 
  ### Step 1: 
  Run the  `MakeData()` function:
 
 ```R
 library(tornado.test.1)
-data <- MakeData(CNV,gene_name_1,gene_name_2)
+data <- MakeData(CNV,gene_name_1,gene_name_2,max.length,score.method,cohort_thredshold)
 
 ```
 
 Here **CNV** is a BED-like data.frame you just imported.
 
-
-
-
 The other parameters are defined as following:
 
 1. **gene_name_1**: the name of the first gene.
 1. **gene_name_2**: the name of the second gene (optional).
+1. **max.length**: the maximum length of events, defaut is 1e7.
+1. **score.method**: the method of calculating focallity score, default is edge.
+1. **cohort_thredshold**: the threshold of cohorts, if the size of cohort is below the threshold, it would be collected into "others" group, default is 0.
 
 Here **data** is an R object containing information of the CNV of selected genes. And it should be input of step 2.
 
@@ -146,7 +137,6 @@ cnv.plot <- TornadoPlots(data, legend, color, color.method, sort.method, SaveAsO
 1. **color**: a vector of CNV colors, optional.
 1. **color.method**: how to color the CNVs. It could be “cohort”(default) or “ploidy”(optional).
 1. **sort.method**: how to sort the CNVs. It could be “length”(defult), "cohort" or "ploidy" (optional).
-**SaveAsObject**: if TRUE, returns an rastergrob object. if FALSE the function only saves the plot.
 
 Here **cnv.plot** is a list, containing output of plots.
 
@@ -171,9 +161,9 @@ If you want to go further, try printing a standard Genome Tornado Plot:
 grid.arrange(plot_genea[[1]])
 ```
 
-<p align="center">
-<img src="image/stk38L_tornado.png">
-</p>
+<!-- <p align="center"> -->
+<!-- <img src="image/stk38L_tornado.png"> -->
+<!-- </p> -->
 
 
 Colored lines stand for CNV events. In the plot, you can easily find out their locations in chromosomes.
@@ -188,9 +178,9 @@ grid.arrage(plot_genea[[2]])
 ```
 
 
-<p align="center">
-<img src="image/stk38l_dupdel.png">
-</p>
+<!-- <p align="center"> -->
+<!-- <img src="image/stk38l_dupdel.png"> -->
+<!-- </p> -->
 
 
 Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others.
@@ -205,18 +195,18 @@ Plot twin plot:
 ```R
 grid.arrange(plot_twin[[1]])
 ```
-<p align="center">
-<img src="image/example_twinplot.png">
-</p>
+<!-- <p align="center"> -->
+<!-- <img src="image/example_twinplot.png"> -->
+<!-- </p> -->
 
 In addition, the mixed plot shows the proportion of CNVs which overlap gene 1 alone, gene 2 alone or both genes.  
 plot mixed plot:
 ```R
 grid.arrange(plot_twin[[2]])
 ```
-<p align="center">
-<img src="image/example_mixedplot.png">
-</p>
+<!-- <p align="center"> -->
+<!-- <img src="image/example_mixedplot.png"> -->
+<!-- </p> -->
 
 
 
