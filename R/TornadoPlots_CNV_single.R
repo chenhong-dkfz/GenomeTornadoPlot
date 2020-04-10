@@ -29,6 +29,7 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,pids,
   paralist0 <- CNV.by.method(object,gene.name,pids,title,legend,legend.names,
                              out.dir,file.type,pixel.per.cnv,color,display,
                              gene.anno,start.gene,end.gene,color.method,sort.method)
+  SaveAsObject = TRUE
   if(SaveAsObject==TRUE){
     plotlist0 <- plotCnvs.cohort(paralist=paralist0,SaveAsObject = SaveAsObject)
     #plot0 <- plotlist0[[1]]

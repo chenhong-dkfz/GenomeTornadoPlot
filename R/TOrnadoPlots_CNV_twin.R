@@ -25,6 +25,7 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,pids,ti
                              out.dir=out.dir,color=color,
                              gene.anno=gene.anno,start.gene,end.gene,
                              color.method=color.method,sort.method=sort.method)
+  SaveAsObject = TRUE
   if(SaveAsObject==TRUE){
     plotlist0 <- PlotTwins(paralist=paralist0,SaveAsObject=SaveAsObject)
     #plot0 <- plotlist0[[1]]

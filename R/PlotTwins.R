@@ -159,8 +159,8 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
     xtr2 <- "bottomright"
     xtf <- c(4,5,20.5,22)
     xtf2 <- c(4,24,20.5,0)
-    text(c(pixelPerChrom_1/2),c(y-10),labels = paste("score: ",f.score_1),cex=0.75)
-    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(y-10),labels = paste("score: ",f.score_2),cex=0.75)
+    text(c(pixelPerChrom_1/2),c(y-10),labels = paste("score: ",f.score_1),cex=1)
+    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(y-10),labels = paste("score: ",f.score_2),cex=1)
 
   }    # mean start end smaller than subset chrom centromer
   if(mean.pos > half.length$length){
@@ -168,8 +168,8 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
     xtr2 <- "topright"
     xtf <- c(21.5,5,4,22)
     xtf2 <- c(21.5,24,4,3)
-    text(c(pixelPerChrom_1/2),c(10),labels = paste("score: ",f.score_1),cex=0.75)
-    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(10),labels = paste("score: ",f.score_2),cex=0.75)
+    text(c(pixelPerChrom_1/2),c(10),labels = paste("score: ",f.score_1),cex=1)
+    text(c(pixelPerChrom_1+chromWidth+(pixelPerChrom_2/2)),c(10),labels = paste("score: ",f.score_2),cex=1)
 
   }
 
@@ -264,7 +264,7 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   if(mean.pos > half.length$length){
     xtr <- "topright"
     xtf <- c(21.5,24,4,3)
-    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",f.score_1,",",f.score_2),cex=0.75)
+    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",gene.name_1," ",f.score_1,", gene.name_2 ",f.score_2),cex=1.2)
   }
 
 
@@ -281,8 +281,7 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   }
 
-  # ploidy print pass
-  #
+
   dev.off()
 
   if(SaveAsObject==TRUE){

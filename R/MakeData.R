@@ -55,8 +55,8 @@ MakeData <- function(CNV,
     #   CNV <- CNV[CNV$Score<2,]
     # }
 
-    if(missing(score.type)){
-      score.type = "del"
+    if(missing(score.type)||score.type=="none"){
+      score.type = "none"
     }else if(score.type=="dup"){
       score.type = "dup"
     }else{
@@ -74,8 +74,13 @@ MakeData <- function(CNV,
     gene.position.1 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
     CNV.gene1 <- subsetByOverlaps(CNV1,gene.position.1)
 
+
+    if(score.type != "none"){
     fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,filter = score.type,
                                         gene_coordinates = gencode.v19.genes,method=score.method)
+    }else{
+      fscore.cnv1 <- 0
+    }
     cnv_data <- new("CNV_single",name="CNV_test",matrix=CNV.gene1,gene_name=gene_name_1,gene_score=fscore.cnv1)
 
 
@@ -140,11 +145,17 @@ MakeData <- function(CNV,
 
     if(nrow(data.frame(CNV2[CNV2$rep=="FALSE",]))!=0){CNV2[CNV2$rep=="FALSE",]$rep<- "U2"}
 
-
+    if(score.type != "none"){
     fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,
                                         gene_coordinates = genes,method=score.method)
     fscore.cnv2 <- focallity.score.edge(gene_name_2,cnv_file = CNV,
                                         gene_coordinates = genes,method=score.method)
+    }else{
+      fscore.cnv1 <- 0
+      fscore.cnv2 <- 0
+    }
+
+
     cnv_data <- new("CNV_twin",name="Twin_Test",matrix_1=CNV1,
                     matrix_2=CNV2,gene_name_1=gene_name_1,gene_name_2=gene_name_2,
                     gene_score_1 = fscore.cnv1, gene_score_2 = fscore.cnv2)

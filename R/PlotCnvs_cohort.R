@@ -57,7 +57,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   cohort_0 <- cohorts[del_dup.index]
   starts_0 <- starts[del_dup.index]
   ends_0 <- ends[del_dup.index]
-  rescores_0 <- rescore[del_dup.index]
+  rescore_0 <- rescore[del_dup.index]
   #sorting_1 <- sorting[del.index]
   sorting_0 <- order(ends_0 - starts_0,cohort_0)
   score.values_0 <- score.values[del_dup.index]
@@ -141,6 +141,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
 
 
+
+
   # legend type decision ----------------------------------------------------------------------------
   if(color.method=="cohort" | color.method=="length"){
     legend.color <- GetColor(method="cohort",color=color,cohorts=cohort_0)
@@ -151,32 +153,36 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     print("it is")
   }
 
-  if(legend=="missing" || legend==1||legend=="normal"){
-    legend(xtr,legend=labs,col=legend.color,cex=0.75,pch=16) # normal legend
-    print("normal legend.")
-    #legend(xtr,legend=unique(cohorts),col=GetColor(color=color,cohorts=cohorts,q=F,method="by.cohort"),cex=0.75,pch=16) # normal legend
+  if(mean.pos < half.length$length) {
+    sub.position <- c(.75, 1, .3, .7)
+  }    # mean start end smaller than subset chrom centromer
+  if(mean.pos > half.length$length){
+    sub.position <- c(.75, 1, .6, 1)
   }
 
-  print(color.method)
-  print(table(cohort_0))
-  print(legend)
+  if(color.method=="cohort" | color.method=="length"){
+    if(legend==2 || legend=="pie"){
+      par(new=T,mar=xtf)
+      pie(table(cohort_0),col=legend.color,cex=1)
+    }else{
+      legend(xtr,legend=unique(cohort_0),col=legend.color,cex=0.75,pch=16) # normal legend
+    }
+  }else if(color.method=="ploidy"){
 
-  if(legend==2 || legend=="pie"){
-    par(new=T,mar=xtf )
-    #par(new=T,mar=c(2,12,10,1))
-    if(color.method=="cohort" | color.method=="length"){
-      pie(table(cohort_0),col=legend.color,cex=1) # piechart legend
-    }else if(color.method=="ploidy"){
-      tb <- table(rescore_0)
-      print(rescore_0)
-      dp.list <-c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
-      for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
-      legend.color.subset <- legend.color[sort(unique(rescore_0))]
+    tb <- table(rescore_0)
+    print(rescore_0)
+    dp.list <-c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
+    for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
+    legend.color.subset <- legend.color[sort(unique(rescore_0))]
+    if(legend==2 || legend=="pie"){
+      par(new=T,mar=xtf )
       pie(tb,col=legend.color.subset,cex=1)
+    }else{
+
+      legend(xtr,legend=unique(dp.list),col=legend.color,cex=0.75,pch=16)
     }
   }
 
-  # ploidy print pass
 
   dev.off()
 
@@ -308,8 +314,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     xtr2 <- "bottomright"
     #xtf <- c(4,5,20.5,22)
     #xtf2 <- c(4,24,20.5,0)
-    text(c(pixelPerChrom_1/2),c(y-10),labels = "deletions",cex=0.75)
-    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(y-10),labels = "duplications",cex=0.75)
+    text(c(pixelPerChrom_1/2),c(y-10),labels = "deletions",cex=1)
+    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(y-10),labels = "duplications",cex=1)
 
   }    # mean start end smaller than subset chrom centromer
   if(mean.pos > half.length$length){
@@ -317,8 +323,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     xtr2 <- "topright"
     xtf <- c(21.5,5,4,22)
     xtf2 <- c(21.5,24,4,3)
-    text(c(pixelPerChrom_1/2),c(10),labels = "deletions",cex=0.75)
-    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(10),labels = "duplications",cex=0.75)
+    text(c(pixelPerChrom_1/2),c(10),labels = "deletions",cex=1)
+    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(10),labels = "duplications",cex=1)
 
   }
 
