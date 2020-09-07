@@ -267,19 +267,22 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   color.value <- GetColor(method=color.method,cohorts=cohort_max)
 
 
-
-
+  sorting_ploidy_1 <- order(rescores_1,ends_1 - starts_1)
+  sorting_ploidy_2 <- order(rescores_2,ends_2 - starts_2)
 
   plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
-          sorting = sorting_1, cohort = cohort_1,cohort_max = cohort_max,
+          sorting = sorting_ploidy_1, cohort = cohort_1,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="cohort",score.values = score.values_1,n=n_1,
+          color.method="ploidy",score.values = score.values_1,n=n_1,
           startPoint=(pixelPerChrom_1),direction = "left")
+
   plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
-          sorting = sorting_2, cohort = cohort_2,cohort_max = cohort_max,
+          sorting = sorting_ploidy_2, cohort = cohort_2,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="cohort",score.values = score.values_2,n=n_2,
+          color.method="ploidy",score.values = score.values_2,n=n_2,
           startPoint=(pixelPerChrom_1+chromWidth_d),direction = "right")
+
+
 
   # legend parameters ------------------------------------------------------------------------------------------------------
 
