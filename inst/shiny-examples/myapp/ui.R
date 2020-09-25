@@ -8,16 +8,12 @@ header <- dashboardHeader(),
 
 sidebar <- dashboardSidebar(
 
-  sidebarUserPanel("PCAWG_Visualizer",
+  sidebarUserPanel("GenomeTornadoPlot2",
                    subtitle = a(href = "#", icon("circle", class = "text-success"), "Online"),
-                   # Image file should be in www/ subdir
                    image = "userimage.png"
   ),
 
-  #sidebarSearchForm(label = "Enter a number", "searchText", "searchButton"),
-
   sidebarMenu(
-    # Setting id makes input$tabs give the tabName of currently-selected tab
     id = "tabs",
     menuItem("Tornado Plot", icon = icon("th"), tabName = "To_pl")
   )
@@ -66,7 +62,7 @@ body <- dashboardBody(
             br(),
             actionButton("Draw_tornado","Tornado!"),
             plotOutput("pplot1"),
-           downloadButton('downloadPlot', 'Download Plot')
+            downloadButton('downloadPlot', 'Download Plot')
 
 
     )

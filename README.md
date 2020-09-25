@@ -134,6 +134,21 @@ Here **cnv.plot** is a list, containing output of plots.
 
 In the first step, if you give only **gene_name_1**, you will get a standard tornado plot and “dup_del ” plot for this gene after you finish step 2. Otherwise, if you also give the *gene_name_2*, you will get a “twin” plot and a “mixed” plot.
 
+## GenomeTornadoPlot Easy2Use (shinyapp)
+
+In order to help users generate genome tornado plots in a convenient way, we provided a shiny app in GenomeTornadoPlot package. Users could launch the shiny app in R console.
+
+```R
+runExample()
+```
+Users could upload CNV files from local computer, set the parameters and download generated plots in the shiny app.
+
+<p align="center">
+<img src="image/shiny.png">
+</p>
+
+
+
 ## Example
 
 Here you can simply use the following code to make a tornado plot. Dummy data is attached in the package. The first example is for a single gene. 
