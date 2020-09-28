@@ -77,7 +77,7 @@ MakeData <- function(CNV,
 
     if(score.type != "none"){
     fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,filter = score.type,
-                                        gene_coordinates = gencode.v19.genes,method=score.method)
+                                        gene_coordinates = genes,method=score.method)
     }else{
       fscore.cnv1 <- 0
     }
@@ -104,14 +104,6 @@ MakeData <- function(CNV,
     start_2 <- as.numeric(as.character(gene_coordinates[idx_gene_2,"start"]))
     end_2 <- as.numeric(as.character(gene_coordinates[idx_gene_2,"end"]))
 
-
-    # if(missing(cnv.type)){
-    #   print("filter disabled!")
-    # }else if(type=="dup"){
-    #   CNV <- CNV[CNV$Score>2,]
-    # }else if(type=="del"){
-    #   CNV <- CNV[CNV$Score<2,]
-    # }
 
     CNV1 <- cbind(CNV,length=CNV$End-CNV$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]

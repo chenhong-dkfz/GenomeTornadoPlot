@@ -176,27 +176,64 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   print(legend.type)
 
   # legend type decision ----------------------------------------------------------------------------
+  pixelPerChrom <- chromWidth+pixelPerChrom_1+pixelPerChrom_2+10
+
+  x1 = 0.05
+  x2 = pixelPerChrom_1/pixelPerChrom
+  x3 = (pixelPerChrom_1+20+10)/pixelPerChrom
+  x4 = 0.95
+
+  d1 = x2-x1
+  d2 = x4-x3
+  if(d2>d1){
+    x4 = x4 - (d2-d1)
+  }else{
+    x1 = x1 + (d1-d2)
+  }
+
+
+  if(mean.pos < half.length$length) {
+    y2 = 0.4
+    y1 = 0.2
+  }    # mean start end smaller than subset chrom centromer
+  if(mean.pos > half.length$length){
+    y2 = 0.8
+    y1 = 0.6
+  }
+
+  sub.position1 <- c(0.1,0.3,y1,y2)
+  sub.position2 <- c(0.75,0.95, y1, y2)
+
+  if(pixelPerChrom_1/pixelPerChrom<0.25){sub.position1 <- c(0.5,0.7,y1,y2)}
+  if(pixelPerChrom_2/pixelPerChrom<0.25){sub.position2 <- c(0.3,0.5,y1,y2)}
+  if(pixelPerChrom_1/pixelPerChrom<0.25 & pixelPerChrom_2/pixelPerChrom<0.25){
+    sub.position1 <- c(0.1,0.3,y1,y2)
+    sub.position2 <- c(0.75,0.95, y1, y2)
+  }
+
+
   if(legend.type=="normal"){
     legend(xtr,legend=labs,col=color,cex=0.75,pch=16) # normal legend
     legend(xtr2,legend=labs,col=color,cex=0.75,pch=16)
     print("normal legend.")
   }
   if(legend.type =="pie") {
-    par(new=T,mar=xtf )
-
+    #par(new=T,mar=xtf )
+    par(fig = sub.position1 , mar=c(0,0,1,1), new=TRUE)
     factor_1 <- droplevels.factor(factor_1, exclude = if(anyNA(levels(factor_1)))NULL else NA)
     factor_2 <- droplevels.factor(factor_2, exclude = if(anyNA(levels(factor_2)))NULL else NA)
 
     dtt_1 <- dtt[dtt$names%in%levels(factor_1),]
     color_1 <- as.vector(dtt_1$color)
     labs_1 <- dtt_1$score
-    pie(table(factor_1),labels=labs_1,col=color_1,cex=0.45,radius = 0.6) # piechart legend
+    pie(table(factor_1),labels=labs_1,col=color_1,cex=0.85,radius = 0.9) # piechart legend
 
-    par(new=T,mar=xtf2)
+    #par(new=T,mar=xtf2)
+    par(fig = sub.position2 , mar=c(0,0,1,1), new=TRUE)
     dtt_2 <- dtt[dtt$names%in%levels(factor_2),]
     color_2 <- as.vector(dtt_2$color)
     labs_2 <- dtt_2$score
-    pie(table(factor_2),labels=labs_2,col=color_2,cex=0.45,radius = 0.6)
+    pie(table(factor_2),labels=labs_2,col=color_2,cex=0.85,radius = 0.9)
     print("pie plot legend！")
   } else{} # no legend
 

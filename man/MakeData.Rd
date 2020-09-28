@@ -16,14 +16,17 @@ MakeData(CNV, gene_name_1, gene_name_2, score.type, max.length,
 
 \item{CNV}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}
 
-\item{max.length}{numeric, neglect the events above the max length.}
+\item{start_1}{numeric, start point of the first gene}
 
-\item{score.method}{character, the method of focallity score, could be "edge" or "normal". default "edge".}
+\item{start_2}{numeric, start point of the second gene}
 
-\item{cohort_thredshold}{numeric,the minimum size of cohort. default 0.}
+\item{end_1}{numeric, end point of the first gene}
 
+\item{end_2}{numeric, end point of the second gene}
 
+\item{chrom}{character, chromosome id of both genes}
 
+\item{type}{character, "dup" for all duplications, "del" for all deletions. default none.}
 }
 \description{
 Generate input data for tornado plot

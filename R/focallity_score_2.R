@@ -73,33 +73,38 @@ focallity.score.edge <- function(gene_name,method,filter,cnv_file,gene_coordinat
     starts_1 <- data.frame(CNV.gene1@ranges)$start
     ends_1 <- data.frame(CNV.gene1@ranges)$end
     scores_1 <- data.frame(CNV.gene1$Score)
-    max.length1 <- max(abs(ends_1-starts_1))
+    #max.length1 <- max(abs(ends_1-starts_1))
+    max.length1 <- max.length
     focal.scores1 <- (log10(max.length1)-log10(ends_1-starts_1))*(scores_1+1)
     f.score1 <- sum(focal.scores1)
     if(!exists("CNV.gene.r")){
       starts_l <- data.frame(CNV.gene.l@ranges)$start
       ends_l <- data.frame(CNV.gene.l@ranges)$end
       scores_l <- data.frame(CNV.gene.l$Score)
-      max.length_l <- max(abs(ends_l-starts_l))
+      max.length_l <- max.length
+      # max.length_l <- max(abs(ends_l-starts_l))
       focal.scores_l <- (log10(max.length_l)-log10(ends_l-starts_l))*(scores_l+1)
       f.score_d <- sum(focal.scores_l)
     }else if(!exists("CNV.gene.l")){
       starts_r <- data.frame(CNV.gene.r@ranges)$start
       ends_r <- data.frame(CNV.gene.r@ranges)$end
       scores_r <- data.frame(CNV.gene.r$Score)
-      max.length_r <- max(abs(ends_r-starts_r))
+      #max.length_r <- max(abs(ends_r-starts_r))
+      max.length_r <- max.length
       focal.scores_r <- (log10(max.length_r)-log10(ends_r-starts_r))*(scores_r+1)
       f.score_d <- sum(focal.scores_r)
     }else{
       starts_l <- data.frame(CNV.gene.l@ranges)$start
       ends_l <- data.frame(CNV.gene.l@ranges)$end
       scores_l <- data.frame(CNV.gene.l$Score)
-      max.length_l <- max(abs(ends_l-starts_l))
+      #max.length_l <- max(abs(ends_l-starts_l))
+      max.length_l <- max.length
       focal.scores_l <- (log10(max.length_l)-log10(ends_l-starts_l))*(scores_l+1)
       starts_r <- data.frame(CNV.gene.r@ranges)$start
       ends_r <- data.frame(CNV.gene.r@ranges)$end
       scores_r <- data.frame(CNV.gene.r$Score)
-      max.length_r <- max(abs(ends_r-starts_r))
+      #max.length_r <- max(abs(ends_r-starts_r))
+      max.length_r <- max.length
       focal.scores_r <- (log10(max.length_r)-log10(ends_r-starts_r))*(scores_r+1)
       f.score_d <- 0.5*(sum(focal.scores_l)+sum(focal.scores_r))
     }
