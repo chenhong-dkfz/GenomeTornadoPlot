@@ -32,6 +32,14 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   gene.name_1 <- unlist(paralist["gene.name_1"])
   gene.name_2 <- unlist(paralist["gene.name_2"])
 
+  t_gene_start_1 <- unlist(paralist["t_gene_start_1"])
+  t_gene_end_1 <- unlist(paralist["t_gene_end_1"])
+  t_gene_start_2 <- unlist(paralist["t_gene_start_2"])
+  t_gene_end_2 <- unlist(paralist["t_gene_end_2"])
+
+  n_1 <- unlist(paralist["n_1"])
+  n_2 <- unlist(paralist["n_2"])
+
   pixel.per.cnv <- as.numeric(paralist["pixel.per.cnv"])
   cnv.number <- (length(chroms_1)+length(chroms_2)) # number of lines in input
   chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
@@ -60,7 +68,7 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   # plot parameters -----------------------------------------------------------------------------------------------------------------
   plot.new()
-  #png("t2.png",width = 1024,height=768,units = "px")
+
   tiff(file="t2.tiff", width=12, height=8,units="in", compression="lzw", res=150)
 
   par(c(5,3,4,4))
@@ -75,24 +83,32 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   chrStr <- paste("chr",toString(chroms_1[1]))
   text(c(pixelPerChrom_1+(chromWidth/2)),c(0),labels=c(chrStr))
 
+  t_gene_start_1 = as.numeric(as.character(t_gene_start_1))
+  t_gene_end_1 = as.numeric(as.character(t_gene_end_1))
+  t_gene_start_2 = as.numeric(as.character(t_gene_start_2))
+  t_gene_end_2 = as.numeric(as.character(t_gene_end_2))
+
   if(gene.anno == TRUE){
     paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
-    m_1 <- mean(start.gene_1,end.gene_1)
-    m_2 <- mean(start.gene_2,end.gene_2)
+    m_1 <- mean(c(t_gene_start_1,t_gene_end_1))
+    m_2 <- mean(c(t_gene_start_2,t_gene_end_2))
 
-    text(c(pixelPerChrom_1+chromWidth+15),c(y-m_1+(y*0.045)),labels=c(cnv.type_1),cex=0.7)
-    rect(pixelPerChrom_1+1,y-m_1,pixelPerChrom_1+chromWidth-1,y-m_1,col="gray50", border = "gray50")
+    # annotation right side
+    text(c(pixelPerChrom_1+chromWidth+15),c(y-m_1+(y*0.045)),labels=c(gene.name_2),cex=0.7)
     lines(c(pixelPerChrom_1+chromWidth+7,pixelPerChrom_1+chromWidth+4),c(y-m_1+(y*0.03),y-m_1),col="gray50")
-    lines(c(pixelPerChrom_1+chromWidth+4,pixelPerChrom_1+chromWidth+1),c(y-m_1,y-m_1),col="gray50")
+    #lines(c(pixelPerChrom_1+chromWidth+4,pixelPerChrom_1+chromWidth+1),c(y-m_1,y-m_1),col="gray50")
 
-    text(c(pixelPerChrom_1-15),c(y-m_2-(y*0.045)),labels=c(cnv.type_2),cex=0.7)
-    rect(pixelPerChrom_1+1,y-m_2,pixelPerChrom_1+chromWidth-1,y-m_2,col="gray50", border = "gray50")
+    # annotation left side
+    text(c(pixelPerChrom_1-15),c(y-m_2-(y*0.045)),labels=c(gene.name_1),cex=0.7)
     lines(c(pixelPerChrom_1-7,pixelPerChrom_1-4),c(y-m_2-(y*0.03),y-m_2),col="gray50")
-    lines(c(pixelPerChrom_1-4,pixelPerChrom_1-1),c(y-m_2,y-m_2),col="gray50")
+    #lines(c(pixelPerChrom_1-4,pixelPerChrom_1-1),c(y-m_2,y-m_2),col="gray50")
 
-  }else{
-    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
+
+
+  }else{ # acutally this is what really use
+    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",bands="major",width=chromWidth,orientation="v",legend=FALSE)
   }
+
 
   cohort_max <- sort(unique(c(levels(cohort_1),levels(cohort_2))))
   color.value <- GetColor(method=color.method,cohorts=cohort_max)
@@ -100,35 +116,40 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
           sorting = sorting_1, cohort = cohort_1,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="cohort",score.values = score.values_1,n=n_1,
+          color.method=color.method,score.values = score.values_1,n=n_1,
           startPoint=(pixelPerChrom_1),direction = "left")
   plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
           sorting = sorting_2, cohort = cohort_2,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="cohort",score.values = score.values_2,n=n_2,
+          color.method=color.method,score.values = score.values_2,n=n_2,
           startPoint=(pixelPerChrom_1+chromWidth),direction = "right")
 
   # legend parameters ------------------------------------------------------------------------------------------------------
 
 
+  # dashline
+
   if(color.method == "ploidy"){
     color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(7)
     if(length(color)<6){color <- color.base}
     if(n_1>=n_2){nmax=n_1}else{nmax=n_2}
-    #legend.names = unlist(paralist["legend.names"])
-    legend.names = c("deepdel","monodel","normal","gainlow","gainmid","gainhigh","unknown")
-    df.color.ploidy <- data.frame(color=color[1:7], # colors according to getColor.ploidy/2
-                                  score=c(1:7), # score according to ??
-                                  names=legend.names)
-    data.score <- data.frame(score=c(sort(unique(c(rescores_1,rescores_2))))) # unique and present scores of inout data
-    dtt <- df.color.ploidy[df.color.ploidy$score %in% data.score$score,] # subset only present scores of input data
-    color <- as.vector(dtt$color)
-    labs <- as.vector(dtt$names)
-    factor_1 <- rescores_1
-    factor_2 <- rescores_2
+    legend.names = c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
+    df.color.ploidy <- data.frame(color=color.value, # colors according to getColor.ploidy/2
+                                  score=c(1,2,3,4,5,6,7), # score according to ??
+                                  names=c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
+    )
+    dtt <- df.color.ploidy
+    ploidy_levels <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
+    factor_1 <- ploidy_levels[rescores_1]
+    factor_2 <- ploidy_levels[rescores_2]
+
+    #data.score <- data.frame(score=c(sort(unique(c(rescores_1,rescores_2))))) # unique and present scores of inout data
+   # dtt <- df.color.ploidy[df.color.ploidy$score %in% data.score$score,] # subset only present scores of input data
+   # color <- as.vector(dtt$color)
+   # labs <- as.vector(dtt$names)
+   ## factor_2 <- rescores_2
 
   }else{
-    #cohort.max <- unique(c(levels(cohort_1),levels(cohort_2)))
     cohort.dim <- length(cohort_max)
     df.color.cohort <- data.frame(color=color.value, # colors according to getColor.ploidy/2
                                   score=cohort_max, # score according to ??
@@ -141,7 +162,7 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   }
 
 
-
+  #plot.x <- recordPlot(load=NULL, attach=NULL)
 
 
 
@@ -151,7 +172,6 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   genome <- data.frame(chromosome=c(1:22,"X","Y"), centromere=centro, length=length) # dataframe containing chromosome and centromere position info
 
   mean.pos <- mean(c(starts_1,ends_1)) # mean position of all CNV´s
-  #centroo <- genome[genome$chromosome %in% chroms,] # centromere position in the current chromosome
   half.length <- genome[genome$chromosome %in% chroms_1,] # half of the length of the current chromosome
 
   if(mean.pos < half.length$length) {
@@ -175,7 +195,11 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
 
   print(legend.type)
 
+
+
+  # may change here
   # legend type decision ----------------------------------------------------------------------------
+
   pixelPerChrom <- chromWidth+pixelPerChrom_1+pixelPerChrom_2+10
 
   x1 = 0.05
@@ -223,19 +247,44 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
     factor_1 <- droplevels.factor(factor_1, exclude = if(anyNA(levels(factor_1)))NULL else NA)
     factor_2 <- droplevels.factor(factor_2, exclude = if(anyNA(levels(factor_2)))NULL else NA)
 
+    dtt <-dtt[order(dtt$names),]
+
     dtt_1 <- dtt[dtt$names%in%levels(factor_1),]
     color_1 <- as.vector(dtt_1$color)
     labs_1 <- dtt_1$score
-    pie(table(factor_1),labels=labs_1,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+    freq <- data.frame(table(factor_1)/sum(table(factor_1)))
+    if(nrow(freq[freq$Freq<0.05,])!=0){
+      freq[freq$Freq<0.05,]$factor_1 <- NA
+    }
+    labs_1s <- freq$factor_1
+    showtop = TRUE
+    if(showtop==TRUE){
+      pie(table(factor_1),labels=labs_1s,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+    }else{
+      pie(table(factor_1),labels=labs_1,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+    }
 
     #par(new=T,mar=xtf2)
     par(fig = sub.position2 , mar=c(0,0,1,1), new=TRUE)
     dtt_2 <- dtt[dtt$names%in%levels(factor_2),]
     color_2 <- as.vector(dtt_2$color)
     labs_2 <- dtt_2$score
-    pie(table(factor_2),labels=labs_2,col=color_2,cex=0.85,radius = 0.9)
+
+    freq <- data.frame(table(factor_2)/sum(table(factor_2)))
+    if(nrow(freq[freq$Freq<0.05,])!=0){
+      freq[freq$Freq<0.05,]$factor_2 <- NA
+    }
+    labs_2s <- freq$factor_2
+    if(showtop==TRUE){
+      pie(table(factor_2),labels=labs_2s,col=color_2,cex=0.85,radius = 0.9) # piechart legend
+    }else{
+      pie(table(factor_2),labels=labs_2,col=color_2,cex=0.85,radius = 0.9) # piechart legend
+    }
+
+
     print("pie plot legend！")
   } else{} # no legend
+
 
   dev.off()
   if(SaveAsObject==TRUE){
@@ -244,6 +293,120 @@ PlotTwins <- function(paralist,SaveAsObject = SaveAsObject){
   }
 
   # plot parameters for unique plots
+  plot.new()
+
+  tiff(file="t2_zoom.tiff", width=12, height=8,units="in", compression="lzw", res=150)
+  ###plot.x
+
+  par(c(5,3,4,4))
+  pixelPerChrom_1 <-  (pixel.per.cnv)*(length(chroms_1)+1)
+  pixelPerChrom_2 <-  (pixel.per.cnv)*(length(chroms_2)+1)
+  pixelPerChrom <- chromWidth+pixelPerChrom_1+pixelPerChrom_2+10 # determines space between chromsomes
+
+  x.size <- pixelPerChrom
+  y.size <- y+100
+  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
+       ylab="Chromosomal location",main=title)
+  chrStr <- paste("chr",toString(chroms_1[1]))
+  text(c(pixelPerChrom_1+(chromWidth/2)),c(0),labels=c(chrStr))
+
+  t_gene_start_1 = as.numeric(as.character(t_gene_start_1))
+  t_gene_end_1 = as.numeric(as.character(t_gene_end_1))
+  t_gene_start_2 = as.numeric(as.character(t_gene_start_2))
+  t_gene_end_2 = as.numeric(as.character(t_gene_end_2))
+
+  if(gene.anno == TRUE){
+    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",width=chromWidth,orientation="v",legend=FALSE)
+    m_1 <- mean(c(t_gene_start_1,t_gene_end_1))
+    m_2 <- mean(c(t_gene_start_2,t_gene_end_2))
+
+    # annotation right side
+    text(c(pixelPerChrom_1+chromWidth+15),c(y-m_1+(y*0.045)),labels=c(gene.name_2),cex=0.7)
+    lines(c(pixelPerChrom_1+chromWidth+7,pixelPerChrom_1+chromWidth+4),c(y-m_1+(y*0.03),y-m_1),col="gray50")
+    #lines(c(pixelPerChrom_1+chromWidth+4,pixelPerChrom_1+chromWidth+1),c(y-m_1,y-m_1),col="gray50")
+
+    # annotation left side
+    text(c(pixelPerChrom_1-15),c(y-m_2-(y*0.045)),labels=c(gene.name_1),cex=0.7)
+    lines(c(pixelPerChrom_1-7,pixelPerChrom_1-4),c(y-m_2-(y*0.03),y-m_2),col="gray50")
+    #lines(c(pixelPerChrom_1-4,pixelPerChrom_1-1),c(y-m_2,y-m_2),col="gray50")
+
+
+
+  }else{ # acutally this is what really use
+    paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth,y),units="bases",bands="major",width=chromWidth,orientation="v",legend=FALSE)
+  }
+
+
+  cohort_max <- sort(unique(c(levels(cohort_1),levels(cohort_2))))
+  color.value <- GetColor(method=color.method,cohorts=cohort_max)
+
+  plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
+          sorting = sorting_1, cohort = cohort_1,cohort_max = cohort_max,
+          color.value = color.value,
+          color.method="cohort",score.values = score.values_1,n=n_1,
+          startPoint=(pixelPerChrom_1),direction = "left")
+  plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
+          sorting = sorting_2, cohort = cohort_2,cohort_max = cohort_max,
+          color.value = color.value,
+          color.method="cohort",score.values = score.values_2,n=n_2,
+          startPoint=(pixelPerChrom_1+chromWidth),direction = "right")
+
+  # legend parameters ------------------------------------------------------------------------------------------------------
+
+
+  # dashline
+
+  if(color.method == "ploidy"){
+    color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(7)
+    if(length(color)<6){color <- color.base}
+    if(n_1>=n_2){nmax=n_1}else{nmax=n_2}
+    legend.names = c("deepdel","monodel","normal","gainlow","gainmid","gainhigh","unknown")
+    df.color.ploidy <- data.frame(color=color[1:7], # colors according to getColor.ploidy/2
+                                  score=c(1:7), # score according to ??
+                                  names=legend.names)
+    data.score <- data.frame(score=c(sort(unique(c(rescores_1,rescores_2))))) # unique and present scores of inout data
+    dtt <- df.color.ploidy[df.color.ploidy$score %in% data.score$score,] # subset only present scores of input data
+    color <- as.vector(dtt$color)
+    labs <- as.vector(dtt$names)
+    factor_1 <- rescores_1
+    factor_2 <- rescores_2
+
+  }else{
+    cohort.dim <- length(cohort_max)
+    df.color.cohort <- data.frame(color=color.value, # colors according to getColor.ploidy/2
+                                  score=cohort_max, # score according to ??
+                                  names=cohort_max)
+    dtt <- df.color.cohort
+    color <- as.vector(dtt$color)
+    labs <- as.vector(dtt$names)
+    factor_1 <- cohort_1
+    factor_2 <- cohort_2
+  }
+
+
+
+
+
+  ###
+  lines(c(0,pixelPerChrom_1),c(y-t_gene_start_1,y-t_gene_start_1),col="gray50",lty=2)
+  lines(c(0,pixelPerChrom_1),c(y-t_gene_end_1,y-t_gene_end_1),col="gray50",lty=2)
+  lines(c(pixelPerChrom_1+chromWidth,pixelPerChrom_1+chromWidth+pixelPerChrom_2),c(y-t_gene_end_2,y-t_gene_end_2),col="gray50",lty=2)
+  lines(c(pixelPerChrom_1+chromWidth,pixelPerChrom_1+chromWidth+pixelPerChrom_2),c(y-t_gene_start_2,y-t_gene_start_2),col="gray50",lty=2)
+
+
+  xlims = c(-40,x.size+40)
+  ylims = c(y-min(min(starts_1),min(starts_2)),y-max(max(ends_1),max(ends_2)))
+  zoomplot.zoom(xlim=xlims,ylim=ylims,x=1*(pixelPerChrom_1+chromWidth))
+  #plot.y =  recordPlot(load=NULL, attach=NULL)
+  #plot.y
+  legend("left",legend=labs,col=color,cex=0.6,pch=16) # normal legend
+  legend("right",legend=labs,col=color,cex=0.6,pch=16)
+
+  dev.off()
+  if(SaveAsObject==TRUE){
+    img <- readTIFF("t2_zoom.tiff")
+    gz <- rasterGrob(img, interpolate=TRUE)
+  }
 
 
 

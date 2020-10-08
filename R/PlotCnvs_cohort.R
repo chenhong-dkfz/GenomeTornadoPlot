@@ -67,9 +67,6 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
   cohort_0 <- droplevels.factor(cohort_0, exclude = if(anyNA(levels(cohort_0)))NULL else NA)
 
-
-  #f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
-
   if (length(unique(chroms_0)) > 1){
     print(unique(chroms_0))
     print("More than one chromosome id - use other function")
@@ -290,14 +287,35 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
   #cohort.max <- unique(c(levels(cohort_1),levels(cohort_2)))
   cohort.dim <- length(cohort_max)
-  df.color.cohort <- data.frame(color=color.value, # colors according to getColor.ploidy/2
-                                score=cohort_max, # score according to ??
-                                names=cohort_max)
-  dtt <- df.color.cohort
+
+
+
+
+
+
+  if(color.method == "cohort"){
+    df.color.cohort <- data.frame(color=color.value, # colors according to getColor.ploidy/2
+                                  score=cohort_max, # score according to ??
+                                  names=cohort_max)
+    dtt <- df.color.cohort
+    factor_1 <- cohort_1
+    factor_2 <- cohort_2
+  }else if(color.method == "ploidy"){
+    df.color.ploidy <- data.frame(color=color.value, # colors according to getColor.ploidy/2
+                                  score=c(1,2,3,4,5,6,7), # score according to ??
+                                  names=c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
+    )
+    dtt <- df.color.ploidy
+    ploidy_levels <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
+    factor_1 <- ploidy_levels[rescores_1]
+    factor_2 <- ploidy_levels[rescores_2]
+  }
+
+
+
   color <- as.vector(dtt$color)
   labs <- as.vector(dtt$names)
-  factor_1 <- cohort_1
-  factor_2 <- cohort_2
+
 
 
 
@@ -355,11 +373,12 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     df_cohort_total <- data.frame(matrix(rep(0,2*length(cohort_total)),ncol = 2))
     df_cohort_total$cohort <- cohort_total
     rownames(df_cohort_total)<-cohort_total
+    df_cohort_total <- df_cohort_total[ order(row.names(df_cohort_total)), ]
 
     df_cohort_total1<-merge(df_cohort_total,df01,by="row.names",all.x=T)
     df_cohort_total2<-merge(df_cohort_total,df02,by="row.names",all.x=T)
     freqs <- cbind(df_cohort_total1$Freq,df_cohort_total2$Freq)
-    rownames(freqs) <- cohort_total
+    rownames(freqs) <- rownames(df_cohort_total)
     freqs[is.na(freqs)] <- 0
 
     freqs <- freqs[order(-freqs[,1],freqs[,2]),]

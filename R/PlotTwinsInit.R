@@ -6,6 +6,13 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   CNV_1 <- twin.cnv@matrix_1
   CNV_2 <- twin.cnv@matrix_2
 
+
+  t_gene_start_1 = twin.cnv@t_gene_start_1
+  t_gene_end_1 = twin.cnv@t_gene_end_1
+  t_gene_start_2 = twin.cnv@t_gene_start_2
+  t_gene_end_2 = twin.cnv@t_gene_end_2
+
+
   f.score_1 <- twin.cnv@gene_score_1
   f.score_2 <- twin.cnv@gene_score_2
 
@@ -28,6 +35,12 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   pids_2 <- CNV_2$PID
   rep_2 <- CNV_2$rep
 
+
+
+
+
+
+
   gene.name_1 <- as.character(twin.cnv@gene_name_1)
   gene.name_2 <- as.character(twin.cnv@gene_name_2)
 
@@ -42,12 +55,16 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
     }
   }
 
+  rescore <- unlist(lapply(score,MapPloidyClasses))
+
+
 
   index_1 <- (end.CNV_1 - start.CNV_1) < 10000000 # only events shorter than 10 M
   m_1 <- sum(index_1)
   startPos_1 <- start.CNV_1[index_1]
   endPos_1 <- end.CNV_1[index_1]
-  rescore_1 <- score_1[index_1]
+  score_1 <- score_1[index_1]
+  rescore_1 <- unlist(lapply(score_1,MapPloidyClasses))
   score.values_1 <- as.character(sort(unique(rescore_1)))
   n_1 <- length(unique(rescore_1))
 
@@ -55,7 +72,8 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   m_2 <- sum(index_2)
   startPos_2 <- start.CNV_2[index_2]
   endPos_2 <- end.CNV_2[index_2]
-  rescore_2 <- score_2[index_2]
+  score_2 <- score_2[index_2]
+  rescore_2 <- unlist(lapply(score_2,MapPloidyClasses))
   score.values_2 <- as.character(sort(unique(rescore_2)))
   n_2 <- length(unique(rescore_2))
 
@@ -148,30 +166,6 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
     gene.anno <- ""
   }
 
-  #if(missing(start.gene_1)){start.gene_1 <- "gene.name_1"}
-  #if(missing(end.gene_1)){end.gene_1 <- "gene.name_1"}
-  #if(missing(start.gene_2)){start.gene_2 <- "gene.name_2"}
-  #if(missing(end.gene_2)){end.gene_2 <- "gene.name_2"}
-
-
-
-  ## gene.anno TRUE but missing start/end.gene------------------------
-  # if(missing(start.gene_1) & gene.anno == TRUE){
-  #   print("start.gene 1 argument is missing")
-  # }
-  #
-  # if(missing(end.gene_1) & gene.anno == TRUE){
-  #   print("end.gene 1 argument is missing")
-  # }
-  #
-  # if(missing(end.gene_2) & gene.anno == TRUE){
-  #   print("end.gene 2 argument is missing")
-  # }
-  #
-  # if(missing(end.gene_2) & gene.anno == TRUE){
-  #   print("end.gene 2 argument is missing")
-  # }
-
 
   paralist <- list("gene.name_1"=gene.name_1,"gene.name_2"=gene.name_2,
                    "cnv.type_1"=cnv.type_1,"cnv.type_2"=cnv.type_2,
@@ -189,7 +183,10 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
                    "startPos_1"=startPos_1,"endPos_1"=endPos_1,
                    "startPos_2"=startPos_2,"endPos_2"=endPos_2,
                    "repeat_1"=repeat_1,"repeat_2"=repeat_2,
-                   "f.score_1"=f.score_1,"f.score_2"=f.score_2
+                   "f.score_1"=f.score_1,"f.score_2"=f.score_2,
+                   "t_gene_start_1" = t_gene_start_1,"t_gene_end_1" = t_gene_end_1,
+                   "t_gene_start_2" = t_gene_start_2,"t_gene_end_2" = t_gene_end_2
+
   )
 
 

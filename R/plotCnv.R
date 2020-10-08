@@ -11,11 +11,8 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
   ends <- ends[sorting]
   cohorts <- cohort[sorting]
   scores <- scores[sorting]
-  #cohorts <- rescore[sorting] #?
-  #cohorts <- droplevels.factor(cohorts, exclude = if(anyNA(levels(cohorts)))NULL else NA)  ## erase factor levels = 0 (turns out very important for color plotting)
   cnv.number <-  length(chroms) # number of lines in input
-  #chromWidth <- round((pixel.per.cnv * cnv.number) * 0.1)
-  #f.score <- focallity.score(m=length(starts),starts = starts,ends = ends)
+
 
 
   indX <- chroms == 'X'

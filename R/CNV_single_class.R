@@ -8,5 +8,7 @@ CNV_single = setClass("CNV_single",
                         name = "character",
                         matrix = "GenomicRanges",
                         gene_name = "character",
-                        gene_score = "numeric"
+                        gene_score = "numeric",
+                        t_gene_start = "numeric",
+                        t_gene_end = "numeric"
                       ))

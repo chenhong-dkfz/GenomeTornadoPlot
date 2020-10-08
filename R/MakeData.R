@@ -150,7 +150,9 @@ MakeData <- function(CNV,
 
     cnv_data <- new("CNV_twin",name="Twin_Test",matrix_1=CNV1,
                     matrix_2=CNV2,gene_name_1=gene_name_1,gene_name_2=gene_name_2,
-                    gene_score_1 = fscore.cnv1, gene_score_2 = fscore.cnv2)
+                    gene_score_1 = fscore.cnv1, gene_score_2 = fscore.cnv2,
+                    t_gene_start_1 = start_1,t_gene_end_1 = end_1,
+                    t_gene_start_2 = start_2,t_gene_end_2 = end_2)
   }
   return(cnv_data)
 }
