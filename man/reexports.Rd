@@ -27,6 +27,7 @@
 \alias{seqnames}
 \alias{start}
 \alias{end}
+\alias{entropy}
 \alias{grid.arrange}
 \alias{rasterGrob}
 \alias{readTIFF}
@@ -45,6 +46,8 @@ below to see their documentation.
   \item{IRanges}{\code{\link[IRanges]{IRanges}}, \code{\link[IRanges]{subsetByOverlaps}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors]{Rle}}}
+
+  \item{entropy}{\code{\link[entropy]{entropy}}}
 
   \item{grDevices}{\code{\link[grDevices]{colorRampPalette}}, \code{\link[grDevices]{dev.off}}, \code{\link[grDevices]{gray.colors}}, \code{\link[grDevices]{palette}}, \code{\link[grDevices]{pdf}}, \code{\link[grDevices]{rainbow}}}
 

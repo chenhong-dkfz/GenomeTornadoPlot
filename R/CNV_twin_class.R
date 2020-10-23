@@ -10,5 +10,6 @@ CNV_twin = setClass("CNV_twin",
                       t_gene_start_1 = "numeric",
                       t_gene_end_1 = "numeric",
                       t_gene_start_2 = "numeric",
-                      t_gene_end_2 = "numeric"
+                      t_gene_end_2 = "numeric",
+                      max.length = "numeric"
                     ))

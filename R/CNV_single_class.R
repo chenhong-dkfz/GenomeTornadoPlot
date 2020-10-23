@@ -10,5 +10,6 @@ CNV_single = setClass("CNV_single",
                         gene_name = "character",
                         gene_score = "numeric",
                         t_gene_start = "numeric",
-                        t_gene_end = "numeric"
+                        t_gene_end = "numeric",
+                        max.length = "numeric"
                       ))

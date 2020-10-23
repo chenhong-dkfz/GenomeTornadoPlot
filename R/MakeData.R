@@ -22,7 +22,7 @@ MakeData <- function(CNV,
   data("genes",package = "tornado.test.1")
 
   if(missing(max.length)){
-    max.length = 10000000
+    max.length = 10000000 # 1e7
   }
 
   if(missing(cohort_thredshold)){
@@ -47,29 +47,22 @@ MakeData <- function(CNV,
     end_1 <- as.numeric(as.character(gene_coordinates[idx_gene_1,"end"]))
 
 
-    # if(missing(type)){
-    #   print("filter disabled!")
-    # }else if(type=="dup"){
-    #   CNV <- CNV[CNV$Score>2,]
-    # }else if(type=="del"){
-    #   CNV <- CNV[CNV$Score<2,]
-    # }
-
     if(missing(score.type)||score.type=="none"){
       score.type = "none"
     }else if(score.type=="dup"){
       score.type = "dup"
     }else{
       socre.type = "del"
-    }
+    }  # so far score.type is only del#
 
     if(missing(score.method)){
-      score.method = "edge"
+      score.method = "normal"
     }
 
     CNV1 <- cbind(CNV,length=CNV$End-CNV$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]
     CNV1 <- CNV1[CNV1$length <= max.length,]
+    CNV1 <- CNV1[CNV1$Gene == gene_name_1,]
     CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
     gene.position.1 <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
     CNV.gene1 <- subsetByOverlaps(CNV1,gene.position.1)
@@ -77,11 +70,12 @@ MakeData <- function(CNV,
 
     if(score.type != "none"){
     fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,filter = score.type,
-                                        gene_coordinates = genes,method=score.method)
+                                        gene_coordinates = genes,method=score.method,
+                                        max.length = max.length)
     }else{
       fscore.cnv1 <- 0
     }
-    cnv_data <- new("CNV_single",name="CNV_test",matrix=CNV.gene1,gene_name=gene_name_1,gene_score=fscore.cnv1)
+    cnv_data <- new("CNV_single",name="CNV_test",matrix=CNV.gene1,gene_name=gene_name_1,gene_score=fscore.cnv1, t_gene_start = start_1,t_gene_end = end_1)
 
 
   }else{   # in case there are two genes of interests
@@ -108,10 +102,12 @@ MakeData <- function(CNV,
     CNV1 <- cbind(CNV,length=CNV$End-CNV$Start)
     CNV1 <- CNV1[CNV1$length >= 0,]
     CNV1 <- CNV1[CNV1$length <= max.length,]
+    CNV1 <- CNV1[CNV1$Gene == gene_name_1,]
 
     CNV2 <- cbind(CNV,length=CNV$End-CNV$Start)
     CNV2 <- CNV2[CNV2$length >= 0,]
     CNV2 <- CNV2[CNV2$length <= max.length,]
+    CNV2 <- CNV2[CNV2$Gene == gene_name_2,]
 
     CNV1 <- makeGRangesFromDataFrame(CNV1 , keep.extra.columns = TRUE)
     gene.position <- GRanges(seqnames =Rle(chrom) , ranges=IRanges(start=start_1,end=end_1))
@@ -139,9 +135,11 @@ MakeData <- function(CNV,
 
     if(score.type != "none"){
     fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,
-                                        gene_coordinates = genes,method=score.method)
+                                        gene_coordinates = genes,method=score.method,
+                                        max.length = max.length)
     fscore.cnv2 <- focallity.score.edge(gene_name_2,cnv_file = CNV,
-                                        gene_coordinates = genes,method=score.method)
+                                        gene_coordinates = genes,method=score.method,
+                                        max.length = max.length)
     }else{
       fscore.cnv1 <- 0
       fscore.cnv2 <- 0
@@ -152,7 +150,8 @@ MakeData <- function(CNV,
                     matrix_2=CNV2,gene_name_1=gene_name_1,gene_name_2=gene_name_2,
                     gene_score_1 = fscore.cnv1, gene_score_2 = fscore.cnv2,
                     t_gene_start_1 = start_1,t_gene_end_1 = end_1,
-                    t_gene_start_2 = start_2,t_gene_end_2 = end_2)
+                    t_gene_start_2 = start_2,t_gene_end_2 = end_2,
+                    max.length = max.length)
   }
   return(cnv_data)
 }

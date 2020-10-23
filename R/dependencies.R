@@ -55,6 +55,9 @@ GenomicRanges::start
 GenomicRanges::end
 
 
+#' @importFrom entropy entropy
+#' @export
+entropy::entropy
 
 
 #' @importFrom gridExtra grid.arrange

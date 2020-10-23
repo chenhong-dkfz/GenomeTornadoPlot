@@ -27,6 +27,12 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   f.score <- CNV.input@gene_score
   gene.name <- CNV.input@gene_name
 
+
+  t_gene_start = CNV.input@t_gene_start
+  t_gene_end = CNV.input@t_gene_end
+
+
+
   print("new")
 
   # solid parameters
@@ -181,6 +187,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                    "cohort"=cohort,"pids"=pids,
                    #"sorting.color"=sorting.color,
                    "sort.method"=sort.method,"color.method"=color.method,
+                   "t_gene_start" = t_gene_start,"t_gene_end" = t_gene_end,
                    "f.score"=f.score)
   return(paralist)
 }

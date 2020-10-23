@@ -1,6 +1,6 @@
 plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
                     cohort_max, color.value,
-                    color.method,color,score.values,n,startPoint,direction){
+                    color.method,color,n,startPoint,direction){
 
 
 
@@ -48,20 +48,20 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
       }
     }
     # X Chromosome
-    for(index in 1:len) {
-      if(indX[index] == TRUE){
-        x <- startPoint + pixel.per.cnv*index
-        lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-      }
-    }
+   # for(index in 1:len) {
+  #    if(indX[index] == TRUE){
+  #      x <- startPoint + pixel.per.cnv*index
+  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+  #    }
+  #  }
 
     # Y Chromosome
-    for(index in 1:len){
-      if(indY[index] == TRUE){
-        x <- startPoint + pixel.per.cnv*index
-        lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-      }
-    }
+  #  for(index in 1:len){
+  #    if(indY[index] == TRUE){
+  #      x <- startPoint + pixel.per.cnv*index
+  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+  #    }
+  #  }
   }else{ # if the lines are in the left side
     for(index in 1:len){
       # Autosomes
@@ -76,20 +76,20 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
               col="black",lwd=pixel.per.cnv)
       }
     }
-    # X Chromosome
-    for(index in 1:len) {
-      if(indX[index] == TRUE){
-        x <- startPoint - pixel.per.cnv*index
-        lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-      }
-    }
+  #  # X Chromosome
+  #  for(index in 1:len) {
+  #    if(indX[index] == TRUE){
+  #      x <- startPoint - pixel.per.cnv*index
+  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+  #    }
+  #  }
 
     # Y Chromosome
-    for(index in 1:len){
-      if(indY[index] == TRUE){
-        x <- startPoint - pixel.per.cnv*index
-        lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-      }
-    }
+   # for(index in 1:len){
+  #    if(indY[index] == TRUE){
+  #      x <- startPoint - pixel.per.cnv*index
+  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+  #    }
+  #  }
   }
 }

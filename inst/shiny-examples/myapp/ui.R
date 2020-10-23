@@ -1,6 +1,7 @@
 library(shiny)
 library(shinydashboard)
 
+
 ui <- dashboardPage( # header
 
   header <- dashboardHeader(),
@@ -51,18 +52,26 @@ ui <- dashboardPage( # header
                               selected = "RYBP"),
                   br(),
                   br(),
-                  br()
+                  br(),
+
               ),
               box(title = "Options", status = "primary",
-                  radioButtons("Score", label = h3("Score type"),
-                               choices = list("Edge score" = 1, "FS/local rank" = 2),
-                               selected = 1),
-                  radioButtons("Focal_threshold", label = h3("Focal threshold"),
-                               choices = list("1e-6" = 1, "1e-7" = 2),
-                               selected = 1),
+                  radioButtons("cnv.type", label = h3("CNV types"),
+                              choices = list("deletion" = "del", "duplication" = "dup", "both" = "both"),
+                              selected = "del"),
+                  radioButtons("sorting_method", label = h3("Sorting method"),
+                               choices = list("by cohort" = "cohort", "by ploidy" = "ploidy"),
+                               selected = "cohort"),
+                  radioButtons("color_method", label = h3("Color method"),
+                               choices = list("by cohort" = "cohort", "by ploidy" = "ploidy"),
+                               selected = "cohort"),
                   radioButtons("Plot_type", label = h3("Plot type"),
                                choices = list("Twin" = 1, "Normal" = 2),
-                               selected = 1)
+                               selected = 1),
+                  radioButtons("max.length", label = h3("definition of focal"),
+                               choices = list("1e6" = 1e6, "1e7" = 1e7),
+                               selected = 1e7),
+
               ),
               br(),
               br(),

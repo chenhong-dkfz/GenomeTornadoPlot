@@ -35,7 +35,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   pids_2 <- CNV_2$PID
   rep_2 <- CNV_2$rep
 
-
+  max.length = twin.cnv@max.length
 
 
 
@@ -55,11 +55,9 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
     }
   }
 
-  rescore <- unlist(lapply(score,MapPloidyClasses))
 
 
-
-  index_1 <- (end.CNV_1 - start.CNV_1) < 10000000 # only events shorter than 10 M
+  index_1 <- (end.CNV_1 - start.CNV_1) < max.length # only events shorter than 10 M
   m_1 <- sum(index_1)
   startPos_1 <- start.CNV_1[index_1]
   endPos_1 <- end.CNV_1[index_1]
@@ -68,7 +66,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   score.values_1 <- as.character(sort(unique(rescore_1)))
   n_1 <- length(unique(rescore_1))
 
-  index_2 <- (end.CNV_2 - start.CNV_2) < 10000000 # only events shorter than 10 M
+  index_2 <- (end.CNV_2 - start.CNV_2) < max.length # only events shorter than 10 M
   m_2 <- sum(index_2)
   startPos_2 <- start.CNV_2[index_2]
   endPos_2 <- end.CNV_2[index_2]
@@ -83,30 +81,20 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   cohort_1 <- cohort_1[index_1]
   cohort_2 <- cohort_2[index_2]
   ## default/optional parameter for gene name (default = "geneX")-------------------------------------------------------------------------------------------------------
-  if(missing(gene.name_1)){gene.name_1 <- "geneX"}
-  cnv.type_1 <- gene.name_1   # assign gene.name to cnv.type --> can be replaced later on
-  if(missing(gene.name_2)){gene.name_2 <- "geneY"}
-  cnv.type_2 <- gene.name_2   # assign gene.name to cnv.type --> can be replaced later on
+
+  if(missing(cnv.type_1)){cnv.type_1 <- "del"}
+  if(missing(cnv.type_2)){cnv.type_2 <- "del"}
 
 
-
-
-
-  ## default/optional parameter for "pids" and "title" (default:"gene.name: m events from unkown amount of unique samples")---------------------------------------------------------
-  # if(missing(title)){
-  #   if(missing(pids)){
-  #     title <- paste(cnv.type_1,"&",cnv.type_2)
-  #   }else{
-  #     title <- paste(cnv.type_1,":",m_1,"events from",length(unique(pids[index_1])),"samples") } # normal title genereated when pids given
-  # }else{
-  #   if(missing(pids)){
-  #     title <- title
-  #   }else{
-  #     title <- paste(title,":",m_1,"events from",length(unique(pids_1[index_1])),"samples") } # normal title genereated when pids given
-  # }
 
   if(missing(title)){
-    title <- paste(cnv.type_1,"&",cnv.type_2)
+    if(cnv.type_1 == "del"){
+    title <- paste(gene.name_1,"&",gene.name_2,": deletions")
+    }else if(cnv.type_1 == "dup"){
+      title <- paste(gene.name_1,"&",gene.name_2,": duplications")
+    }else{
+      title <- paste(gene.name_1,"&",gene.name_2,": all CNVs")
+    }
   }else{
     title <- title
   }

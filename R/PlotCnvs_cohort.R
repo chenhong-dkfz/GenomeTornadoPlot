@@ -13,7 +13,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   legend = unlist(paralist["legend"])
   legend.names = unlist(paralist["legend.names"])
   color = unlist(paralist["color"])
-  score.values = unlist(paralist["score.values"])
+  #score.values = unlist(paralist["score.values"])
   n = unlist(paralist["n"])
   display = unlist(paralist["display"])
   gene.anno = unlist(paralist["gene.anno"])
@@ -27,8 +27,6 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   cohort = unlist(paralist["cohort"])
   rescore = unlist(paralist["rescore"])
   sorting.color <- unlist(paralist["sorting.color"])
-  #print("sorting color")
-  #print(sorting.color)
   sorting.plot.color <- cohort[sorting.color]
   f.score <- unlist(paralist["f.score"])
 
@@ -60,7 +58,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   rescore_0 <- rescore[del_dup.index]
   #sorting_1 <- sorting[del.index]
   sorting_0 <- order(ends_0 - starts_0,cohort_0)
-  score.values_0 <- score.values[del_dup.index]
+  #score.values_0 <- score.values[del_dup.index]
 
   cnv.number_0 <-  length(chroms_0) # number of lines in input
   chromWidth_0 <- round((pixel.per.cnv * cnv.number_0) * 0.1)
@@ -207,7 +205,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   rescores_1 <- rescore[del.index]
   #sorting_1 <- sorting[del.index]
   sorting_1 <- order(ends_1 - starts_1,cohort_1)
-  score.values_1 <- score.values[del.index]
+  #score.values_1 <- score.values[del.index]
 
   chroms_2 <- chroms[dup.index]
   cnv.type_2 <- cnv.type
@@ -216,7 +214,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   ends_2 <- ends[dup.index]
   rescores_2 <- rescore[dup.index]
   sorting_2 <- order(ends_2 - starts_2,cohort_2)
-  score.values_2 <- score.values[dup.index]
+  #score.values_2 <- score.values[dup.index]
 
   cnv.number_d <-  length(chroms_1)+length(chroms_2) # number of lines in input
   chromWidth_d <- round((pixel.per.cnv * cnv.number_d) * 0.1)
@@ -270,13 +268,13 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
           sorting = sorting_ploidy_1, cohort = cohort_1,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="ploidy",score.values = score.values_1,n=n_1,
+          color.method="ploidy",n=n_1,
           startPoint=(pixelPerChrom_1),direction = "left")
 
   plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
           sorting = sorting_ploidy_2, cohort = cohort_2,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="ploidy",score.values = score.values_2,n=n_2,
+          color.method="ploidy",n=n_2,
           startPoint=(pixelPerChrom_1+chromWidth_d),direction = "right")
 
 

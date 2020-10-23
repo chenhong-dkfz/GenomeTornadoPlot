@@ -20,17 +20,20 @@ server <- function(input, output, session) {
     dty <- fread(inFile$datapath,data.table = F)
     colnames(dty) <- c("Chromosome","Start","End","Score","Gene","Cohort","PID")
     dty$length <- dty$End-dty$Start
-    dty <- dty[dty$length<=1000000,]
-    dty$Chromosome <- 3 #NEAT1 chr11.
+    max.length <- input$max.length
+    dty <- dty[dty$length<=10000000,]
     input_gene_1 <- input$gene1
     input_gene_2 <- input$gene2
+    cnv.type <- input$cnv.type
     plot_type <- as.numeric(input$Plot_type)
+    color_method <- as.character(input$color_method)
+    sort_method <- as.character(input$sorting_method)
     print(plot_type)
     print(input_gene_1)
     print(input_gene_2)
     print("x")
     sdt <- MakeData(CNV=dty,gene_name_1 = input_gene_1,gene_name_2 = input_gene_2,score.type = "del")
-    plotlist1s <- TornadoPlots(sdt,color.method="cohort",sort.method="length",SaveAsObject = T)
+    plotlist1s <- TornadoPlots(sdt,cnv.type_1 = cnv.type,cnv.type_2 = cnv.type, color.method=color_method,sort.method=sort_method,SaveAsObject = T)
     out1 <<- plotlist1s[[plot_type]]
     output$pplot1 <- renderPlot({grid.arrange(out1)})
   })

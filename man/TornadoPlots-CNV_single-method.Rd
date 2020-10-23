@@ -7,7 +7,8 @@
 \usage{
 \S4method{TornadoPlots}{CNV_single}(object, gene.name, pids, title, legend,
   legend.names, out.dir, file.type, pixel.per.cnv, color, display,
-  gene.anno, start.gene, end.gene, color.method, sort.method, SaveAsObject)
+  gene.anno, start.gene, end.gene, color.method, sort.method, SaveAsObject,
+  multi_panel)
 }
 \arguments{
 \item{gene.name}{string}
