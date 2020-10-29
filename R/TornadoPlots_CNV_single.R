@@ -33,7 +33,7 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,pids,
                              gene.anno,start.gene,end.gene,color.method,sort.method)
   if(SaveAsObject==TRUE){
     if(multi_panel==FALSE){
-      plotlist0 <- PlotTwins(paralist=paralist0,SaveAsObject=SaveAsObject)
+      plotlist0 <- plotCnvs.cohort(paralist=paralist0,SaveAsObject=SaveAsObject)
     }else{
       plot_multipanel_single(paralist=paralist0)
     }

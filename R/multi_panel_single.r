@@ -139,9 +139,6 @@ plot_multipanel_single <- function(paralist){
   cnv.number_d <-  length(chroms_1)+length(chroms_2) # number of lines in input
   chromWidth_d <- round((pixel.per.cnv * cnv.number_d) * 0.1)
 
-
-
-
   cohort_max <- sort(unique(c(levels(cohort_1),levels(cohort_2))))
   color.value <- GetColor(method="ploidy",cohorts=cohort_max)
 

@@ -133,11 +133,24 @@ MakeData <- function(CNV,
 
     if(nrow(data.frame(CNV2[CNV2$rep=="FALSE",]))!=0){CNV2[CNV2$rep=="FALSE",]$rep<- "U2"}
 
+
+    if(missing(score.type)||score.type=="none"){
+      score.type = "none"
+    }else if(score.type=="dup"){
+      score.type = "dup"
+    }else{
+      socre.type = "del"
+    }  # so far score.type is only del#
+
+    if(missing(score.method)){
+      score.method = "normal"
+    }
+
     if(score.type != "none"){
-    fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,
+    fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,filter = score.type,
                                         gene_coordinates = genes,method=score.method,
                                         max.length = max.length)
-    fscore.cnv2 <- focallity.score.edge(gene_name_2,cnv_file = CNV,
+    fscore.cnv2 <- focallity.score.edge(gene_name_2,cnv_file = CNV,filter = score.type,
                                         gene_coordinates = genes,method=score.method,
                                         max.length = max.length)
     }else{
