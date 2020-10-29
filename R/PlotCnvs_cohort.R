@@ -158,7 +158,36 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   if(color.method=="cohort" | color.method=="length"){
     if(legend==2 || legend=="pie"){
       par(new=T,mar=xtf)
-      pie(table(cohort_0),col=legend.color,cex=1)
+      #cohort_0 <- levels(cohort_0)
+      cohort.dim <- length(cohort_0)
+      df.color.cohort <- data.frame(color=legend.color, # colors according to getColor.ploidy/2
+                                    score=levels(cohort_0), # score according to ??
+                                    names=levels(cohort_0))
+      dtt <- df.color.cohort
+      color <- as.vector(dtt$color)
+      labs <- as.vector(dtt$names)
+
+      factor_0 <- droplevels.factor(cohort_0, exclude = if(anyNA(levels(cohort_0)))NULL else NA)
+      dtt <-dtt[order(dtt$names),]
+
+      dtt_1 <- dtt[dtt$names%in%levels(factor_0),]
+      color_1 <- as.vector(dtt_1$color)
+      labs_1 <- dtt_1$score
+      freq <- data.frame(table(factor_0)/sum(table(factor_0)))
+      if(nrow(freq[freq$Freq<0.05,])!=0){
+        freq[freq$Freq<0.05,]$factor_0 <- NA
+      }
+      labs_1s <- freq$factor_0
+      showtop = TRUE
+      if(showtop==TRUE){
+        pie(table(factor_0),labels=labs_1s,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+      }else{
+        pie(table(factor_0),labels=labs_1,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+      }
+
+
+
+      #pie(table(cohort_0),col=legend.color,cex=1)
     }else{
       legend(xtr,legend=unique(cohort_0),col=legend.color,cex=0.75,pch=16) # normal legend
     }

@@ -91,7 +91,9 @@ plot_multipanel_single <- function(paralist){
   cohort_entropy_dup <- entropy(table(cohort_2),unit = "log2")
 
 
+#####
 
+ # tiff(file="multipanel_single.tiff", width=20, height=8,units="in", compression="lzw", res=150)
 
 
   ########################################################
@@ -395,7 +397,7 @@ plot_multipanel_single <- function(paralist){
 
   print("pie plot legend！")
 
-
+#dev.off()
 
 
 

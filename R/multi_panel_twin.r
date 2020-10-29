@@ -79,6 +79,8 @@ plot_multipanel_twin <- function(paralist){
 
   ######end addon############
 
+#  tiff(file="multipanel_twin.tiff", width=25, height=8,units="in", compression="lzw", res=150)
+
   # the starts and text
 
   layout(mat = matrix(c(1,1,2,2,3,3,4,5,5,5,5,6), ncol = 6, byrow=T),heights = c(3, 4))
@@ -552,6 +554,6 @@ plot_multipanel_twin <- function(paralist){
     pie(table(factor_2),labels=labs_2,col=color_2,cex=1,radius = 1.5) # piechart legend
   }
 
-
+#dev.off()
 
 }
