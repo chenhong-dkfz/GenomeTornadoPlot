@@ -34,6 +34,7 @@
 \alias{IRanges}
 \alias{subsetByOverlaps}
 \alias{Rle}
+\alias{fread}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -46,6 +47,8 @@ below to see their documentation.
   \item{IRanges}{\code{\link[IRanges]{IRanges}}, \code{\link[IRanges]{subsetByOverlaps}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors]{Rle}}}
+
+  \item{data.table}{\code{\link[data.table]{fread}}}
 
   \item{entropy}{\code{\link[entropy]{entropy}}}
 

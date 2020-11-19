@@ -84,4 +84,6 @@ IRanges::subsetByOverlaps
 #' @export
 S4Vectors::Rle
 
-
+#' @importFrom data.table fread
+#' @export
+data.table::fread

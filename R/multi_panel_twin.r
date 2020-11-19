@@ -510,7 +510,7 @@ plot_multipanel_twin <- function(paralist){
   if(sort.method=="cohort"){
     sorting_x_1 <- order(cohort_0_1,ends_0_1 - starts_0_1)
     sorting_x_2 <- order(cohort_0_2,ends_0_2 - starts_0_2)
-  }else if(sort.method=="cohort"){
+  }else if(sort.method=="ploidy"){
     sorting_x_1 <- order(rescore_0_1,ends_0_1 - starts_0_1)
     sorting_x_2 <- order(rescore_0_2,ends_0_2 - starts_0_2)
   }else{

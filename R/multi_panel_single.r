@@ -341,21 +341,51 @@ plot_multipanel_single <- function(paralist){
 
     #text(c(pixelPerChrom_1+chromWidth_d+1*chromWidth_d),c(y-m+5*(t_gene_end-t_gene_start)),labels=paste0("chr",chrom[1],":",t_gene_start,"-",t_gene_end),cex=0.7)
 
+#
+#   sorting_ploidy_1 <- order(rescores_1,ends_1 - starts_1)
+#   sorting_ploidy_2 <- order(rescores_2,ends_2 - starts_2)
+#
+#   plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
+#           sorting = sorting_ploidy_1, cohort = cohort_1,cohort_max = cohort_max,
+#           color.value = color.value,
+#           color.method="ploidy",n=n_1,
+#           startPoint=(pixelPerChrom_1),direction = "left")
+#
+#   plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
+#           sorting = sorting_ploidy_2, cohort = cohort_2,cohort_max = cohort_max,
+#           color.value = color.value,
+#           color.method="ploidy",n=n_2,
+#           startPoint=(pixelPerChrom_1+chromWidth_d),direction = "right")
+#
+#
 
-  sorting_ploidy_1 <- order(rescores_1,ends_1 - starts_1)
-  sorting_ploidy_2 <- order(rescores_2,ends_2 - starts_2)
+  if(sort.method=="cohort"){
+    sorting_x_1 <- order(cohort_1,ends_1 - starts_1)
+    sorting_x_2 <- order(cohort_2,ends_2 - starts_2)
+  }else if(sort.method=="ploidy"){
+    sorting_x_1 <- order(rescores_1,ends_1 - starts_1)
+    sorting_x_2 <- order(rescores_2,ends_2 - starts_2)
+  }else{
+    sorting_x_1 <- order(ends_1 - starts_1)
+    sorting_x_2 <- order(ends_2 - starts_2)
+  }
 
   plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
-          sorting = sorting_ploidy_1, cohort = cohort_1,cohort_max = cohort_max,
+          sorting = sorting_x_1, cohort = cohort_1,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="ploidy",n=n_1,
+          color.method=color.method,n=n_1,
           startPoint=(pixelPerChrom_1),direction = "left")
 
   plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
-          sorting = sorting_ploidy_2, cohort = cohort_2,cohort_max = cohort_max,
+          sorting = sorting_x_2, cohort = cohort_2,cohort_max = cohort_max,
           color.value = color.value,
-          color.method="ploidy",n=n_2,
+          color.method=color.method,n=n_2,
           startPoint=(pixelPerChrom_1+chromWidth_d),direction = "right")
+
+
+
+
+
   legend("bottom",legend=ploidy_levels,col=color.value,cex=0.75,pch=16,horiz=TRUE,box.lty=0)
 
   #############################################################################
