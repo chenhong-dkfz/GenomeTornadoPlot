@@ -18,7 +18,8 @@ Imports:
     gridExtra,
     IRanges,
     S4Vectors,
-    tiff
+    tiff,
+    entropy
 Suggests: 
     knitr,
     rmarkdown
