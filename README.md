@@ -197,7 +197,7 @@ Here, the gene of interest is duplicated in most cohorts, whereas deletions are 
 We can also apply `GenomeTornadoPlot` for gene pairs.
 ```R
 data("MLLT3_CDKN2A",package = "tornado.test.1")
-data_twin <-  MakeData(CNV=cnv_MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
+data_twin <-  MakeData(CNV=cnv_MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A",score.type="del")
 plot_twin <- TornadoPlots(data_twin,sort.method="cohort",SaveAsObject=T,multi_panel=FALSE)
 ```
 Plot twin plot:
