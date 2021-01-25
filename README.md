@@ -37,7 +37,7 @@ Please notice that the focallity score of each gene is calculated by the data yo
 Prior to installing GenomeTornadoPlot, please install all dependencies as following:
 
 ```R
-dependencies.packages = c('ggplot2', 'data.table', 'devtools','grid', 'gridExtra','tiff')
+dependencies.packages = c('ggplot2', 'data.table', 'devtools','grid', 'gridExtra','tiff',"shiny","shinydashboard","entropy")
 	      
 install.packages(dependencies.packages)
 
