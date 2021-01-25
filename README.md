@@ -201,7 +201,7 @@ We can draw a multiple panel plot by setting multi_panel TRUE.
 TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE,multi_panel=FALSE)
 ```
 <p align="center">
-<img src="image/stk38l_multiple.png">
+<img src="image/stk38L_multiple.png">
 </p>
 
 
