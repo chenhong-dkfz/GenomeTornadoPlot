@@ -198,7 +198,7 @@ Here, the gene of interest is duplicated in most cohorts, whereas deletions are 
 We can draw a multiple panel plot by setting multi_panel TRUE.
 
 ```R
-TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE,multi_panel=FALSE)
+TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE,multi_panel=TRUE)
 ```
 <p align="center">
 <img src="image/stk38L_multiple.png">
