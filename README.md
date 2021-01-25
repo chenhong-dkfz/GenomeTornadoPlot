@@ -194,6 +194,18 @@ grid.arrage(plot_genea[[2]])
 
 Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others.
 
+
+We can draw a multiple panel plot by setting multi_panel TRUE.
+
+```R
+TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE,multi_panel=FALSE)
+```
+<p align="center">
+<img src="image/stk38l_multiple.png">
+</p>
+
+
+
 We can also apply `GenomeTornadoPlot` for gene pairs.
 ```R
 data("MLLT3_CDKN2A",package = "tornado.test.1")
