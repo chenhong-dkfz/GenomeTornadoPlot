@@ -205,7 +205,7 @@ Plot twin plot:
 grid.arrange(plot_twin[[1]])
 ```
 <p align="center">
-<img src="image/example_twinplot.png">
+<img src="image/example_twin_plot.png">
 </p>
 
 In addition, the mixed plot shows the proportion of CNVs which overlap gene 1 alone, gene 2 alone or both genes.  
