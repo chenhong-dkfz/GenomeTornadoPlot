@@ -37,7 +37,7 @@ Please notice that the focallity score of each gene is calculated by the data yo
 Prior to installing GenomeTornadoPlot, please install all dependencies as following:
 
 ```R
-dependencies.packages = c('ggplot2', 'data.table', 'devtools','grid', 'gridExtra','tiff')
+dependencies.packages = c('ggplot2', 'data.table', 'devtools','grid', 'gridExtra','tiff',"shiny","shinydashboard","entropy")
 	      
 install.packages(dependencies.packages)
 
@@ -101,7 +101,7 @@ Plot to our data
 
 ```R
 library(tornado.test.1)
-data <- MakeData(CNV,gene_name_1,gene_name_2)
+data <- MakeData(CNV,gene_name_1,gene_name_2,score.type="del")
 
 ```
 
@@ -114,6 +114,7 @@ The other parameters are defined as following:
 
 1. **gene_name_1**: the name of the first gene.
 1. **gene_name_2**: the name of the second gene (optional).
+1. **score.type**: if the value is "del", calculate focallity score of deletions.if the value is "dup", calculate focallity score of duplications.
 
 Here **data** is an R object containing information of the CNV of selected genes. And it should be input of step 2.
 
@@ -156,8 +157,8 @@ Here you can simply use the following code to make a tornado plot. Dummy data is
 
 ```R
 data("cnv_STK38L", package = "tornado.test.1")
-data_genea <-  MakeData(CNV=cnv_STK38L,gene_name_1 = "STK38L")
-plot_genea <- TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE)
+data_genea <-  MakeData(CNV=cnv_STK38L,gene_name_1 = "STK38L",score.type="del")
+plot_genea <- TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE,multi_panel=FALSE)
 ```
 If what you need is just the focallity score, just use the following command:
 ```R
@@ -193,18 +194,30 @@ grid.arrage(plot_genea[[2]])
 
 Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others.
 
+
+We can draw a multiple panel plot by setting multi_panel TRUE.
+
+```R
+TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE,multi_panel=TRUE)
+```
+<p align="center">
+<img src="image/stk38L_multiple.png">
+</p>
+
+
+
 We can also apply `GenomeTornadoPlot` for gene pairs.
 ```R
 data("MLLT3_CDKN2A",package = "tornado.test.1")
-data_twin <-  MakeData(CNV_1=cnv_MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A")
-plot_twin <- TornadoPlots(data_twin,sort.method="cohort",SaveAsObject=T)
+data_twin <-  MakeData(CNV=cnv_MLLT3_CDKN2A,gene_name_1 = "MLLT3",gene_name_2="CDKN2A",score.type="del")
+plot_twin <- TornadoPlots(data_twin,sort.method="cohort",SaveAsObject=T,multi_panel=FALSE)
 ```
 Plot twin plot:
 ```R
 grid.arrange(plot_twin[[1]])
 ```
 <p align="center">
-<img src="image/example_twinplot.png">
+<img src="image/example_twin_plot.png">
 </p>
 
 In addition, the mixed plot shows the proportion of CNVs which overlap gene 1 alone, gene 2 alone or both genes.  
