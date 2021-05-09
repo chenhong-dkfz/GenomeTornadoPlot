@@ -6,22 +6,50 @@ server <- function(input, output, session) {
 
   observeEvent(input$file1, {
     inFile <- input$file1
+    # if(input$pcawg_chr=="user"){
+    #   inFile <- input$file1
+    #   print(inFile)
+    #   dty <- fread(inFile$datapath,data.table = F)
+    # }else{
+    #   chr.nr <- input$pcawg_chr
+    #   data.name <- paste0("data/",chr.nr,".Rdata")
+    #   print(data.name)
+    #   data("chr3",package = "tornado.test.1")
+    #   dty <- cnv_chr
+    #   print("loading finished")
+    # }
     dty <- fread(inFile$datapath,data.table = F)
+    print("loading finished!")
     colnames(dty) <- c("Chromosome","Start","End","Score","Gene","Cohort","PID")
+    print("loading finished!")
     updateSelectInput(session, "gene1", label = "Gene A", choices = dty$Gene)
+    print("loading finished!")
     updateSelectInput(session, "gene2", label = "Gene B", choices = dty$Gene)
+    print("loading finished!")
 
   })
 
 
+
   observeEvent(input$Draw_tornado,{
+    # if(input$pcawg_chr=="user"){
+    # inFile <- input$file1
+    # print(inFile)
+    # dty <- fread(inFile$datapath,data.table = F)
+    # }else{
+    #   chr.nr <- input$pcawg_chr
+    #   data.name <- paste0("data/",chr.nr,".Rdata")
+    #   load(data.name)
+    #   dty <- cnv_chr
+    # }
     inFile <- input$file1
-    print(inFile)
+    #print(inFile)
     dty <- fread(inFile$datapath,data.table = F)
     colnames(dty) <- c("Chromosome","Start","End","Score","Gene","Cohort","PID")
     dty$length <- dty$End-dty$Start
     max.length <- input$max.length
     dty <- dty[dty$length<=10000000,]
+    dty <- dty[dty$length<=max.length,]
     input_gene_1 <- input$gene1
     input_gene_2 <- input$gene2
     cnv.type <- input$cnv.type

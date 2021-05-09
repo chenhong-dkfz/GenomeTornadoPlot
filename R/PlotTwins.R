@@ -454,7 +454,7 @@ PlotTwins <- function(paralist,SaveAsObject)
   if(mean.pos > half.length$length){
     xtr <- "topright"
     xtf <- c(21.5,24,4,3)
-    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",gene.name_1," ",f.score_1,", gene.name_2 ",f.score_2),cex=1.2)
+    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",gene.name_1," ",f.score_1,"," ,gene.name_2," " ,f.score_2),cex=1.2)
   }
 
 
