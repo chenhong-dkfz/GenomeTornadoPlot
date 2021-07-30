@@ -87,6 +87,7 @@ PlotTwins <- function(paralist,SaveAsObject)
 
   chroms_0_1 <- chroms_1[del_dup.index_1]
   cohort_0_1 <- cohort_1[del_dup.index_1]
+  cohort_entropy_0_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
   starts_0_1 <- starts_1[del_dup.index_1]
   ends_0_1 <- ends_1[del_dup.index_1]
   rescore_0_1 <- rescores_1[del_dup.index_1]
@@ -112,6 +113,7 @@ PlotTwins <- function(paralist,SaveAsObject)
 
   chroms_0_2 <- chroms_2[del_dup.index_2]
   cohort_0_2 <- cohort_2[del_dup.index_2]
+  cohort_entropy_0_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
   starts_0_2 <- starts_2[del_dup.index_2]
   ends_0_2 <- ends_2[del_dup.index_2]
   rescore_0_2 <- rescores_2[del_dup.index_2]
@@ -256,8 +258,8 @@ PlotTwins <- function(paralist,SaveAsObject)
     xtr2 <- "bottomright"
     xtf <- c(4,5,20.5,22)
     xtf2 <- c(4,24,20.5,0)
-    text(c(pixelPerChrom_0_1/2),c(y-10),labels = paste("score: ",f.score_1),cex=1)
-    text(c(pixelPerChrom_0_1+chromWidth_0+(pixelPerChrom_0_2/2)),c(y-10),labels = paste("score: ",f.score_2),cex=1)
+    text(c(pixelPerChrom_0_1/2),c(y-10),labels = paste("score: ",f.score_1," entropy:",cohort_entropy_0_1),cex=1)
+    text(c(pixelPerChrom_0_1+chromWidth_0+(pixelPerChrom_0_2/2)),c(y-10),labels = paste("score: ",f.score_2," entropy:",cohort_entropy_0_2),cex=1)
 
   }    # mean start end smaller than subset chrom centromer
   if(mean.pos > half.length$length){
@@ -265,8 +267,8 @@ PlotTwins <- function(paralist,SaveAsObject)
     xtr2 <- "topright"
     xtf <- c(21.5,5,4,22)
     xtf2 <- c(21.5,24,4,3)
-    text(c(pixelPerChrom_0_1/2),c(10),labels = paste("score: ",f.score_1),cex=1)
-    text(c(pixelPerChrom_0_1+chromWidth_0+(pixelPerChrom_0_2/2)),c(10),labels = paste("score: ",f.score_2),cex=1)
+    text(c(pixelPerChrom_0_1/2),c(10),labels = paste("score: ",f.score_1," entropy:",cohort_entropy_0_1),cex=1)
+    text(c(pixelPerChrom_0_1+chromWidth_0+(pixelPerChrom_0_2/2)),c(10),labels = paste("score: ",f.score_2," entropy:",cohort_entropy_0_2),cex=1)
 
   }
 
@@ -382,6 +384,7 @@ PlotTwins <- function(paralist,SaveAsObject)
 
   chroms_0_1 <- chroms_1[del_dup.index_1]
   cohort_0_1 <- cohort_1[del_dup.index_1]
+  cohort_entropy_0_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
   starts_0_1 <- starts_1[del_dup.index_1]
   ends_0_1 <- ends_1[del_dup.index_1]
   rescore_0_1 <- rescores_1[del_dup.index_1]
@@ -392,6 +395,7 @@ PlotTwins <- function(paralist,SaveAsObject)
 
   chroms_0_2 <- chroms_2[del_dup.index_2]
   cohort_0_2 <- cohort_2[del_dup.index_2]
+  cohort_entropy_0_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
   starts_0_2 <- starts_2[del_dup.index_2]
   ends_0_2 <- ends_2[del_dup.index_2]
   rescore_0_2 <- rescores_2[del_dup.index_2]
@@ -402,6 +406,9 @@ PlotTwins <- function(paralist,SaveAsObject)
 
   cnv.number_0 <- cnv.number_0_1 + cnv.number_0_2
   chromWidth_0 <- round((pixel.per.cnv * cnv.number_0) * 0.1)
+
+
+
 
 
   pixelPerChrom <- chromWidth_0 + (pixel.per.cnv)*(cnv.number_0+1)+10 # determines space between chromsomes
@@ -448,13 +455,13 @@ PlotTwins <- function(paralist,SaveAsObject)
   if(mean.pos < half.length$length){
     xtr <- "bottomright"
     xtf <- c(4,24,20.5,3)
-    text(c(pixelPerChrom/2),c(y-10),labels = paste("score: ",f.score_1,",",f.score_2),cex=1.2) # score on opposite
+    text(c(pixelPerChrom/2),c(y-10),labels = paste("score: ",f.score_1,",",f.score_2,"; entropy: ",cohort_entropy_0_1,",",cohort_entropy_0_2),cex=1.2) # score on opposite
   }
 
   if(mean.pos > half.length$length){
     xtr <- "topright"
     xtf <- c(21.5,24,4,3)
-    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",gene.name_1," ",f.score_1,"," ,gene.name_2," " ,f.score_2),cex=1.2)
+    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",f.score_1,",",f.score_2,"; entropy: ",cohort_entropy_0_1,",",cohort_entropy_0_2),cex=1.2)
   }
 
 

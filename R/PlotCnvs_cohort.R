@@ -29,7 +29,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   sorting.color <- unlist(paralist["sorting.color"])
   sorting.plot.color <- cohort[sorting.color]
   f.score <- unlist(paralist["f.score"])
-
+  zoomed <- unlist(paralist["zoomed"])
+  t_gene_start <- unlist(paralist["t_gene_start"])
+  t_gene_end <- unlist(paralist["t_gene_end"])
   # original
 
   chroms <- chrom[sorting]
@@ -59,6 +61,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   #sorting_1 <- sorting[del.index]
   sorting_0 <- order(ends_0 - starts_0,cohort_0)
   #score.values_0 <- score.values[del_dup.index]
+
+  cohort_entropy <- round(entropy(table(cohort_0),unit = "log2"),digits = 2)
 
   cnv.number_0 <-  length(chroms_0) # number of lines in input
   chromWidth_0 <- round((pixel.per.cnv * cnv.number_0) * 0.1)
@@ -126,13 +130,13 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   if(mean.pos < half.length$length){
     xtr <- "bottomright"
     xtf <- c(4,24,20.5,3)
-    text(c(pixelPerChrom/2),c(y-10),labels = paste("score: ",f.score),cex=1.2) # score on opposite
+    text(c(pixelPerChrom/2),c(y-10),labels = paste("score: ",f.score," entropy: ",cohort_entropy),cex=1.2) # score on opposite
   }
 
   if(mean.pos > half.length$length){
     xtr <- "topright"
     xtf <- c(21.5,24,4,3)
-    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",f.score),cex=0.75)
+    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",f.score," entropy: ",cohort_entropy),cex=0.75)
   }
 
 
@@ -245,6 +249,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   sorting_2 <- order(ends_2 - starts_2,cohort_2)
   #score.values_2 <- score.values[dup.index]
 
+
+
   cnv.number_d <-  length(chroms_1)+length(chroms_2) # number of lines in input
   chromWidth_d <- round((pixel.per.cnv * cnv.number_d) * 0.1)
 
@@ -263,8 +269,20 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   ndel <- length(starts_1)
   ndup <- length(starts_2)
   title <- paste0(gene_name,": ",ndel," deletions and ",ndup," duplications")
+
+  if(zoomed==TRUE){
+  y1 = min(y - t_gene_end,y-max(ends_1),y-max(ends_2))
+  y2 = max(y - t_gene_start,y-min(starts_1),y-min(starts_2))
+  plot(c(0,x.size),c(y1*0.95,y2*1.05),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+
+  lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=1)
+  lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=1)
+
+}else{
+
   plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
        ylab="Chromosomal location",main=title)
+}
   chrStr <- paste("chr",toString(chroms_1[1]))
   text(c(pixelPerChrom_1+(chromWidth_d/2)),c(0),labels=c(chrStr))
 

@@ -8,22 +8,24 @@
 \S4method{TornadoPlots}{CNV_single}(object, gene.name, pids, title, legend,
   legend.names, out.dir, file.type, pixel.per.cnv, color, display,
   gene.anno, start.gene, end.gene, color.method, sort.method, SaveAsObject,
-  multi_panel)
+  multi_panel, zoomed)
 }
 \arguments{
-\item{gene.name}{string}
+\item{gene.name}{gene name, string}
 
-\item{legend}{int}
+\item{pids}{the given patient id, string}
+
+\item{legend}{type of legend display, int}
 
 \item{legend.names}{string}
 
-\item{out.dir}{string}
+\item{out.dir}{path of output plot, string}
 
-\item{file.type}{string}
+\item{file.type}{output plot file type, string}
 
 \item{pixel.per.cnv}{int}
 
-\item{color}{list}
+\item{color}{colors of tornado, list}
 
 \item{display}{string}
 
@@ -37,9 +39,7 @@
 
 \item{sort.method}{string}
 
-\item{CNV.input}{Grange object}
-
-\item{pid}{string}
+\item{CNV.input}{Output of MakeData function, Grange object}
 }
 \description{
 Plot Tornado Plots

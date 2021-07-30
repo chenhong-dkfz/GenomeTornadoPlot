@@ -93,22 +93,22 @@ plot_multipanel_twin <- function(paralist){
 
   del_dup.index_1 <- rescores_1>3
   cohort_0_1 <- cohort_1[del_dup.index_1]
-  cohort_entropy_dup_1 <- entropy(table(cohort_0_1),unit = "log2")
+  cohort_entropy_dup_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
 
 
   del_dup.index_2 <- rescores_2>3
   cohort_0_2 <- cohort_2[del_dup.index_2]
-  cohort_entropy_dup_2 <- entropy(table(cohort_0_2),unit = "log2")
+  cohort_entropy_dup_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
 
 
   del_dup.index_1 <- rescores_1<3
   cohort_0_1 <- cohort_1[del_dup.index_1]
-  cohort_entropy_del_1 <- entropy(table(cohort_0_1),unit = "log2")
+  cohort_entropy_del_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
 
 
   del_dup.index_2 <- rescores_2<3
   cohort_0_2 <- cohort_2[del_dup.index_2]
-  cohort_entropy_del_2 <- entropy(table(cohort_0_2),unit = "log2")
+  cohort_entropy_del_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
 
 
 
@@ -151,7 +151,7 @@ plot_multipanel_twin <- function(paralist){
 
   chroms_0_1 <- chroms_1[del_dup.index_1]
   cohort_0_1 <- cohort_1[del_dup.index_1]
-  cohort_entropy_dup_1 <- entropy(table(cohort_0_1),unit = "log2")
+  cohort_entropy_dup_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
   starts_0_1 <- starts_1[del_dup.index_1]
   ends_0_1 <- ends_1[del_dup.index_1]
   rescore_0_1 <- rescores_1[del_dup.index_1]
@@ -177,7 +177,7 @@ plot_multipanel_twin <- function(paralist){
 
   chroms_0_2 <- chroms_2[del_dup.index_2]
   cohort_0_2 <- cohort_2[del_dup.index_2]
-  cohort_entropy_dup_2 <- entropy(table(cohort_0_2),unit = "log2")
+  cohort_entropy_dup_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
   starts_0_2 <- starts_2[del_dup.index_2]
   ends_0_2 <- ends_2[del_dup.index_2]
   rescore_0_2 <- rescores_2[del_dup.index_2]
@@ -274,7 +274,7 @@ plot_multipanel_twin <- function(paralist){
 
   chroms_0_1 <- chroms_1[del_dup.index_1]
   cohort_0_1 <- cohort_1[del_dup.index_1]
-  cohort_entropy_del_1 <- entropy(table(cohort_0_1),unit = "log2")
+  cohort_entropy_del_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
   starts_0_1 <- starts_1[del_dup.index_1]
   ends_0_1 <- ends_1[del_dup.index_1]
   rescore_0_1 <- rescores_1[del_dup.index_1]
@@ -300,7 +300,7 @@ plot_multipanel_twin <- function(paralist){
 
   chroms_0_2 <- chroms_2[del_dup.index_2]
   cohort_0_2 <- cohort_2[del_dup.index_2]
-  cohort_entropy_del_2 <- entropy(table(cohort_0_2),unit = "log2")
+  cohort_entropy_del_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
   starts_0_2 <- starts_2[del_dup.index_2]
   ends_0_2 <- ends_2[del_dup.index_2]
   rescore_0_2 <- rescores_2[del_dup.index_2]

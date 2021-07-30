@@ -87,8 +87,8 @@ plot_multipanel_single <- function(paralist){
   cohort_1 <- cohorts[del.index]
   cohort_2 <- cohorts[dup.index]
 
-  cohort_entropy_del <- entropy(table(cohort_1),unit = "log2")
-  cohort_entropy_dup <- entropy(table(cohort_2),unit = "log2")
+  cohort_entropy_del <- round(entropy(table(cohort_1),unit = "log2"),digits=2)
+  cohort_entropy_dup <- round(entropy(table(cohort_2),unit = "log2"),digits = 2)
 
 
 #####

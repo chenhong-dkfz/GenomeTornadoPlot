@@ -21,7 +21,7 @@
 #'
 CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                           out.dir,file.type,pixel.per.cnv,color,display,cnv.type,
-                          gene.anno,start.gene,end.gene,sort.method,color.method){
+                          gene.anno,start.gene,end.gene,sort.method,color.method,zoomed){
 
   CNV_1 <- CNV.input@matrix
   f.score <- CNV.input@gene_score
@@ -169,6 +169,8 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   if(missing(start.gene)){start.gene <- gene.name}
   if(missing(end.gene)){end.gene <- gene.name}
 
+
+  if(missing(zoomed)){zoomed <- FALSE}
   file.type="default"
   out.dir="default"
   out.fp <- out.dir
@@ -188,7 +190,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                    #"sorting.color"=sorting.color,
                    "sort.method"=sort.method,"color.method"=color.method,
                    "t_gene_start" = t_gene_start,"t_gene_end" = t_gene_end,
-                   "f.score"=f.score)
+                   "f.score"=f.score,"zoomed"=zoomed)
   return(paralist)
 }
 

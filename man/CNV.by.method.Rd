@@ -6,7 +6,7 @@
 \usage{
 CNV.by.method(CNV.input, gene.name, pids, title, legend, legend.names,
   out.dir, file.type, pixel.per.cnv, color, display, cnv.type, gene.anno,
-  start.gene, end.gene, sort.method, color.method)
+  start.gene, end.gene, sort.method, color.method, zoomed)
 }
 \arguments{
 \item{CNV.input}{Grange object}
