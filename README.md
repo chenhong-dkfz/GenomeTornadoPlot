@@ -188,7 +188,7 @@ The score below the graph is the “focallity score” of the gene.
 
 In some cases, a gene plays different roles in different cohorts. A deletion/duplication plot helps identifying that.
 ```R
-grid.arrage(plot_genea[[2]])
+grid.arrange(plot_genea[[2]])
 ```
 
 
