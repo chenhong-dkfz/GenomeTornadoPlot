@@ -2,6 +2,14 @@
 
 # GenomeTornadoPlot
 
+Authors: Chen Hong<sup>1,2,3</sup>, Robin Thiele<sup>1,2</sup>, Lars Feuerbach<sup>1</sup>
+
+Affiliations:\
+1 Division of Applied Bioinformatics, German Cancer Research Center (DKFZ), Heidelberg, Germany.\
+2 Faculty of Biosciences, Heidelberg University, Heidelberg, Germany.\
+3 German Cancer Consortium (DKTK), German Cancer Research Center (DKFZ), Heidelberg, Germany.
+
+
 The GenomeTornadoPlot package allow users to visualize copy number variations (CNVs), and many other types of structure variations as well, which overlap with one or two genes in one chromosomes. For all CNVs overlapping with the target gene a focallity score is also calculated. Higher the focallity score is, more probable it is that the gene is affected by focal events.
 
 
