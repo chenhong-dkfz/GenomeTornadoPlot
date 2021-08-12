@@ -1,3 +1,5 @@
+# convert copy number to scores
+
 MapPloidyClasses <- function(v){
   if(v == 0){class = 1 # homozygous deletion
   }else if(v<5){
