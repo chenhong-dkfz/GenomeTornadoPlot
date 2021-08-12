@@ -19,7 +19,7 @@ MakeData <- function(CNV,
                      gene_name_2,
                      score.type,max.length,score.method,cohort_thredshold){
 
-  data("genes",package = "tornado.test.1")
+  data("genes",package = "GenomeTornadoPlot")
 
   if(missing(max.length)){
     max.length = 10000000 # 1e7

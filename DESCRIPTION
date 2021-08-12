@@ -1,4 +1,4 @@
-Package: tornado.test.1
+Package: GenomeTornadoPlot
 Type: Package
 Title: Tornado Plot for CNV
 Version: 0.1.0
