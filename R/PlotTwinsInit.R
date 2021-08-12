@@ -16,7 +16,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   f.score_1 <- twin.cnv@gene_score_1
   f.score_2 <- twin.cnv@gene_score_2
 
-  print(sort.method)
+  #print(sort.method)
 
   chrom_1 <- as.vector(seqnames(CNV_1))
   start.CNV_1 <- start(CNV_1)

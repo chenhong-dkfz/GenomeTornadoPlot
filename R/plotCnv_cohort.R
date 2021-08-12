@@ -25,7 +25,7 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
   ploidy.list <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
   ploidy.list <- 1:7
   repeat.list <- c("U1","C1","C2","U2")
-  print(color.value)
+  #print(color.value)
   startPoint <- chromWidth
 
   if(method=="cohort"){
@@ -46,7 +46,7 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
       #print(ends[index]-starts[index])
       class.index <- match(class[index],class.list)
       #class.index <- class[sorting.color[index]]
-      print(class.index)
+      #print(class.index)
       x <- startPoint + pixel.per.cnv*index
       lines(c(x,x),c(y-starts[index],y-ends[index]),
             col=color.value[class.index],lwd=pixel.per.cnv)

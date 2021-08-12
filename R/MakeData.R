@@ -32,7 +32,7 @@ MakeData <- function(CNV,
 
   gene_coordinates = genes
 
-  print(nrow(gene_coordinates))
+  #print(nrow(gene_coordinates))
 
 
   if(missing(gene_name_2)){   # in case there is only one gene of interests

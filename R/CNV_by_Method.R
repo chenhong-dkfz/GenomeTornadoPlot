@@ -33,7 +33,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
 
 
 
-  print("new")
+  #print("new")
 
   # solid parameters
   chrom = as.vector(seqnames(CNV_1))
@@ -61,7 +61,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   cohort = cohort[index]
   pids = pids[index]
 
-  print(sort.method)
+  #print(sort.method)
 
   rescore <- unlist(lapply(score,MapPloidyClasses))
   score.values <- as.character(sort(unique(rescore)))
@@ -148,14 +148,14 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
     if(missing(cohort)){
       print("use CNV.by.ploidy or CNV.by.length functions")
     }else{
-      print(length(cohort))
+      #print(length(cohort))
       cohort <- cohort[index]
-      print(length(cohort))
-      print(length(endPos))
-      print(length(startPos))
+      #print(length(cohort))
+      #print(length(endPos))
+      #print(length(startPos))
 
       sorting <- order(cohort,endPos - startPos)
-      print("sorted by cohort")
+      #print("sorted by cohort")
     }
   }else if(sort.method=="ploidy"){
     sorting <- order(rescore,endPos - startPos) # sort by score and then by length, sort by ploidy
@@ -175,11 +175,11 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   out.dir="default"
   out.fp <- out.dir
 
-  print("methods,sort")
-  print(sort.method)
+  #print("methods,sort")
+  #print(sort.method)
 
-  print("methods,color")
-  print(color.method)
+  #print("methods,color")
+  #print(color.method)
 
   paralist <- list("gene.name"=gene.name,"cnv.type"=cnv.type,"title"=title,"legend"=legend,
                    "legend.names"=legend.names,"file.type"=file.type,"out.dir"=out.dir,"pixel.per.cnv"=pixel.per.cnv,

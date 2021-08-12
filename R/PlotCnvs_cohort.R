@@ -93,9 +93,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
     tcnv = "deletion"
   }
   ncohort <- length(unique(cohort_0))
-  print(cohort_0)
+  #print(cohort_0)
 
-  print(cohorts)
+  #print(cohorts)
   title <- paste0(gene_name,": ",nsample," ",tcnv," events from ",ncohort," cohorts")
   plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
   chrStr <- paste("chr",toString(chroms_0[1]))
@@ -148,8 +148,8 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }
   if(color.method=="ploidy"){
     legend.color <- GetColor(method="ploidy",color=color,cohorts=cohort_0)
-    print(legend.color)
-    print("it is")
+    #print(legend.color)
+    #print("it is")
   }
 
   if(mean.pos < half.length$length) {
@@ -198,7 +198,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
   }else if(color.method=="ploidy"){
 
     tb <- table(rescore_0)
-    print(rescore_0)
+    #print(rescore_0)
     dp.list <-c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
     for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
     legend.color.subset <- legend.color[sort(unique(rescore_0))]
@@ -406,7 +406,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject){
 
   }
 
-  print(legend.type)
+  #print(legend.type)
 
   # legend type decision ----------------------------------------------------------------------------
   if(legend.type=="normal"){

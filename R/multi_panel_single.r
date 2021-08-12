@@ -193,9 +193,9 @@ plot_multipanel_single <- function(paralist){
     tcnv = "deletion"
   }
   ncohort <- length(unique(cohort_0))
-  print(cohort_0)
+  #print(cohort_0)
 
-  print(cohorts)
+  #print(cohorts)
   title <- paste0(gene_name,": ",nsample," ",tcnv," events from ",ncohort," cohorts")
 
   plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
@@ -249,8 +249,8 @@ plot_multipanel_single <- function(paralist){
   }
   if(color.method=="ploidy"){
     legend.color <- GetColor(method="ploidy",color=color,cohorts=cohort_0)
-    print(legend.color)
-    print("it is")
+    #print(legend.color)
+    #print("it is")
 
   }
 
@@ -291,7 +291,7 @@ plot_multipanel_single <- function(paralist){
   }else if(color.method=="ploidy"){
 
     tb <- table(rescore_0)
-    print(rescore_0)
+    #print(rescore_0)
     dp.list <-c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
     for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
     legend.color.subset <- legend.color[sort(unique(rescore_0))]
