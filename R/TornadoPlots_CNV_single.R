@@ -28,10 +28,16 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,pids,
   if(missing(color.method)){color.method = "cohort"}
   if(missing(sort.method)){sort.method = "length"}
   if(missing(multi_panel)){multi_panel = FALSE}
-  if(missing(zoomed)){multi_panel = FALSE}
-  paralist0 <- CNV.by.method(object,gene.name,pids,title,legend,legend.names,
-                             out.dir,file.type,pixel.per.cnv,color,display,
-                             gene.anno,start.gene,end.gene,color.method,sort.method,zoomed)
+  if(missing(zoomed)){zoomed = FALSE}
+  # paralist0 <- CNV.by.method(object,gene.name,pids,title,legend,legend.names,
+  #                            out.dir,file.type,pixel.per.cnv,color,display,
+  #                            gene.anno,start.gene,end.gene,color.method,sort.method,zoomed)
+  paralist0 <- CNV.by.method(CNV.input=object,gene.name=gene.name,pids=pids,title=title,legend=legend,
+                             legend.names=legend.names,
+                             out.dir=out.dir,file.type=file.type,pixel.per.cnv=pixel.per.cnv,
+                             color=color,display=display,
+                             gene.anno=gene.anno,start.gene=start.gene,end.gene=end.gene,
+                             color.method=color.method,sort.method=sort.method,zoomed=zoomed)
   if(SaveAsObject==TRUE){
     if(multi_panel==FALSE){
       plotlist0 <- plotCnvs.cohort(paralist=paralist0,SaveAsObject=SaveAsObject)
