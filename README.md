@@ -80,7 +80,8 @@ For more information, please check the user manual and package help.
 
 ### step 0:
 Firstly, you can prepare a BED-like data, and import it to R session.
-In R, it should be a data frame and look like this:
+In R, it should be a data frame and look like this:\
+(You can download real PCAWG data for test from https://github.com/chenhong-dkfz/GenomeTornadoPlot-files)
 
 ```R
 load(file = “path to the file/chr17.RData”)
