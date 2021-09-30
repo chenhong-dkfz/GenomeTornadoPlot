@@ -84,8 +84,8 @@ In R, it should be a data frame and look like this:\
 (You can download real PCAWG data for test from https://github.com/chenhong-dkfz/GenomeTornadoPlot-files)
 
 ```R
-load(file = “path to the file/chr17.RData”)
-knitr::kable(head(cnv_chr, 10))
+load(file = "path to the file/chr17.RData")
+knitr::kable(head(chr17, 10))
 ```
 |    |Chromosome | Start|      End| CN|Gene          |cohort  |pid                                  |
 |:---|:----------|-----:|--------:|--:|:-------------|:-------|:------------------------------------|
@@ -110,8 +110,8 @@ Plot to our data
 
 ```R
 library(GenomeTornadoPlot)
-input_gene_1=“TP53” 
-sdt <- MakeData(CNV=cnv_chr,gene_name_1 = input_gene_1,score.type = “del”)
+input_gene_1="TP53" 
+sdt <- MakeData(CNV=chr17,gene_name_1 = input_gene_1,score.type = "del")
 
 ```
 
