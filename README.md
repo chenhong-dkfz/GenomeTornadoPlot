@@ -148,6 +148,7 @@ plotlist1 <- TornadoPlots(sdt,color.method="cohort",sort.method="cohort",multi_p
 6. **SaveAsObject**: if TRUE, returns an rastergrob object. if FALSE the function only saves the plot.
 7. **multi_panel**: if TRUE, a multiple panel plot will be displayed.
 8. **zoomed**: if TRUE, a zoomed-in plot for details will be displayed.
+9. **orient**: if the value is "v", vertical arranged plots will be displayed. if the value is "h", horizontal arranged plots will be displayed.
 
 Here **cnv.plot** is a list, containing output of plots.
 
@@ -212,7 +213,7 @@ grid.arrange(plot_genea[[2]])
 Here, the gene of interest is duplicated in most cohorts, whereas deletions are more frequent in some others.
 
 
-We can draw a multiple panel plot by setting multi_panel TRUE.
+We can draw a multiple panel plot by setting multi_panel TRUE. The detail gene/variation stats, different levels tornado plots and zoomed-in plot will be displayed in a complex plot.
 
 ```R
 TornadoPlots(data_genea,gene.name="STK38L",sort.method="cohort",SaveAsObject=TRUE,multi_panel=TRUE)
