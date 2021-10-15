@@ -149,6 +149,7 @@ plotlist1 <- TornadoPlots(sdt,color.method="cohort",sort.method="cohort",multi_p
 7. **multi_panel**: if TRUE, a multiple panel plot will be displayed.
 8. **zoomed**: if TRUE, a zoomed-in plot for details will be displayed.
 9. **orient**: if the value is "v", vertical arranged plots will be displayed. if the value is "h", horizontal arranged plots will be displayed.
+10. **font.size.factor**: rescale of fonts shown in the plots.
 
 Here **cnv.plot** is a list, containing output of plots.
 
