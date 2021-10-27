@@ -17,7 +17,8 @@
 MakeData <- function(CNV,
                      gene_name_1,
                      gene_name_2,
-                     score.type,max.length,score.method,cohort_thredshold){
+                     score.type,max.length,score.method,cohort_thredshold,
+                     gene_score_1,gene_score_2){
 
   data("genes",package = "GenomeTornadoPlot")
 
@@ -29,10 +30,17 @@ MakeData <- function(CNV,
     cohort_thredshold <- 0.1
   }
 
+  if(missing(gene_score_1)){
+    gene_score_1 <- 9999
+  }
+
+  if(missing(gene_score_2)){
+    gene_score_2 <- 9999
+  }
+
+  if(gene_score_1==9999){self_score=FALSE}
 
   gene_coordinates = genes
-
-  #print(nrow(gene_coordinates))
 
 
   if(missing(gene_name_2)){   # in case there is only one gene of interests
@@ -75,6 +83,8 @@ MakeData <- function(CNV,
     }else{
       fscore.cnv1 <- 0
     }
+
+    if(self_score==TRUE){fscore.cnv1<-gene_score_1}
     cnv_data <- new("CNV_single",name="CNV_test",matrix=CNV.gene1,gene_name=gene_name_1,gene_score=fscore.cnv1, t_gene_start = start_1,t_gene_end = end_1)
 
 
@@ -158,6 +168,10 @@ MakeData <- function(CNV,
       fscore.cnv2 <- 0
     }
 
+    if(self_score==TRUE){
+      fscore.cnv1<-gene_score_1
+      fscore.cnv2<-gene_score_2
+    }
 
     cnv_data <- new("CNV_twin",name="Twin_Test",matrix_1=CNV1,
                     matrix_2=CNV2,gene_name_1=gene_name_1,gene_name_2=gene_name_2,

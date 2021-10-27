@@ -30,18 +30,18 @@ GetColor <- function(method,score,color,score.values,n,greyscale,cohorts){
            color.value <- "black"
            switch (score,
                    "U1" = {color.value = "red"},
-                   "C1" = {color.value = "grey"},
+                   "C1" = {color.value = "black"},
                    "U2" = {color.value = "blue"}
            )
-           color.value <- c("red","grey","grey","blue")
+           color.value <- c("red","black","black","blue")
          },
 
          "ploidy" = {
-           color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(7)
+           color.base <- colorRampPalette(c("red2","indianred4","lightskyblue2","skyblue3","midnightblue"))(5)
            if(missing(color)){
              color1 <- color.base
            }else if(length(unique(color))!=1){
-             color1 <- colorRampPalette(color)(7)
+             color1 <- colorRampPalette(color)(5)
              # six types of ploidy, 2deletion+dip+3gain
            }else{color1 <- color.base}
            color.value <- color1

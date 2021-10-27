@@ -1,5 +1,5 @@
 plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
-                           pixel.per.cnv,cohorts,startPoint,color,method,rep){
+                               pixel.per.cnv,cohorts,startPoint,color,method,rep,orient){
   indX <- chroms == 'X'
   indY <- chroms == 'Y'
   len <- length(starts)
@@ -22,8 +22,8 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
   }
   color.value <- GetColor(method=method,color=color,cohorts=cohorts)
   cohort.list <- sort(unique(cohorts))
-  ploidy.list <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
-  ploidy.list <- 1:7
+  ploidy.list <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+  ploidy.list <- 1:5
   repeat.list <- c("U1","C1","C2","U2")
   #print(color.value)
   startPoint <- chromWidth
@@ -40,22 +40,42 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
   }
 
   # Autosomes
-  for(index in 1:len){
-    if(method!="length"){
-      #print(index)
-      #print(ends[index]-starts[index])
-      class.index <- match(class[index],class.list)
-      #class.index <- class[sorting.color[index]]
-      #print(class.index)
-      x <- startPoint + pixel.per.cnv*index
-      lines(c(x,x),c(y-starts[index],y-ends[index]),
-            col=color.value[class.index],lwd=pixel.per.cnv)
-    }else{
-      x <- startPoint + pixel.per.cnv*index
-      lines(c(x,x),c(y-starts[index],y-ends[index]),
-            col="black",lwd=pixel.per.cnv)
+
+  if(orient=="v"){
+    for(index in 1:len){
+      if(method!="length"){
+        #print(index)
+        #print(ends[index]-starts[index])
+        class.index <- match(class[index],class.list)
+        #class.index <- class[sorting.color[index]]
+        #print(class.index)
+        x <- startPoint + pixel.per.cnv*index
+        lines(c(x,x),c(y-starts[index],y-ends[index]),
+              col=color.value[class.index],lwd=pixel.per.cnv)
+      }else{
+        x <- startPoint + pixel.per.cnv*index
+        lines(c(x,x),c(y-starts[index],y-ends[index]),
+              col="black",lwd=pixel.per.cnv)
+      }
     }
+  }else{
+
+    for(index in 1:len){
+      if(method!="length"){
+        class.index <- match(class[index],class.list)
+        x <- startPoint + pixel.per.cnv*index
+        lines(c(starts[index],ends[index]),c(x,x),
+              col=color.value[class.index],lwd=pixel.per.cnv)
+      }else{
+        x <- startPoint + pixel.per.cnv*index
+        lines(c(starts[index],ends[index]),c(x,x),
+              col="black",lwd=pixel.per.cnv)
+      }
+    }
+
   }
+
+
 
   # X Chromosome
   for(index in 1:len){

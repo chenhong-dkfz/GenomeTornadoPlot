@@ -1,5 +1,5 @@
+plot_multipanel_single <- function(paralist,font.size.factor,orient){
 
-plot_multipanel_single <- function(paralist){
 
   gene_name = unlist(paralist["gene.name"])
   chrom = unlist(paralist["chrom"])
@@ -91,9 +91,9 @@ plot_multipanel_single <- function(paralist){
   cohort_entropy_dup <- round(entropy(table(cohort_2),unit = "log2"),digits = 2)
 
 
-#####
+  #####
 
- # tiff(file="multipanel_single.tiff", width=20, height=8,units="in", compression="lzw", res=150)
+  # tiff(file="multipanel_single.tiff", width=20, height=8,units="in", compression="lzw", res=150)
 
 
   ########################################################
@@ -101,20 +101,22 @@ plot_multipanel_single <- function(paralist){
   layout(mat = matrix(c(1,2,3,4,4,5), ncol = 3, byrow=T),heights = c(3, 4))
   #layout(mat = matrix(c(1,2,3,4,4,4), ncol = 3, byrow=T),heights = c(3, 4))
 
-######################################################## data ready
+  ######################################################## data ready
 
   par(c(5,3,4,4))
   plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
-  text(x = 0.5, y = 0.5, paste0("gene name: ",gene_name," (chr",chrom[1],":",t_gene_start,"-",t_gene_end,")\n",
-                               "focality score of deletions: ",f.score," (quantile)\n",
-                               "Casino score: NA (quantile)\n",
-                               "duplication entropy:",cohort_entropy_dup,"\n",
-                               "deleltion entropy: ",cohort_entropy_del,"\n",
-                               "focal defininition threshold: ",1e7),
+  text(x = 0.5, y = 0.5, paste0("gene name: ",gene_name," \n",
+                                "location: "," chr",chrom[1],":",t_gene_start,"-",t_gene_end,"\n",
+                                "focality score of deletions: ",f.score,"\n",
+                                #"focality score of deletions: ",f.score," (quantile)\n",
+                                #"Casino score: NA (quantile)\n",
+                                "duplication entropy:",cohort_entropy_dup,"\n",
+                                "deleltion entropy: ",cohort_entropy_del,"\n",
+                                "focal defininition threshold: 10Mbp"),
        cex = 1.6, col = "black")
 
 
-#############################################################################
+  #############################################################################
 
 
   # both side #
@@ -150,7 +152,7 @@ plot_multipanel_single <- function(paralist){
 
 
 
-######################################################## data ready
+  ######################################################## data ready
   # legend parameters ------------------------------------------------------------------------------------------------------
 
 
@@ -161,16 +163,16 @@ plot_multipanel_single <- function(paralist){
                                   score=cohort_max, # score according to ??
                                   names=cohort_max)
     dtt <- df.color.cohort
-    ploidy_levels <- c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
+    ploidy_levels <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
     factor_1 <- cohort_1
     factor_2 <- cohort_2
   }else if(color.method == "ploidy"){
     df.color.ploidy <- data.frame(color=color.value, # colors according to getColor.ploidy/2
-                                  score=c(1,2,3,4,5,6,7), # score according to ??
-                                  names=c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
+                                  score=c(1,2,3,4,5), # score according to ??
+                                  names=c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
     )
     dtt <- df.color.ploidy
-    ploidy_levels <- c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
+    ploidy_levels <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
     factor_1 <- ploidy_levels[rescores_1]
     factor_2 <- ploidy_levels[rescores_2]
   }
@@ -184,8 +186,19 @@ plot_multipanel_single <- function(paralist){
 
   par(c(5,3,4,4))
   pixelPerChrom <- chromWidth_0 + (pixel.per.cnv)*(cnv.number_0+1)+10 # determines space between chromsomes
-  x.size <- pixelPerChrom
-  y.size <- y+100
+
+  #x.size <- pixelPerChrom
+  #y.size <- y+100
+
+  if(orient=="v"){
+    x.size <- pixelPerChrom
+    y.size <- y+100}else{
+      y.size <- pixelPerChrom
+      x.size <- y+100
+    }
+
+
+
   nsample <- length(chroms_0)
   if(cnv.type=="dup"){
     tcnv = "duplication"
@@ -198,9 +211,13 @@ plot_multipanel_single <- function(paralist){
   #print(cohorts)
   title <- paste0(gene_name,": ",nsample," ",tcnv," events from ",ncohort," cohorts")
 
-  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+
+  if(orient=="v"){plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1.5)}else{
+    plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="Chromosomal location",ylab="CNVs",main=title,cex.lab=1.5)
+  }
+
   chrStr <- paste("chr",toString(chroms_0[1]))
-  text(c((chromWidth_0/2)),c(0),labels=c(chrStr))
+
   if(gene.anno == TRUE)    ###added RT gene.anno arg
   {
     m <- mean(start.gene,end.gene)
@@ -210,12 +227,16 @@ plot_multipanel_single <- function(paralist){
     lines(c(0.6,2.25),c(y-m+(y*0.02),y-m),col="gray50")
     lines(c(2.25,5),c(y-m,y-m),col="gray50")
   }else{
-    paintCytobands(chroms_0[1],pos=c(chromWidth_0,y),units="bases",width=chromWidth_0,orientation="v",legend=FALSE)
+
+    if(orient=="v"){
+      paintCytobands(chroms_0[1],pos=c(chromWidth_0,y),units="bases",width=chromWidth_0,orientation="v",legend=FALSE)}else{
+        paintCytobands(chroms_0[1],pos=c(0,chromWidth_0),units="bases",width=chromWidth_0,orientation="h",legend=FALSE)
+      }
   }
 
   plotCnv.cohort(chroms_0,starts_0,ends_0,y,
-                 chromWidth=chromWidth_0,pixel.per.cnv=pixel.per.cnv,score=rescore_0,
-                 cohorts=cohort_0,startPoint=chromWidth_0,method=color.method)
+                     chromWidth=chromWidth_0,pixel.per.cnv=pixel.per.cnv,score=rescore_0,
+                     cohorts=cohort_0,startPoint=chromWidth_0,method=color.method,orient = orient)
 
 
   # legend position decision (top or bottom)
@@ -227,21 +248,6 @@ plot_multipanel_single <- function(paralist){
   #centroo <- genome[genome$chromosome %in% chroms,] # centromere position in the current chromosome
   half.length <- genome[genome$chromosome %in% chroms_0,] # half of the length of the current chromosome
 
-  # mean CNV is over the centromere -> legend is plotted bottomright
-  if(mean.pos < half.length$length){
-    xtr <- "bottomright"
-    xtf <- c(4,24,20.5,3)
-    text(c(pixelPerChrom/2),c(y-10),labels = paste("score: ",f.score),cex=1.2) # score on opposite
-  }
-
-  if(mean.pos > half.length$length){
-    xtr <- "topright"
-    xtf <- c(21.5,24,4,3)
-    text(c(pixelPerChrom/2),c(10),labels = paste("score: ",f.score),cex=0.75)
-  }
-
-
-
 
   # legend type decision ----------------------------------------------------------------------------
   if(color.method=="cohort" | color.method=="length"){
@@ -249,9 +255,6 @@ plot_multipanel_single <- function(paralist){
   }
   if(color.method=="ploidy"){
     legend.color <- GetColor(method="ploidy",color=color,cohorts=cohort_0)
-    #print(legend.color)
-    #print("it is")
-
   }
 
   if(mean.pos < half.length$length) {
@@ -279,27 +282,26 @@ plot_multipanel_single <- function(paralist){
       labs_1s <- freq$factor_1
       showtop = TRUE
       if(showtop==TRUE){
-        pie(table(factor_1),labels=labs_1s,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+        pie(table(factor_1),labels=labs_1s,col=color_1,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
       }else{
-        pie(table(factor_1),labels=labs_1,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+        pie(table(factor_1),labels=labs_1,col=color_1,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
       }
 
 
     }else{
-      legend(xtr,legend=unique(cohort_0),col=legend.color,cex=0.75,pch=16) # normal legend
+      legend(xtr,legend=unique(cohort_0),col=legend.color,cex=0.75*font.size.factor,pch=16) # normal legend
     }
   }else if(color.method=="ploidy"){
 
     tb <- table(rescore_0)
-    #print(rescore_0)
-    dp.list <-c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
+    dp.list <-c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
     for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
     legend.color.subset <- legend.color[sort(unique(rescore_0))]
     if(legend==2 || legend=="pie"){
-      pie(tb,col=legend.color.subset,cex=1)
+      pie(tb,col=legend.color.subset,cex=1*font.size.factor)
     }else{
 
-      legend(xtr,legend=unique(dp.list),col=legend.color,cex=0.75,pch=16)
+      legend(xtr,legend=unique(dp.list),col=legend.color,cex=0.75*font.size.factor,pch=16)
     }
   }
 
@@ -326,7 +328,7 @@ plot_multipanel_single <- function(paralist){
   # modifies
   y1 = min(y - t_gene_end,y-max(ends_1),y-max(ends_2))
   y2 = max(y - t_gene_start,y-min(starts_1),y-min(starts_2))
-  plot(c(0,x.size),c(y1*0.95,y2*1.05),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+  plot(c(0,x.size),c(y1*0.95,y2*1.05),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1.5)
 
   lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=1)
   lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=1)
@@ -337,27 +339,7 @@ plot_multipanel_single <- function(paralist){
 
 
   paintCytobands(chroms_1[1],pos=c(pixelPerChrom_1+chromWidth_d,y),units="bases",width=chromWidth_d,orientation="v",legend=FALSE)
-    m <- mean(t_gene_start,t_gene_end)
-
-    #text(c(pixelPerChrom_1+chromWidth_d+1*chromWidth_d),c(y-m+5*(t_gene_end-t_gene_start)),labels=paste0("chr",chrom[1],":",t_gene_start,"-",t_gene_end),cex=0.7)
-
-#
-#   sorting_ploidy_1 <- order(rescores_1,ends_1 - starts_1)
-#   sorting_ploidy_2 <- order(rescores_2,ends_2 - starts_2)
-#
-#   plotCnv(chroms_1,starts_1,ends_1,y,rescores_1,pixel.per.cnv=pixel.per.cnv,
-#           sorting = sorting_ploidy_1, cohort = cohort_1,cohort_max = cohort_max,
-#           color.value = color.value,
-#           color.method="ploidy",n=n_1,
-#           startPoint=(pixelPerChrom_1),direction = "left")
-#
-#   plotCnv(chroms_2,starts_2,ends_2,y,rescores_2,pixel.per.cnv=pixel.per.cnv,
-#           sorting = sorting_ploidy_2, cohort = cohort_2,cohort_max = cohort_max,
-#           color.value = color.value,
-#           color.method="ploidy",n=n_2,
-#           startPoint=(pixelPerChrom_1+chromWidth_d),direction = "right")
-#
-#
+  m <- mean(t_gene_start,t_gene_end)
 
   if(sort.method=="cohort"){
     sorting_x_1 <- order(cohort_1,ends_1 - starts_1)
@@ -382,11 +364,10 @@ plot_multipanel_single <- function(paralist){
           color.method=color.method,n=n_2,
           startPoint=(pixelPerChrom_1+chromWidth_d),direction = "right")
 
+  # legend("bottom",legend=ploidy_levels,col=color.value,cex=1*font.size.factor,
+  #         pch=16,horiz=TRUE,box.lty=0,xjust=0.5,x.intersp = 0.3,y.intersp=0, bg="white")
 
-
-
-
-  legend("bottom",legend=ploidy_levels,col=color.value,cex=0.75,pch=16,horiz=TRUE,box.lty=0)
+  # here should be rewritten with windows
 
   #############################################################################
 
@@ -417,22 +398,47 @@ plot_multipanel_single <- function(paralist){
   freqs <- freqs[order(-freqs[,1],freqs[,2]),]
   test0 <- t(freqs)
 
-  barplot(test0,
+  # barplot(test0,
+  #         horiz=TRUE,
+  #         xlab="cohorts", col=c("red","darkblue"),las=1,
+  #         cex.main=0.5*font.size.factor,cex.axis = 0.5*font.size.factor,cex.names = 1*font.size.factor,
+  #         beside=TRUE)
+  # legend("center",legend=c("DEL","DUP"),col=c("red","darkblue"),
+  #        cex=2*font.size.factor,pch=16,bty="n",text.width=3)
+
+
+  test1 <- data.frame(t(test0))
+  test1$sum <- test1$X1+test1$X2
+  test2 <- data.frame(matrix(ncol = 1, nrow = 5))
+  x <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+  rownames(test2) <- x
+  colnames(test2) <- "rank"
+  test2$rank <- 1:nrow(test2)
+
+  test1$rn <- rownames(test1)
+  test2$rn <- rownames(test2)
+  test3 <- merge(test1,test2,by="rn",all=TRUE)
+  #test3$sum.x <- test3$sum.x + test3$sum.y
+  test3[is.na(test3$sum)==TRUE,"sum"] <- 0
+  test3<-test3[order(test3$rank),]
+  test4 <- test3$sum
+  names(test4) <- test3$rn
+
+  color.value <- c("red2","indianred4","grey","lightskyblue2","skyblue3","skyblue4","black")
+  barplot(test4,
+          #main="Deletions and Duplications",
           horiz=TRUE,
-          xlab="cohorts", col=c("darkblue","red"),las=1,
-          cex.main=0.5,cex.axis = 0.5,cex.names = 0.5,
+          xlab="cohorts",
+          #col=c("red","darkblue"),
+          col=color.value,
+          las=1,
+          cex.lab=2,
+          cex.main=0.8*font.size.factor,cex.axis = 0.8*font.size.factor,cex.names = 0.8*font.size.factor,
+          #legend = c("deletion","duplication"),
           beside=TRUE)
-  legend("right",legend=c("DEL","DUP"),col=c("darkblue","red"),
-         cex=0.5,pch=16,bty="n",text.width=2)
 
   print("pie plot legend！")
 
-#dev.off()
-
-
-
-
-
-
+  #dev.off()
 
 }

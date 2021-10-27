@@ -1,6 +1,6 @@
 plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
-                    cohort_max, color.value,
-                    color.method,color,n,startPoint,direction){
+                        cohort_max, color.value,
+                        color.method,color,n,startPoint,direction){
 
 
 
@@ -19,8 +19,8 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
   indY <- chroms == 'Y'
 
   cohort.list <- cohort_max
-  ploidy.list <- c("bi-del","mo-del","diploidy","gain-low","gain-mid","gain-high","n/a")
-  ploidy.list <- 1:7
+  ploidy.list <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+  ploidy.list <- 1:5
 
   if(color.method=="cohort"){
     class.list <- cohort.list
@@ -48,21 +48,21 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
       }
     }
     # X Chromosome
-   # for(index in 1:len) {
-  #    if(indX[index] == TRUE){
-  #      x <- startPoint + pixel.per.cnv*index
-  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-  #    }
-  #  }
+    # for(index in 1:len) {
+    #    if(indX[index] == TRUE){
+    #      x <- startPoint + pixel.per.cnv*index
+    #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+    #    }
+    #  }
 
     # Y Chromosome
-  #  for(index in 1:len){
-  #    if(indY[index] == TRUE){
-  #      x <- startPoint + pixel.per.cnv*index
-  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-  #    }
-  #  }
-  }else{ # if the lines are in the left side
+    #  for(index in 1:len){
+    #    if(indY[index] == TRUE){
+    #      x <- startPoint + pixel.per.cnv*index
+    #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+    #    }
+    #  }
+  }else if (direction=="left"){ # if the lines are in the left side
     for(index in 1:len){
       # Autosomes
       if(color.method!="length"){
@@ -76,20 +76,48 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
               col="black",lwd=pixel.per.cnv)
       }
     }
-  #  # X Chromosome
-  #  for(index in 1:len) {
-  #    if(indX[index] == TRUE){
-  #      x <- startPoint - pixel.per.cnv*index
-  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-  #    }
-  #  }
+    #  # X Chromosome
+    #  for(index in 1:len) {
+    #    if(indX[index] == TRUE){
+    #      x <- startPoint - pixel.per.cnv*index
+    #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+    #    }
+    #  }
 
     # Y Chromosome
-   # for(index in 1:len){
-  #    if(indY[index] == TRUE){
-  #      x <- startPoint - pixel.per.cnv*index
-  #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
-  #    }
-  #  }
+    # for(index in 1:len){
+    #    if(indY[index] == TRUE){
+    #      x <- startPoint - pixel.per.cnv*index
+    #      lines(c(x,x),c(y-starts[index],y-ends[index]),col="black",lwd=pixel.per.cnv)
+    #    }
+    #  }
+  }else if(direction=="bottom"){
+    for(index in 1:len){
+      # Autosomes
+      if(color.method!="length"){
+        class.index <- match(class.cont[index],class.list)
+        x <- startPoint - pixel.per.cnv*index
+        lines(c(starts[index],ends[index]),c(x,x),
+              col=color.value[class.index],lwd=pixel.per.cnv)
+      }else{
+        x <- startPoint - pixel.per.cnv*index
+        lines(c(starts[index],ends[index]),c(x,x),
+              col="black",lwd=pixel.per.cnv)
+      }
+    }
+  }else if(direction=="top"){
+    for(index in 1:len){
+      # Autosomes
+      if(color.method!="length"){
+        class.index <- match(class.cont[index],class.list)
+        x <- startPoint + pixel.per.cnv*index
+        lines(c(starts[index],ends[index]),c(x,x),
+              col=color.value[class.index],lwd=pixel.per.cnv)
+      }else{
+        x <- startPoint + pixel.per.cnv*index
+        lines(c(starts[index],ends[index]),c(x,x),
+              col="black",lwd=pixel.per.cnv)
+      }
+    }
   }
 }

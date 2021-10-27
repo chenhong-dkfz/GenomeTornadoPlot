@@ -19,9 +19,11 @@
 #' @return list variable
 #'
 #'
+
 CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                           out.dir,file.type,pixel.per.cnv,color,display,cnv.type,
-                          gene.anno,start.gene,end.gene,sort.method,color.method,zoomed){
+                          gene.anno,start.gene,end.gene,sort.method,color.method,zoomed,
+                          path,format,SaveAsObject,orient){
 
   CNV_1 <- CNV.input@matrix
   f.score <- CNV.input@gene_score
@@ -31,9 +33,6 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   t_gene_start = CNV.input@t_gene_start
   t_gene_end = CNV.input@t_gene_end
 
-
-
-  #print("new")
 
   # solid parameters
   chrom = as.vector(seqnames(CNV_1))
@@ -52,6 +51,12 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   }
   if(missing(sort.method)){sort.method = color.method}
   if(missing(color.method)){color.method = sort.method}
+
+  if(missing(path)){path=""}
+  if(missing(format)){format="tiff"}
+  if(missing(SaveAsObject)){SaveAsObject=TRUE}
+  if(missing(orient)){orient="v"}
+
   #if(sort.method=="length"){color.method = "cohort"}
   score = CNV_1$Score
   cohort = CNV_1$Cohort
@@ -61,7 +66,6 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   cohort = cohort[index]
   pids = pids[index]
 
-  #print(sort.method)
 
   rescore <- unlist(lapply(score,MapPloidyClasses))
   score.values <- as.character(sort(unique(rescore)))
@@ -175,11 +179,6 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   out.dir="default"
   out.fp <- out.dir
 
-  #print("methods,sort")
-  #print(sort.method)
-
-  #print("methods,color")
-  #print(color.method)
 
   paralist <- list("gene.name"=gene.name,"cnv.type"=cnv.type,"title"=title,"legend"=legend,
                    "legend.names"=legend.names,"file.type"=file.type,"out.dir"=out.dir,"pixel.per.cnv"=pixel.per.cnv,
@@ -190,8 +189,7 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                    #"sorting.color"=sorting.color,
                    "sort.method"=sort.method,"color.method"=color.method,
                    "t_gene_start" = t_gene_start,"t_gene_end" = t_gene_end,
-                   "f.score"=f.score,"zoomed"=zoomed)
+                   "f.score"=f.score,"zoomed"=zoomed,"orient"=orient,
+                   "format"=format,"path"=path,"SaveAsObject"=SaveAsObject)
   return(paralist)
 }
-
-

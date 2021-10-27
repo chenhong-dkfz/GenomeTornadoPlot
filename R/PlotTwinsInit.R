@@ -1,8 +1,8 @@
 PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
                           out.dir,title,
                           legend.type,legend.names,color,score.values_1,score.values_2,
-                          gene.anno,cnv.type_1,cnv.type_2
-){
+                          gene.anno,cnv.type_1,cnv.type_2,zoomed,
+                          path,format,SaveAsObject,orient){
   CNV_1 <- twin.cnv@matrix_1
   CNV_2 <- twin.cnv@matrix_2
 
@@ -37,9 +37,11 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
 
   max.length = twin.cnv@max.length
 
-
-
-
+  if(missing(path)){path=""}
+  if(missing(format)){format="tiff"}
+  if(missing(SaveAsObject)){SaveAsObject=TRUE}
+  if(missing(orient)){orient="v"}
+  if(missing(zoomed)){zoomed <- FALSE}
 
   gene.name_1 <- as.character(twin.cnv@gene_name_1)
   gene.name_2 <- as.character(twin.cnv@gene_name_2)
@@ -89,7 +91,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
 
   if(missing(title)){
     if(cnv.type_1 == "del"){
-    title <- paste(gene.name_1,"&",gene.name_2,": deletions")
+      title <- paste(gene.name_1,"&",gene.name_2,": deletions")
     }else if(cnv.type_1 == "dup"){
       title <- paste(gene.name_1,"&",gene.name_2,": duplications")
     }else{
@@ -173,7 +175,9 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
                    "repeat_1"=repeat_1,"repeat_2"=repeat_2,
                    "f.score_1"=f.score_1,"f.score_2"=f.score_2,
                    "t_gene_start_1" = t_gene_start_1,"t_gene_end_1" = t_gene_end_1,
-                   "t_gene_start_2" = t_gene_start_2,"t_gene_end_2" = t_gene_end_2
+                   "t_gene_start_2" = t_gene_start_2,"t_gene_end_2" = t_gene_end_2,
+                   "format"=format,"path"=path,"SaveAsObject"=SaveAsObject,
+                   "orient"=orient,"zoomed"=zoomed
 
   )
 
