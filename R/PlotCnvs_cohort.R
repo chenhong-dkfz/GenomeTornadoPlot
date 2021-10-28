@@ -208,7 +208,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
       xtr <- "topright"
       xtf <- c(21.5,24,4,3)
       text(c(y.size),c(pixelPerChrom/2),labels = paste("score: ",f.score," entropy: ",cohort_entropy),cex=1.2*font.size.factor)
-      text(x,y=NULL,pos=3,labels = paste("score: ",f.score," entropy: ",cohort_entropy),cex=1.2*font.size.factor)
+    #  text(x,y=NULL,pos=3,labels = paste("score: ",f.score," entropy: ",cohort_entropy),cex=1.2*font.size.factor)
     }
   }
 

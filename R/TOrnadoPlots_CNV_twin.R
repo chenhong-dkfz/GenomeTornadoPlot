@@ -20,20 +20,24 @@
 setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,pids,title,legend.type,legend.names,
                                                         out.dir,file.type,pixel.per.cnv,color,display,cnv.type_1,cnv.type_2,
                                                         gene.anno,start.gene,end.gene,color.method,sort.method,SaveAsObject,
-                                                        multi_panel,font.size.factor,file,format){
+                                                        multi_panel,font.size.factor,file,format,path,orient,zoomed){
   if(missing(SaveAsObject)){SaveAsObject = TRUE}
   if(missing(format)){format = "tiff"}
-  if(missing(file)){file = paste0("output_plot.",format)}
+  if(missing(path)){path = ""}
   if(missing(color.method)){color.method = "cohort"}
   if(missing(sort.method)){sort.method = "length"}
   if(missing(multi_panel)){multi_panel = FALSE}
   if(missing(font.size.factor)){font.size.factor = 1}
+  if(missing(zoomed)){zoomed = FALSE}
+  if(missing(orient)){orient = "v"}
+
   paralist0 <- PlotTwinsInit(twin.cnv=object,
                              title=title,legend.type=legend.type,legend.names=legend.names,
                              out.dir=out.dir,color=color,cnv.type_1=cnv.type_1,cnv.type_2=cnv.type_2,
                              gene.anno=gene.anno,start.gene,end.gene,
                              color.method=color.method,sort.method=sort.method,
-                             SaveAsObject=SaveAsObject,format=format,file=file)
+                             SaveAsObject=SaveAsObject,format=format,path=path,
+                             zoomed=zoomed, orient=orient)
 
   if(SaveAsObject==TRUE){
     if(multi_panel==FALSE){

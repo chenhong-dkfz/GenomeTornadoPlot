@@ -5,7 +5,7 @@
 \title{Generate input data for tornado plot}
 \usage{
 MakeData(CNV, gene_name_1, gene_name_2, score.type, max.length,
-  score.method, cohort_thredshold)
+  score.method, cohort_thredshold, gene_score_1, gene_score_2)
 }
 \arguments{
 \item{CNV}{data frame with six columns,Chromosome,Start,End,Score,Gene,Cohort,PID}

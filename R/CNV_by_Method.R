@@ -19,6 +19,7 @@
 #' @return list variable
 #'
 #'
+#' @export
 
 CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
                           out.dir,file.type,pixel.per.cnv,color,display,cnv.type,

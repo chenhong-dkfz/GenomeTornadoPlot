@@ -175,9 +175,9 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
   #y.size <- y+100
 
   if(orient=="v"){
-    x.size <- pixelPerChrom
+    x.size <- pixelPerChrom_0
     y.size <- y+100}else{
-      y.size <- pixelPerChrom
+      y.size <- pixelPerChrom_0
       x.size <- y+100
     }
 

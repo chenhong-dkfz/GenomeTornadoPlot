@@ -432,10 +432,12 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
           #col=c("red","darkblue"),
           col=color.value,
           las=1,
-          cex.lab=2,
-          cex.main=0.8*font.size.factor,cex.axis = 0.8*font.size.factor,cex.names = 0.8*font.size.factor,
+          cex.main=0.5*font.size.factor,cex.axis = 0.5*font.size.factor,cex.names = 0.5*font.size.factor,
           #legend = c("deletion","duplication"),
           beside=TRUE)
+
+
+
 
   print("pie plot legend！")
 

@@ -38,6 +38,7 @@ MakeData <- function(CNV,
     gene_score_2 <- 9999
   }
 
+  self_score <- TRUE
   if(gene_score_1==9999){self_score=FALSE}
 
   gene_coordinates = genes
@@ -77,7 +78,7 @@ MakeData <- function(CNV,
 
 
     if(score.type != "none"){
-    fscore.cnv1 <- focallity.score.edge(gene_name_1,cnv_file = CNV,filter = score.type,
+    fscore.cnv1 <- focallity.score.edge(gene_name=gene_name_1,cnv_file = CNV,filter = score.type,
                                         gene_coordinates = genes,method=score.method,
                                         max.length = max.length)
     }else{
