@@ -28,6 +28,8 @@
 ~%2FGenomeTornadoPlot%2FDESCRIPTION="ACE5D107"
 ~%2FGenomeTornadoPlot%2FR%2FMakeData.R="1F482F7C"
 ~%2FGenomeTornadoPlot%2FR%2FMapPloidyClasses.R="646ACA84"
+~%2FGenomeTornadoPlot%2FR%2FTornadoPlots_CNV_single.R="AEF040D1"
+~%2FGenomeTornadoPlot%2FR%2Fmulti_panel_single.r="8D33C19E"
 ~%2FGenomeTornadoPlot%2FR%2FrunExample.R="D5FE41C2"
 ~%2FGenomeTornadoPlot%2FREADME.md="34371043"
 ~%2FGenomeTornadoPlot%2Finst%2Fshiny-examples%2Fmyapp%2Fserver.R="36617F05"
