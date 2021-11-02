@@ -98,18 +98,18 @@ names(chr17)[6] <- "Cohort"
 names(chr17)[7] <- "PID"
 knitr::kable(head(chr17, 10))
 ```
-|      |Chromosome |     Start|       End| Score|Gene          |Cohort  |PID                                  |
-|:-----|:----------|---------:|---------:|-----:|:-------------|:-------|:------------------------------------|
-|9850  |10         | 108244750| 109463784|     1|RP11-446H13.2 |BLCA-US |301d6ce3-4099-4c1d-8e50-c04b7ce91450 |
-|11289 |10         | 108244750| 109463784|     1|SORCS1        |BLCA-US |301d6ce3-4099-4c1d-8e50-c04b7ce91450 |
-|13161 |10         |    139263|  37999998|     4|OR7E110P      |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
-|13187 |10         |    139263|  37999998|     4|RP11-108B14.4 |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
-|13201 |10         |    139263|  37999998|     4|KIF5B         |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
-|13228 |10         |    139263|  37999998|     4|AKR1C6P       |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
-|13357 |10         |    139263|  37999998|     4|ATP5C1        |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
-|13401 |10         |    139263|  37999998|     4|RP11-295P9.6  |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
-|13422 |10         | 123539881| 135411645|     3|BNIP3         |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
-|13438 |10         |    139263|  37999998|     4|RP13-16H11.7  |BLCA-US |4838b5a9-968c-4178-bffb-3fafe1f6dc09 |
+| Chromosome| Start|      End| Score|Gene  |Cohort  |PID                                  |
+|----------:|-----:|--------:|-----:|:-----|:-------|:------------------------------------|
+|         17|     6| 18318423|     3|DOC2B |BLCA-US |0c7aca3f-e006-4de3-afc2-20b4f727d4fd |
+|         17| 12499| 14755572|     3|DOC2B |BLCA-US |2b142863-b963-4cc9-8f8f-c72503c93390 |
+|         17|   827| 22199998|     1|DOC2B |BLCA-US |301d6ce3-4099-4c1d-8e50-c04b7ce91450 |
+|         17|     6| 10573886|     3|DOC2B |BLCA-US |418a3dec-96ff-4719-becb-e1a8260cce2f |
+|         17| 12499|   521774|     4|DOC2B |BLCA-US |448fe471-3f4e-4dc8-a4e0-6f147dc93abe |
+|         17|   833| 10272085|     1|DOC2B |BLCA-US |8c619cbc-9e91-4716-9711-5236e55d8f46 |
+|         17|  1868|  5317402|     3|DOC2B |BLCA-US |94108975-b7a0-40ba-ad39-e44cc62e8cc0 |
+|         17|  2800|  1995288|     3|DOC2B |BLCA-US |973d0577-8ca4-44a1-817f-1d3c1bada151 |
+|         17|   833| 22199998|     1|DOC2B |BLCA-US |acc629cb-ad03-4cec-9b21-922e4932ef3e |
+|         17|     6|  1706906|     4|DOC2B |BLCA-US |b73523d7-f5a5-4140-8537-4df4d1ecf465 |
 
 The **Score** column records copy numbers of each CNV event.
 
