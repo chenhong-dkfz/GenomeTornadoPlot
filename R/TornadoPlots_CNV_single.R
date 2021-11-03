@@ -1,20 +1,20 @@
 #'Plot Tornado Plots
 #'
 #' @param CNV.input Output of MakeData function, Grange object
-#' @param gene.name gene name, string
-#' @param pids the given patient id, string
-#' @param legend type of legend display, int
+#' @param gene.name gene name. Character.
+#' @param pids the given patient id. Character.
+#' @param legend type of legend display. Character.
 #' @param legend.names string
-#' @param out.dir path of output plot, string
-#' @param file.type output plot file type, string
-#' @param pixel.per.cnv int
-#' @param color colors of tornado, list
-#' @param display string
-#' @param gene.anno string
-#' @param start.gene string
-#' @param end.gene string
-#' @param sort.method string
-#' @param color.method string
+#' @param path path of output plot. character.
+#' @param formath output plot file type. character.
+#' @param SaveAsObject if true, the plot will be saved in R object. If false, it will be saved in a file. Boolean.
+#' @param color colors of tornado.List.
+#' @param zoomed if true, the plot will be shown in zoomed-in sight. Boolean.
+#' @param multi_panel If true, a multiple panel plot will be shown.
+#' @param orient vertical or horizontal arrange CNVs and chromosome. It should be "v" or "h".
+#' @param font.size.factor multiply for rescale font size. Double.
+#' @param sort.method the method for coloring the CNVs. Character.
+#' @param color.method the method for coloring the CNVs. Character.
 #'
 #' @export
 

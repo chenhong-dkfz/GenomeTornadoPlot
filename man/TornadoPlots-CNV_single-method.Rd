@@ -11,35 +11,35 @@
   multi_panel, zoomed, font.size.factor, path, format, orient)
 }
 \arguments{
-\item{gene.name}{gene name, string}
+\item{gene.name}{gene name. Character.}
 
-\item{pids}{the given patient id, string}
+\item{pids}{the given patient id. Character.}
 
-\item{legend}{type of legend display, int}
+\item{legend}{type of legend display. Character.}
 
 \item{legend.names}{string}
 
-\item{out.dir}{path of output plot, string}
+\item{color}{colors of tornado.List.}
 
-\item{file.type}{output plot file type, string}
+\item{color.method}{the method for coloring the CNVs. Character.}
 
-\item{pixel.per.cnv}{int}
+\item{sort.method}{the method for coloring the CNVs. Character.}
 
-\item{color}{colors of tornado, list}
+\item{SaveAsObject}{if true, the plot will be saved in R object. If false, it will be saved in a file. Boolean.}
 
-\item{display}{string}
+\item{multi_panel}{If true, a multiple panel plot will be shown.}
 
-\item{gene.anno}{string}
+\item{zoomed}{if true, the plot will be shown in zoomed-in sight. Boolean.}
 
-\item{start.gene}{string}
+\item{font.size.factor}{multiply for rescale font size. Double.}
 
-\item{end.gene}{string}
+\item{path}{path of output plot. character.}
 
-\item{color.method}{string}
-
-\item{sort.method}{string}
+\item{orient}{vertical or horizontal arrange CNVs and chromosome. It should be "v" or "h".}
 
 \item{CNV.input}{Output of MakeData function, Grange object}
+
+\item{formath}{output plot file type. character.}
 }
 \description{
 Plot Tornado Plots
