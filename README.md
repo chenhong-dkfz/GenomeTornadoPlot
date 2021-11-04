@@ -163,7 +163,7 @@ plotlist1 <- TornadoPlots(sdt,color.method="ploidy",sort.method="length",multi_p
 7. **format**: if SaveAsObject is FALSE, the packge will save the plots in files. if this value is "tiff", the plot will be saved as a tiff image. if this value is "eps", the plot will be saved as an EPS vector image.
 8. **path**: if SaveAsObject is FALSE, the packge will save the plots in files. the image will be saved in the path in disk.
 9. **multi_panel**: if TRUE, a multiple panel plot will be displayed.
-10. **zoomed**: if TRUE, a zoomed-in plot for details will be displayed.
+10. **zoomed**: the value should be "global", "region" or "gene". It indicates how plot will be zoomed in.
 11. **orient**: if the value is "v", vertical arranged plots will be displayed. if the value is "h", horizontal arranged plots will be displayed.
 12. **font.size.factor**: rescale of fonts shown in the plots.
 
