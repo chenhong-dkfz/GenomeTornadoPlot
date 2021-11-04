@@ -155,9 +155,9 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
     }else{ # format = EPS
       if(orient=="v"){
         setEPS()
-        postscript(file=paste0(path,"/bi-plot.tiff"),width=12,height=8)}else{
+        postscript(file=paste0(path,"/bi-plot.eps"),width=12,height=8)}else{
           setEPS()
-          postscript(file=paste0(path,"/bi-plot.tiff"),width=8,height=12)
+          postscript(file=paste0(path,"/bi-plot.eps"),width=8,height=12)
         }
     } # end else format = EPS
   }
@@ -189,12 +189,19 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
   t_gene_start_2 = as.numeric(as.character(t_gene_start_2))
   t_gene_end_2 = as.numeric(as.character(t_gene_end_2))
 
-  if(zoomed==TRUE){
+  if(zoomed!="global"){
     if(orient=="v"){
       y1 = min(y - t_gene_end_1,y-t_gene_end_2)
       y2 = max(y - t_gene_start_1,y-t_gene_start_2)
-      plot(c(0,x.size),c(y1-1e7,y2+1e7),type="n",xaxt="n",yaxt="n",
-           xlab="CNVs",ylab="Chromosomal location",main=title)
+      if(zoomed == "gene"){
+        plot(c(0,x.size),c(y1-1e6,y2+1e6),type="n",xaxt="n",yaxt="n",
+             xlab="CNVs",ylab="Chromosomal location",main=title)
+      }else{
+        plot(c(0,x.size),c(y1-1e7,y2+1e7),type="n",xaxt="n",yaxt="n",
+             xlab="CNVs",ylab="Chromosomal location",main=title)
+      }
+
+
       lines(c(0,x.size), c(y-t_gene_start_1,y-t_gene_start_1), lty=3, lwd=1)
       lines(c(0,x.size), c(y-t_gene_end_1,y-t_gene_end_1), lty=3, lwd=1)
       lines(c(0,x.size), c(y-t_gene_start_2,y-t_gene_start_2), lty=3, lwd=1)
@@ -202,7 +209,15 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
     }else{ # if orient is h
       y1 = max(t_gene_end_1,t_gene_end_2)
       y2 = min(t_gene_start_1,t_gene_start_2)
-      plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+
+      if(zoomed == "gene"){
+        plot(c(y2-1e6,y1+1e6),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
+             ylab="Chromosomal location",main=title)
+      }else{
+        plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
+             ylab="Chromosomal location",main=title)
+      }
+
       lines(c(t_gene_start_1,t_gene_start_1), c(0,y.size),lty=3, lwd=1)
       lines(c(t_gene_end_2,t_gene_end_2), c(0,y.size),lty=3, lwd=1)
       lines(c(t_gene_start_2,t_gene_start_2), c(0,y.size),lty=3, lwd=1)
@@ -336,7 +351,7 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
 
   #plot.x <- recordPlot(load=NULL, attach=NULL)
 
-  if(zoomed==FALSE&orient=="v"){
+  if(zoomed!="global"&orient=="v"){
 
     # legend position decision (top or bottom)
     centro <- c(125,93.3,91,50.4,48.4,61,59.9,45.6,49,40.2,53.7,35.8,17.9,17.6,19,36.6,24,17.2,26.5,27.5,13.2,14.7,60.6,12.5)*1000000
@@ -536,11 +551,17 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
   #plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
 
 
-  if(zoomed==TRUE){
+  if(zoomed!="global"){
     if(orient=="v"){
       y1 = min(y - t_gene_end_1,y-t_gene_end_2)
       y2 = max(y - t_gene_start_1,y-t_gene_start_2)
-      plot(c(0,x.size),c(y1-1e7,y2+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      if(zoomed == "gene"){
+        plot(c(0,x.size),c(y1-1e6,y2+1e6),type="n",xaxt="n",yaxt="n",
+             xlab="CNVs",ylab="Chromosomal location",main=title)
+      }else{
+        plot(c(0,x.size),c(y1-1e7,y2+1e7),type="n",xaxt="n",yaxt="n",
+             xlab="CNVs",ylab="Chromosomal location",main=title)
+      }
       lines(c(0,x.size), c(y-t_gene_start_1,y-t_gene_start_1), lty=3, lwd=1)
       lines(c(0,x.size), c(y-t_gene_end_1,y-t_gene_end_1), lty=3, lwd=1)
       lines(c(0,x.size), c(y-t_gene_start_2,y-t_gene_start_2), lty=3, lwd=1)
@@ -548,7 +569,14 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
     }else{ # if orient is h
       y1 = max(t_gene_end_1,t_gene_end_2)
       y2 = min(t_gene_start_1,t_gene_start_2)
-      plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      #plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      if(zoomed == "gene"){
+        plot(c(y2-1e6,y1+1e6),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
+             ylab="Chromosomal location",main=title)
+      }else{
+        plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
+             ylab="Chromosomal location",main=title)
+      }
       lines(c(t_gene_start_1,t_gene_start_1), c(0,y.size),lty=3, lwd=1)
       lines(c(t_gene_end_2,t_gene_end_2), c(0,y.size),lty=3, lwd=1)
       lines(c(t_gene_start_2,t_gene_start_2), c(0,y.size),lty=3, lwd=1)
@@ -563,7 +591,6 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
                   xlab="Chromosomal location",main=title)
            }
   }
-
 
 
 
@@ -604,7 +631,7 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
 
 
 
-  if(zoomed==FALSE&orient=="v"){
+  if(zoomed!="global"&orient=="v"){
 
     # legend position decision (top or bottom)
     centro <- c(125,93.3,91,50.4,48.4,61,59.9,45.6,49,40.2,53.7,35.8,17.9,17.6,19,36.6,24,17.2,26.5,27.5,13.2,14.7,60.6,12.5)*1000000

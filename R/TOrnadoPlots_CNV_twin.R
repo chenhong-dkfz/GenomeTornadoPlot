@@ -2,7 +2,6 @@
 #'
 #' @param CNV.input Grange object
 #' @param gene.name gene name. Character.
-#' @param pids the given patient id. Character.
 #' @param legend type of legend display. Character.
 #' @param legend.names string
 #' @param path path of output plot. character.
@@ -17,8 +16,8 @@
 #' @param color.method the method for coloring the CNVs. Character.
 #'
 
-setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,pids,title,legend.type,legend.names,
-                                                        out.dir,file.type,pixel.per.cnv,color,display,cnv.type_1,cnv.type_2,
+setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,title,legend.type,legend.names,
+                                                        pixel.per.cnv,color,cnv.type_1,cnv.type_2,
                                                         gene.anno,start.gene,end.gene,color.method,sort.method,SaveAsObject,
                                                         multi_panel,font.size.factor,file,format,path,orient,zoomed){
   if(missing(SaveAsObject)){SaveAsObject = TRUE}
@@ -33,8 +32,8 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,pids,ti
 
   paralist0 <- PlotTwinsInit(twin.cnv=object,
                              title=title,legend.type=legend.type,legend.names=legend.names,
-                             out.dir=out.dir,color=color,cnv.type_1=cnv.type_1,cnv.type_2=cnv.type_2,
-                             gene.anno=gene.anno,start.gene,end.gene,
+                             color=color,cnv.type_1=cnv.type_1,cnv.type_2=cnv.type_2,
+                             gene.anno=gene.anno,start.gene=start.gene,end.gene=end.gene,
                              color.method=color.method,sort.method=sort.method,
                              SaveAsObject=SaveAsObject,format=format,path=path,
                              zoomed=zoomed, orient=orient)

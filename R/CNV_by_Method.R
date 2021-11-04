@@ -4,12 +4,10 @@
 #' @param gene.name string
 #' @param pid string
 #' @param legend int
-#' @param legend.names string
 #' @param out.dir string
 #' @param file.type string
 #' @param pixel.per.cnv int
 #' @param color list
-#' @param display string
 #' @param gene.anno string
 #' @param start.gene string
 #' @param end.gene string
@@ -21,8 +19,8 @@
 #'
 #' @export
 
-CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
-                          out.dir,file.type,pixel.per.cnv,color,display,cnv.type,
+CNV.by.method <- function(CNV.input,gene.name,title,legend,
+                          out.dir,file.type,pixel.per.cnv,color,cnv.type,
                           gene.anno,start.gene,end.gene,sort.method,color.method,zoomed,
                           path,format,SaveAsObject,orient){
 
@@ -112,11 +110,6 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
       } # normal title genereated when pids given
     }
     if(missing(legend)){legend <- "pie"}
-    if(missing(legend.names)){
-      legend.names <- c("unkown ploidy","0")
-    }else{
-      legend.names <- legend.names
-    }
     if(missing(pixel.per.cnv)){
       pixel.per.cnv <- 200/m
     }  ## better a equation dependened on the number of CNVs (index!)
@@ -128,9 +121,6 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
     }
 
     ## where to plot?----------------------------------------------------------------------------------------------------------------------------------------------------
-    if(missing(display)){
-      display <- "missing"
-    }
 
     if(missing(gene.anno)){
       gene.anno <- "missing"
@@ -175,14 +165,14 @@ CNV.by.method <- function(CNV.input,gene.name,pids,title,legend,legend.names,
   if(missing(end.gene)){end.gene <- gene.name}
 
 
-  if(missing(zoomed)){zoomed <- FALSE}
+  if(missing(zoomed)){zoomed <- "global"}
   file.type="default"
   out.dir="default"
   out.fp <- out.dir
 
 
   paralist <- list("gene.name"=gene.name,"cnv.type"=cnv.type,"title"=title,"legend"=legend,
-                   "legend.names"=legend.names,"file.type"=file.type,"out.dir"=out.dir,"pixel.per.cnv"=pixel.per.cnv,
+                   "file.type"=file.type,"out.dir"=out.dir,"pixel.per.cnv"=pixel.per.cnv,
                    "color"=color,"sorting"=sorting,"start.gene"=start.gene,"end.gene"=end.gene,"gene.anno"=gene.anno,
                    "chrom"=chrom,"start.CNV"=start.CNV,"end.CNV"=end.CNV,"rescore"=rescore,
                    "index"=index,"m"=m,"startPos"=startPos,"endPos"=endPos,

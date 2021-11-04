@@ -2,14 +2,14 @@
 #'
 #' @param CNV.input Output of MakeData function, Grange object
 #' @param gene.name gene name. Character.
-#' @param pids the given patient id. Character.
+#' @param title the title shown in the plots. Character.
 #' @param legend type of legend display. Character.
-#' @param legend.names string
 #' @param path path of output plot. character.
 #' @param formath output plot file type. character.
 #' @param SaveAsObject if true, the plot will be saved in R object. If false, it will be saved in a file. Boolean.
 #' @param color colors of tornado.List.
-#' @param zoomed if true, the plot will be shown in zoomed-in sight. Boolean.
+#' @param pixel.per.cnv thickness of CNV lines in pixel. Int.
+#' @param zoomed indicates if plot will be shown in zoomed-in sight. It should be "global","region" or "gene".Character
 #' @param multi_panel If true, a multiple panel plot will be shown.
 #' @param orient vertical or horizontal arrange CNVs and chromosome. It should be "v" or "h".
 #' @param font.size.factor multiply for rescale font size. Double.
@@ -20,8 +20,8 @@
 
 
 
-setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,pids,title,legend,legend.names,
-                                                          out.dir,file.type,pixel.per.cnv,color,display,
+setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title,legend,
+                                                          pixel.per.cnv,color,
                                                           gene.anno,start.gene,end.gene,color.method,sort.method,SaveAsObject,
                                                           multi_panel,zoomed,font.size.factor,path,format,orient){
   if(missing(SaveAsObject)){SaveAsObject = TRUE}
@@ -30,15 +30,14 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,pids,
   if(missing(color.method)){color.method = "cohort"}
   if(missing(sort.method)){sort.method = "length"}
   if(missing(multi_panel)){multi_panel = FALSE}
-  if(missing(zoomed)){zoomed = FALSE}
+  if(missing(zoomed)){zoomed = "global"}
   if(missing(font.size.factor)){font.size.factor = 1}
   if(missing(orient)){orient = "v"}
 
 
-  paralist0 <- CNV.by.method(CNV.input=object,gene.name=gene.name,pids=pids,title=title,legend=legend,
-                             legend.names=legend.names,
+  paralist0 <- CNV.by.method(CNV.input=object,gene.name=gene.name,title=title,legend=legend,
                              out.dir=out.dir,file.type=file.type,pixel.per.cnv=pixel.per.cnv,
-                             color=color,display=display,
+                             color=color,
                              gene.anno=gene.anno,start.gene=start.gene,end.gene=end.gene,
                              color.method=color.method,sort.method=sort.method,zoomed=zoomed,
                              SaveAsObject=SaveAsObject,format=format,path=path,orient=orient)

@@ -1,5 +1,4 @@
-PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
-                          out.dir,title,
+PlotTwinsInit <- function(twin.cnv,sort.method,color.method,title,
                           legend.type,legend.names,color,score.values_1,score.values_2,
                           gene.anno,cnv.type_1,cnv.type_2,zoomed,
                           path,format,SaveAsObject,orient){
@@ -119,11 +118,11 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
   }
 
   ## default/optional parameter for out.dir (defaultdirectory = "/package/TornadoCNV") --------------------------------------------------------------------------------
-  if(missing(out.dir)){
-    out.dir <- paste("twins.by.length","_",gene.name_1,"&",gene.name_2,".","png",sep = "")
-  }else{
-    out.dir <- paste(out.dir,"_",gene.name_1,"&",gene.name_2,".","png",sep="")
-  }
+#  if(missing(out.dir)){
+#    out.dir <- paste("twins.by.length","_",gene.name_1,"&",gene.name_2,".","png",sep = "")
+#  }else{
+#    out.dir <- paste(out.dir,"_",gene.name_1,"&",gene.name_2,".","png",sep="")
+#  }
 
 
   ## default/optional parameter for pixel.per.cnv (default = 5)---------------------------------------------------------------------------------------------------------
@@ -162,7 +161,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,
                    "title"=title,"legend.type"=legend.type,
                    "cohort_1"=cohort_1,"cohort_2"=cohort_2,
                    "legend.names"=legend.names,
-                   "out.dir"=out.dir,"pixel.per.cnv"=pixel.per.cnv,
+                   "pixel.per.cnv"=pixel.per.cnv,
                    "color"=color,"sorting_1"=sorting_1,"sorting_2"=sorting_2,
                    #"start.gene_1"=start.gene_1,"end.gene_1"=end.gene_1,"start.gene_2"=start.gene_2,"end.gene_2"=end.gene_2,
                    "gene.anno"=gene.anno,"n_1"=n_1,"n_2"=n_2,

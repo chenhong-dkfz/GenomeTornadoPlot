@@ -5,19 +5,19 @@
 \alias{TornadoPlots,CNV_single-method}
 \title{Plot Tornado Plots}
 \usage{
-\S4method{TornadoPlots}{CNV_single}(object, gene.name, pids, title, legend,
-  legend.names, out.dir, file.type, pixel.per.cnv, color, display,
-  gene.anno, start.gene, end.gene, color.method, sort.method, SaveAsObject,
-  multi_panel, zoomed, font.size.factor, path, format, orient)
+\S4method{TornadoPlots}{CNV_single}(object, gene.name, title, legend,
+  pixel.per.cnv, color, gene.anno, start.gene, end.gene, color.method,
+  sort.method, SaveAsObject, multi_panel, zoomed, font.size.factor, path,
+  format, orient)
 }
 \arguments{
 \item{gene.name}{gene name. Character.}
 
-\item{pids}{the given patient id. Character.}
+\item{title}{the title shown in the plots. Character.}
 
 \item{legend}{type of legend display. Character.}
 
-\item{legend.names}{string}
+\item{pixel.per.cnv}{thickness of CNV lines in pixel. Int.}
 
 \item{color}{colors of tornado.List.}
 
@@ -29,7 +29,7 @@
 
 \item{multi_panel}{If true, a multiple panel plot will be shown.}
 
-\item{zoomed}{if true, the plot will be shown in zoomed-in sight. Boolean.}
+\item{zoomed}{indicates if plot will be shown in zoomed-in sight. It should be "global","region" or "gene".Character}
 
 \item{font.size.factor}{multiply for rescale font size. Double.}
 

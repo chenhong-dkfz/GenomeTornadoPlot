@@ -11,11 +11,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   plot.type = unlist(paralist["plot.type"])
   # getcolor
   legend = unlist(paralist["legend"])
-  legend.names = unlist(paralist["legend.names"])
   color = unlist(paralist["color"])
   #score.values = unlist(paralist["score.values"])
   n = unlist(paralist["n"])
-  display = unlist(paralist["display"])
   gene.anno = unlist(paralist["gene.anno"])
   cnv.type = unlist(paralist["cnv.type"])
   start.gene = unlist(paralist["start.gene"])
@@ -97,9 +95,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
     }else{ # format = EPS
       if(orient=="v"){
         setEPS()
-        postscript(file=paste0(path,"/tornadoplot.tiff"),width=12,height=8)}else{
+        postscript(file=paste0(path,"/tornadoplot.eps"),width=12,height=8)}else{
           setEPS()
-          postscript(file=paste0(path,"/tornadoplot.tiff"),width=8,height=12)
+          postscript(file=paste0(path,"/tornadoplot.eps"),width=8,height=12)
         }
     } # end else format = EPS
   }
@@ -126,16 +124,25 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
   title <- paste0(gene_name,": ",nsample," ",tcnv," events from ",ncohort," cohorts")
 
+  delta_x = 0
+  delta_y = 0
 
-  if(zoomed==TRUE){
+  if(zoomed!="global"){
     if(orient=="v"){
-      y1 = min(y - t_gene_end,y-max(ends_1),y-max(ends_2))
-      y2 = min(y - t_gene_start,y-min(starts_1),y-min(starts_2))
-      #plot(c(0,x.size),c(y1*0.75,y2*1.25),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
-      plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      if(zoomed=="region"){
+        plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      }else{
+        length.gene = abs(t_gene_end - t_gene_start)
+        plot(c(0,x.size),c(y-t_gene_end-0.5*length.gene,y-t_gene_start+0.5*length.gene),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      }
       lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=1)
       lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=1)}else{ # if orient is h
-        plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+        if(zoomed=="region"){
+          plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+        }else{
+          length.gene = abs(t_gene_end - t_gene_start)
+          plot(c(t_gene_start-0.5*length.gene,t_gene_end+0.5*length.gene),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+        }
         lines(c(t_gene_start,t_gene_start), c(0,y.size),lty=3, lwd=1)
         lines(c(t_gene_end,t_gene_end), c(0,y.size),lty=3, lwd=1)
       }
@@ -148,7 +155,6 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
                   xlab="Chromosomal location",main=title)
            }
   }
-
   chrStr <- paste("chr",toString(chroms_0[1]))
   if(orient=="v"){
     text(c((chromWidth_0/2)),c(0),labels=c(chrStr),cex=1*font.size.factor)}else{
@@ -230,7 +236,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   }
 
 
-  if(zoomed==FALSE&orient=="v"){
+  if(zoomed!="global"&orient=="v"){
 
 
     if(color.method=="cohort" | color.method=="length"){
@@ -344,9 +350,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
     }else{ # format = EPS
       if(orient=="v"){
         setEPS()
-        postscript(file=paste0(path,"/del_dup.tiff"),width=12,height=8)}else{
+        postscript(file=paste0(path,"/del_dup.eps"),width=12,height=8)}else{
           setEPS()
-          postscript(file=paste0(path,"/del_dup.tiff"),width=8,height=12)
+          postscript(file=paste0(path,"/del_dup.eps"),width=8,height=12)
         }
     } # end else format = EPS
   }
@@ -368,17 +374,22 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   ndup <- length(starts_2)
   title <- paste0(gene_name,": ",ndel," deletions and ",ndup," duplications")
 
-  if(zoomed==TRUE){
+  if(zoomed!="global"){
     if(orient=="v"){
-      y1 = min(y - t_gene_end,y-max(ends_1),y-max(ends_2))
-      y2 = min(y - t_gene_start,y-min(starts_1),y-min(starts_2))
-      #plot(c(0,x.size),c(y1*0.75,y2*1.25),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
-      plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      if(zoomed=="region"){
+        plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+      }else{
+        length.gene = abs(t_gene_end - t_gene_start)
+        plot(c(0,x.size),c(y-t_gene_end-length.gene,y-t_gene_start+length.gene),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+      }
       lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=1)
       lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=1)}else{ # if orient is h
-        y1 = min(y - t_gene_end,y-max(ends_1),y-max(ends_2))
-        y2 = min(y - t_gene_start,y-min(starts_1),y-min(starts_2))
-        plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+        if(zoomed=="region"){
+          plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+        }else{
+          length.gene = abs(t_gene_end - t_gene_start)
+          plot(c(t_gene_start-0.5*length.gene,t_gene_end+0.5*length.gene),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+        }
         lines(c(t_gene_start,t_gene_start), c(0,y.size),lty=3, lwd=1)
         lines(c(t_gene_end,t_gene_end), c(0,y.size),lty=3, lwd=1)
       }
@@ -391,6 +402,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
                   xlab="Chromosomal location",main=title)
            }
   }
+
 
   chrStr <- paste("chr",toString(chroms_1[1]))
   if(orient=="v"){
@@ -581,7 +593,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
     par(fig = sub.position , mar=c(0,0,5,5), new=TRUE)
 
-    if(zoomed==FALSE&orient=="v"){
+    if(zoomed!="global"&orient=="v"){
 
       test1 <- data.frame(t(test0))
       test1$sum <- test1$X1+test1$X2

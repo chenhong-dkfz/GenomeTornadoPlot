@@ -5,16 +5,13 @@
 \alias{TornadoPlots,CNV_twin-method}
 \title{Plot Tornado Twin Plots}
 \usage{
-\S4method{TornadoPlots}{CNV_twin}(object, gene.name, pids, title,
-  legend.type, legend.names, out.dir, file.type, pixel.per.cnv, color,
-  display, cnv.type_1, cnv.type_2, gene.anno, start.gene, end.gene,
-  color.method, sort.method, SaveAsObject, multi_panel, font.size.factor,
-  file, format, path, orient, zoomed)
+\S4method{TornadoPlots}{CNV_twin}(object, gene.name, title, legend.type,
+  legend.names, pixel.per.cnv, color, cnv.type_1, cnv.type_2, gene.anno,
+  start.gene, end.gene, color.method, sort.method, SaveAsObject,
+  multi_panel, font.size.factor, file, format, path, orient, zoomed)
 }
 \arguments{
 \item{gene.name}{gene name. Character.}
-
-\item{pids}{the given patient id. Character.}
 
 \item{legend.names}{string}
 
