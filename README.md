@@ -178,7 +178,8 @@ In order to help users generate genome tornado plots in a convenient way, we pro
 ```R
 runExample()
 ```
-Users could upload CNV files from local computer, set the parameters and download generated plots in the shiny app.
+Users could upload text based CNV files from local computer, set the parameters and download generated plots in the shiny app.
+(You can download an example input file for test from https://github.com/chenhong-dkfz/GenomeTornadoPlot-files/FOXP1_RYBP.txt)
 
 <p align="center">
 <img src="image/shiny.png">
