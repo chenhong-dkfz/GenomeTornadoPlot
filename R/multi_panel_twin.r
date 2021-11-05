@@ -1,5 +1,5 @@
 # it is also a half-finished version
-plot_multipanel_twin <- function(paralist){
+plot_multipanel_twin <- function(paralist,font.size.factor,orient){
 
   chroms_1 <- unlist(paralist["chrom_1"])
   starts_1 <- unlist(paralist["startPos_1"])
@@ -120,16 +120,16 @@ plot_multipanel_twin <- function(paralist){
   #text(x = 0.5, y = 0.5, paste0("what do you say?"),
   #     cex = 1.6, col = "black")
   text(x = 0.5, y = 0.5, paste0(gene.name_1," (chr",chroms_1[1],":",t_gene_start_1,"-",t_gene_end_1,")\n",
-                                "focality score of deletions: ",f.score_1," (quantile)\n",
-                                "Casino score: NA (quantile)\n",
+                                "focality score of deletions: ",f.score_1,"\n",
+                                #"Casino score: NA (quantile)\n",
                                 "duplication entropy:",cohort_entropy_dup_1,"\n",
                                 "deleltion entropy: ",cohort_entropy_del_1,"\n",
                                 gene.name_2," (chr",chroms_1[1],":",t_gene_start_2,"-",t_gene_end_2,")\n",
-                                "focality score of deletions: ",f.score_2," (quantile)\n",
-                                "Casino score: NA (quantile)\n",
+                                "focality score of deletions: ",f.score_2,"\n",
+                                #"Casino score: NA (quantile)\n",
                                 "duplication entropy:",cohort_entropy_dup_2,"\n",
                                 "deleltion entropy: ",cohort_entropy_del_2,"\n",
-                                "focal defininition threshold: ",1e7),
+                                "focal defininition threshold: 10Mb"),
        cex = 1.6, col = "black")
 
 
@@ -250,7 +250,8 @@ plot_multipanel_twin <- function(paralist){
 
   plotCnv.cohort(chroms,starts,ends,y,
                  chromWidth=chromWidth_0,pixel.per.cnv=pixel.per.cnv,score=score,
-                 cohorts=cohorts,startPoint=chromWidth_0,method="repeat",color=color,rep=repeats)
+                 cohorts=cohorts,startPoint=chromWidth_0,method="repeat",color=color,rep=repeats,
+                 orient=orient)
 
 
   legend.color <- c("red","grey","blue")
@@ -373,7 +374,8 @@ plot_multipanel_twin <- function(paralist){
 
   plotCnv.cohort(chroms,starts,ends,y,
                  chromWidth=chromWidth_0,pixel.per.cnv=pixel.per.cnv,score=score,
-                 cohorts=cohorts,startPoint=chromWidth_0,method="repeat",color=color,rep=repeats)
+                 cohorts=cohorts,startPoint=chromWidth_0,method="repeat",color=color,rep=repeats,
+                 orient=orient)
 
 
   legend.color <- c("red","grey","blue")
@@ -393,13 +395,13 @@ plot_multipanel_twin <- function(paralist){
     #if(length(color)<6){color <- color.base}
     color <- color.base
     if(n_1>=n_2){nmax=n_1}else{nmax=n_2}
-    legend.names = c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
+    legend.names = c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
     df.color.ploidy <- data.frame(color=color.value, # colors according to getColor.ploidy/2
-                                  score=c(1,2,3,4,5,6,7), # score according to ??
-                                  names=c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
+                                  score=c(1,2,3,4,5), # score according to ??
+                                  names=c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
     )
     dtt <- df.color.ploidy
-    ploidy_levels <- c("bi-del","mo-del","LOH","CN<5","4<CN<9","CN>8","n/a")
+    ploidy_levels <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
     factor_1 <- ploidy_levels[rescore_0_1]
     factor_2 <- ploidy_levels[rescore_0_2]
 

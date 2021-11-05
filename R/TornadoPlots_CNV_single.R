@@ -22,7 +22,9 @@
 
 setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title,legend,
                                                           pixel.per.cnv,color,
-                                                          gene.anno,start.gene,end.gene,color.method,sort.method,SaveAsObject,
+                                                          gene.anno,
+                                                          start.gene,end.gene,
+                                                          color.method,sort.method,SaveAsObject,
                                                           multi_panel,zoomed,font.size.factor,path,format,orient){
   if(missing(SaveAsObject)){SaveAsObject = TRUE}
   if(missing(format)){format = "tiff"}

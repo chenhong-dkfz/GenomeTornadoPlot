@@ -6,18 +6,7 @@ server <- function(input, output, session) {
 
   observeEvent(input$file1, {
     inFile <- input$file1
-    # if(input$pcawg_chr=="user"){
-    #   inFile <- input$file1
-    #   print(inFile)
-    #   dty <- fread(inFile$datapath,data.table = F)
-    # }else{
-    #   chr.nr <- input$pcawg_chr
-    #   data.name <- paste0("data/",chr.nr,".Rdata")
-    #   print(data.name)
-    #   data("chr3",package = "tornado.test.1")
-    #   dty <- cnv_chr
-    #   print("loading finished")
-    # }
+
     dty <- fread(inFile$datapath,data.table = F)
     print("loading finished!")
     colnames(dty) <- c("Chromosome","Start","End","Score","Gene","Cohort","PID")

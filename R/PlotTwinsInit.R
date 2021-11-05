@@ -1,6 +1,7 @@
 PlotTwinsInit <- function(twin.cnv,sort.method,color.method,title,
                           legend.type,legend.names,color,score.values_1,score.values_2,
                           gene.anno,cnv.type_1,cnv.type_2,zoomed,
+                          #start.gene,end.gene,
                           path,format,SaveAsObject,orient){
   CNV_1 <- twin.cnv@matrix_1
   CNV_2 <- twin.cnv@matrix_2
@@ -163,7 +164,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,title,
                    "legend.names"=legend.names,
                    "pixel.per.cnv"=pixel.per.cnv,
                    "color"=color,"sorting_1"=sorting_1,"sorting_2"=sorting_2,
-                   #"start.gene_1"=start.gene_1,"end.gene_1"=end.gene_1,"start.gene_2"=start.gene_2,"end.gene_2"=end.gene_2,
+                  # "start.gene_1"=start.gene_1,"end.gene_1"=end.gene_1,"start.gene_2"=start.gene_2,"end.gene_2"=end.gene_2,
                    "gene.anno"=gene.anno,"n_1"=n_1,"n_2"=n_2,
                    "chrom_1"=chrom_1,"start.CNV_1"=start.CNV_1,"end.CNV_1"=end.CNV_1,"rescore_1"=rescore_1,
                    "chrom_2"=chrom_2,"start.CNV_2"=start.CNV_2,"end.CNV_2"=end.CNV_2,"rescore_2"=rescore_2,

@@ -3,7 +3,7 @@
 #' @param CNV.input Grange object
 #' @param gene.name gene name. Character.
 #' @param legend type of legend display. Character.
-#' @param legend.names string
+#' @param legend.names type of legend display. Character.
 #' @param path path of output plot. character.
 #' @param formath output plot file type. character.
 #' @param SaveAsObject if true, the plot will be saved in R object. If false, it will be saved in a file. Boolean.
@@ -33,7 +33,8 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,title,l
   paralist0 <- PlotTwinsInit(twin.cnv=object,
                              title=title,legend.type=legend.type,legend.names=legend.names,
                              color=color,cnv.type_1=cnv.type_1,cnv.type_2=cnv.type_2,
-                             gene.anno=gene.anno,start.gene=start.gene,end.gene=end.gene,
+                             gene.anno=gene.anno,
+                             #start.gene=start.gene,end.gene=end.gene,
                              color.method=color.method,sort.method=sort.method,
                              SaveAsObject=SaveAsObject,format=format,path=path,
                              zoomed=zoomed, orient=orient)
@@ -42,7 +43,7 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,title,l
     if(multi_panel==FALSE){
     plotlist0 <- PlotTwins(paralist=paralist0,SaveAsObject=SaveAsObject)
     }else{
-    plot_multipanel_twin(paralist=paralist0)
+    plot_multipanel_twin(paralist=paralist0,font.size.factor=font.size.factor,orient=orient)
     }
   }else{
     print("Output image is saved!!")
