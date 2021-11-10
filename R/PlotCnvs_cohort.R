@@ -48,7 +48,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   # plot parameters ---------------------------------------------------------------------
 
   if(cnv.type=="dup"){
-    del_dup.index <- rescore>3
+    del_dup.index <- rescore>=3
   }else{
     del_dup.index <- rescore<3
   }
@@ -307,7 +307,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
 
   del.index <- rescore<3
-  dup.index <- rescore>3
+  dup.index <- rescore>=3
 
   chroms_1 <- chroms[del.index]
   cnv.type_1 <- cnv.type
@@ -593,7 +593,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
     par(fig = sub.position , mar=c(0,0,5,5), new=TRUE)
 
-    if(zoomed!="global"&orient=="v"){
+    if(zoomed=="global"&orient=="v"){
 
       test1 <- data.frame(t(test0))
       test1$sum <- test1$X1+test1$X2
@@ -612,7 +612,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
       test4 <- test3$sum
       names(test4) <- test3$rn
 
-      color.value <- c("red2","indianred4","grey","lightskyblue2","skyblue3","skyblue4","black")
+      color.value <- c("red2","indianred4","lightskyblue2","skyblue3","skyblue4")
       barplot(test4,
               #main="Deletions and Duplications",
               horiz=TRUE,

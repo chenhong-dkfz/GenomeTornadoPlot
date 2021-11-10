@@ -13,7 +13,7 @@
 \arguments{
 \item{gene.name}{gene name. Character.}
 
-\item{legend.names}{string}
+\item{legend.names}{type of legend display. Character.}
 
 \item{color}{colors of tornado.List.}
 

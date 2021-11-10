@@ -82,7 +82,7 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
 
 
   if(cnv.type_1=="dup"){
-    del_dup.index_1 <- rescores_1>3
+    del_dup.index_1 <- rescores_1>=3
   }else if(cnv.type_1=="del") {
     del_dup.index_1 <- rescores_1<3
   }else{
@@ -108,7 +108,7 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
 
 
   if(cnv.type_2=="dup"){
-    del_dup.index_2 <- rescores_2>3
+    del_dup.index_2 <- rescores_2>=3
   }else if(cnv.type_2=="del") {
     del_dup.index_2 <- rescores_2<3
   }else{

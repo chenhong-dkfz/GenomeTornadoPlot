@@ -50,7 +50,7 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
   # plot parameters ---------------------------------------------------------------------
 
   if(cnv.type=="dup"){
-    del_dup.index <- rescore>3
+    del_dup.index <- rescore>=3
   }else{
     del_dup.index <- rescore<3
   }
@@ -83,7 +83,7 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
 
   #######
   del.index <- rescore<3
-  dup.index <- rescore>3
+  dup.index <- rescore>=3
   cohort_1 <- cohorts[del.index]
   cohort_2 <- cohorts[dup.index]
 
@@ -124,7 +124,7 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
 
 
   del.index <- rescore<3
-  dup.index <- rescore>3
+  dup.index <- rescore>=3
 
   chroms_1 <- chroms[del.index]
   cnv.type_1 <- cnv.type
@@ -424,7 +424,7 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
   test4 <- test3$sum
   names(test4) <- test3$rn
 
-  color.value <- c("red2","indianred4","grey","lightskyblue2","skyblue3","skyblue4","black")
+  color.value <- c("red2","indianred4","lightskyblue2","skyblue3","skyblue4")
   barplot(test4,
           #main="Deletions and Duplications",
           horiz=TRUE,

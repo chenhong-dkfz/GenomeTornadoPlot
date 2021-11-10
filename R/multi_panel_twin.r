@@ -22,9 +22,9 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   cohort_2 <- unlist(paralist["cohort_2"])
   cohort_1 <- factor(cohort_1)
   cohort_2 <- factor(cohort_2)
-  print("cohort size:")
-  print(cohort_1)
-  print(cohort_2)
+  #print("cohort size:")
+  #print(cohort_1)
+  #print(cohort_2)
 
   repeat_1 <- unlist(paralist["repeat_1"])
   repeat_2 <- unlist(paralist["repeat_2"])
@@ -91,12 +91,12 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   ######## entropy #########
 
 
-  del_dup.index_1 <- rescores_1>3
+  del_dup.index_1 <- rescores_1>=3
   cohort_0_1 <- cohort_1[del_dup.index_1]
   cohort_entropy_dup_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
 
 
-  del_dup.index_2 <- rescores_2>3
+  del_dup.index_2 <- rescores_2>=3
   cohort_0_2 <- cohort_2[del_dup.index_2]
   cohort_entropy_dup_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
 
@@ -142,7 +142,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
 
 
   if(cnv.type_1=="dup"){
-    del_dup.index_1 <- rescores_1>3
+    del_dup.index_1 <- rescores_1>=3
   }else if(cnv.type_1=="del") {
     del_dup.index_1 <- rescores_1<3
   }else{
@@ -168,7 +168,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
 
 
   if(cnv.type_2=="dup"){
-    del_dup.index_2 <- rescores_2>3
+    del_dup.index_2 <- rescores_2>=3
   }else if(cnv.type_2=="del") {
     del_dup.index_2 <- rescores_2<3
   }else{
@@ -266,7 +266,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
 
 
   if(cnv.type_1=="dup"){
-    del_dup.index_1 <- rescores_1>3
+    del_dup.index_1 <- rescores_1>=3
   }else if(cnv.type_1=="del") {
     del_dup.index_1 <- rescores_1<3
   }else{
@@ -292,7 +292,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
 
 
   if(cnv.type_2=="dup"){
-    del_dup.index_2 <- rescores_2>3
+    del_dup.index_2 <- rescores_2>=3
   }else if(cnv.type_2=="del") {
     del_dup.index_2 <- rescores_2<3
   }else{
