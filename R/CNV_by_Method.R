@@ -22,7 +22,7 @@
 CNV.by.method <- function(CNV.input,gene.name,title,legend,
                           out.dir,file.type,pixel.per.cnv,color,cnv.type,
                           gene.anno,start.gene,end.gene,sort.method,color.method,zoomed,
-                          path,format,SaveAsObject,orient){
+                          path,format,SaveAsObject,orient,drop.low.amp){
 
   CNV_1 <- CNV.input@matrix
   f.score <- CNV.input@gene_score
@@ -181,6 +181,7 @@ CNV.by.method <- function(CNV.input,gene.name,title,legend,
                    "sort.method"=sort.method,"color.method"=color.method,
                    "t_gene_start" = t_gene_start,"t_gene_end" = t_gene_end,
                    "f.score"=f.score,"zoomed"=zoomed,"orient"=orient,
+                   "drop.low.amp" = drop.low.amp,
                    "format"=format,"path"=path,"SaveAsObject"=SaveAsObject)
   return(paralist)
 }

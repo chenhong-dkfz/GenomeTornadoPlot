@@ -41,7 +41,7 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
   path <- unlist(paralist["path"])
   format <- unlist(paralist["format"])
   SaveAsObject <- unlist(paralist["SaveAsObject"])
-
+  drop.low.amp <- unlist(paralist["drop.low.amp"])
 
 
   n_1 <- unlist(paralist["n_1"])
@@ -80,7 +80,7 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
   cnv.type_1 = unlist(paralist["cnv.type_1"])
   cnv.type_2 = unlist(paralist["cnv.type_2"])
 
-
+if(drop.low.amp==FALSE){
   if(cnv.type_1=="dup"){
     del_dup.index_1 <- rescores_1>=3
   }else if(cnv.type_1=="del") {
@@ -88,6 +88,15 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
   }else{
     del_dup.index_1 <- rescores_1>=0
   }
+}else{
+  if(cnv.type_1=="dup"){
+    del_dup.index_1 <- rescores_1>3
+  }else if(cnv.type_1=="del") {
+    del_dup.index_1 <- rescores_1<3
+  }else{
+    del_dup.index_1 <- rescores_1>=0
+  }
+}
 
   chroms_0_1 <- chroms_1[del_dup.index_1]
   cohort_0_1 <- cohort_1[del_dup.index_1]
@@ -106,7 +115,7 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
     return()
   }
 
-
+if(drop.low.amp==FALSE){
   if(cnv.type_2=="dup"){
     del_dup.index_2 <- rescores_2>=3
   }else if(cnv.type_2=="del") {
@@ -114,6 +123,15 @@ PlotTwins <- function(paralist,SaveAsObject,font.size.factor){
   }else{
     del_dup.index_2 <- rescores_2>=0
   }
+}else{
+  if(cnv.type_2=="dup"){
+    del_dup.index_2 <- rescores_2>3
+  }else if(cnv.type_2=="del") {
+    del_dup.index_2 <- rescores_2<3
+  }else{
+    del_dup.index_2 <- rescores_2>=0
+  }
+}
 
   chroms_0_2 <- chroms_2[del_dup.index_2]
   cohort_0_2 <- cohort_2[del_dup.index_2]

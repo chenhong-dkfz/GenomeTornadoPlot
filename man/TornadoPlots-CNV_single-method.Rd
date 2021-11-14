@@ -7,8 +7,8 @@
 \usage{
 \S4method{TornadoPlots}{CNV_single}(object, gene.name, title, legend,
   pixel.per.cnv, color, gene.anno, start.gene, end.gene, color.method,
-  sort.method, SaveAsObject, multi_panel, zoomed, font.size.factor, path,
-  format, orient)
+  sort.method, SaveAsObject, drop.low.amp, multi_panel, zoomed,
+  font.size.factor, path, format, orient)
 }
 \arguments{
 \item{gene.name}{gene name. Character.}

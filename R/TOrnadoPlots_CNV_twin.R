@@ -19,7 +19,7 @@
 setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,title,legend.type,legend.names,
                                                         pixel.per.cnv,color,cnv.type_1,cnv.type_2,
                                                         gene.anno,start.gene,end.gene,color.method,sort.method,SaveAsObject,
-                                                        multi_panel,font.size.factor,file,format,path,orient,zoomed){
+                                                        multi_panel,font.size.factor,file,format,path,orient,zoomed,drop.low.amp){
   if(missing(SaveAsObject)){SaveAsObject = TRUE}
   if(missing(format)){format = "tiff"}
   if(missing(path)){path = ""}
@@ -29,6 +29,7 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,title,l
   if(missing(font.size.factor)){font.size.factor = 1}
   if(missing(zoomed)){zoomed = FALSE}
   if(missing(orient)){orient = "v"}
+  if(missing(drop.low.amp)){drop.low.amp = FALSE}
 
   paralist0 <- PlotTwinsInit(twin.cnv=object,
                              title=title,legend.type=legend.type,legend.names=legend.names,
@@ -37,7 +38,7 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,title,l
                              #start.gene=start.gene,end.gene=end.gene,
                              color.method=color.method,sort.method=sort.method,
                              SaveAsObject=SaveAsObject,format=format,path=path,
-                             zoomed=zoomed, orient=orient)
+                             zoomed=zoomed, orient=orient,drop.low.amp = drop.low.amp)
 
   if(SaveAsObject==TRUE){
     if(multi_panel==FALSE){
