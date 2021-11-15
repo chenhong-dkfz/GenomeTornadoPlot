@@ -7,8 +7,8 @@
 \usage{
 \S4method{TornadoPlots}{CNV_single}(object, gene.name, title, legend,
   pixel.per.cnv, color, gene.anno, start.gene, end.gene, color.method,
-  sort.method, SaveAsObject, multi_panel, zoomed, font.size.factor, path,
-  format, orient)
+  sort.method, SaveAsObject, drop.low.amp, multi_panel, zoomed,
+  font.size.factor, path, format, orient)
 }
 \arguments{
 \item{gene.name}{gene name. Character.}
@@ -26,6 +26,8 @@
 \item{sort.method}{the method for coloring the CNVs. Character.}
 
 \item{SaveAsObject}{if true, the plot will be saved in R object. If false, it will be saved in a file. Boolean.}
+
+\item{drop.low.amp}{If it is TRUE (default), the amplifications with CNV<5 are not shown in plot. Boolean.}
 
 \item{multi_panel}{If true, a multiple panel plot will be shown.}
 

@@ -15,6 +15,7 @@
 #' @param font.size.factor multiply for rescale font size. Double.
 #' @param sort.method the method for coloring the CNVs. Character.
 #' @param color.method the method for coloring the CNVs. Character.
+#' @param drop.low.amp If it is TRUE (default), the amplifications with CNV<5 are not shown in plot. Boolean.
 #'
 #' @export
 
@@ -24,7 +25,7 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title
                                                           pixel.per.cnv,color,
                                                           gene.anno,
                                                           start.gene,end.gene,
-                                                          color.method,sort.method,SaveAsObject,
+                                                          color.method,sort.method,SaveAsObject,drop.low.amp,
                                                           multi_panel,zoomed,font.size.factor,path,format,orient){
   if(missing(SaveAsObject)){SaveAsObject = TRUE}
   if(missing(format)){format = "tiff"}
@@ -35,14 +36,14 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title
   if(missing(zoomed)){zoomed = "global"}
   if(missing(font.size.factor)){font.size.factor = 1}
   if(missing(orient)){orient = "v"}
-
+  if(missing(drop.low.amp)){drop.low.amp="TRUE"}
 
   paralist0 <- CNV.by.method(CNV.input=object,gene.name=gene.name,title=title,legend=legend,
                              out.dir=out.dir,file.type=file.type,pixel.per.cnv=pixel.per.cnv,
                              color=color,
                              gene.anno=gene.anno,start.gene=start.gene,end.gene=end.gene,
                              color.method=color.method,sort.method=sort.method,zoomed=zoomed,
-                             SaveAsObject=SaveAsObject,format=format,path=path,orient=orient)
+                             SaveAsObject=SaveAsObject,format=format,path=path,orient=orient,drop.low.amp=drop.low.amp)
   if(SaveAsObject==TRUE){
     if(multi_panel==FALSE){
       plotlist0 <- plotCnvs.cohort(paralist=paralist0,SaveAsObject=SaveAsObject,font.size.factor=font.size.factor)

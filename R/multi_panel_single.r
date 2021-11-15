@@ -34,6 +34,7 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
 
   t_gene_start <- unlist(paralist["t_gene_start"])
   t_gene_end <- unlist(paralist["t_gene_end"])
+  drop.low.amp <- unlist(paralist["drop.low.amp"])
   # original
 
   chroms <- chrom[sorting]
@@ -48,13 +49,19 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
 
   # single side #
   # plot parameters ---------------------------------------------------------------------
-
+if(drop.low.amp==FALSE){
   if(cnv.type=="dup"){
     del_dup.index <- rescore>=3
   }else{
     del_dup.index <- rescore<3
   }
-
+}else{
+  if(cnv.type=="dup"){
+    del_dup.index <- rescore>3
+  }else{
+    del_dup.index <- rescore<3
+  }
+}
   chroms_0 <- chroms[del_dup.index]
   cohort_0 <- cohorts[del_dup.index]
   starts_0 <- starts[del_dup.index]
@@ -83,7 +90,11 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
 
   #######
   del.index <- rescore<3
+  if(drop.low.amp==FALSE){
   dup.index <- rescore>=3
+  }else{
+    dup.index <- rescore>3
+  }
   cohort_1 <- cohorts[del.index]
   cohort_2 <- cohorts[dup.index]
 
@@ -124,7 +135,11 @@ plot_multipanel_single <- function(paralist,font.size.factor,orient){
 
 
   del.index <- rescore<3
+  if(drop.low.amp==FALSE){
   dup.index <- rescore>=3
+  }else{
+    dup.index <- rescore>3
+  }
 
   chroms_1 <- chroms[del.index]
   cnv.type_1 <- cnv.type

@@ -45,6 +45,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
 
   sort.method = unlist(paralist["sort.method"])
   color.method = unlist(paralist["color.method"])
+  drop.low.amp <- unlist(paralist["drop.low.amp"])
 
 
   pixel.per.cnv <- as.numeric(paralist["pixel.per.cnv"])
@@ -90,13 +91,20 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
 
   ######## entropy #########
 
-
+if(drop.low.amp==FALSE){
   del_dup.index_1 <- rescores_1>=3
+}else{
+  del_dup.index_1 <- rescores_1>3
+  }
+
   cohort_0_1 <- cohort_1[del_dup.index_1]
   cohort_entropy_dup_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
 
-
+if(drop.low.amp==FALSE){
   del_dup.index_2 <- rescores_2>=3
+}else{
+  del_dup.index_2 <- rescores_2>3
+}
   cohort_0_2 <- cohort_2[del_dup.index_2]
   cohort_entropy_dup_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)
 
@@ -140,7 +148,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   cnv.type_1 = "dup"
   cnv.type_2 = "dup"
 
-
+if(drop.low.amp==FALSE){
   if(cnv.type_1=="dup"){
     del_dup.index_1 <- rescores_1>=3
   }else if(cnv.type_1=="del") {
@@ -148,6 +156,15 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   }else{
     del_dup.index_1 <- rescores_1>=0
   }
+}else{
+  if(cnv.type_1=="dup"){
+    del_dup.index_1 <- rescores_1>3
+  }else if(cnv.type_1=="del") {
+    del_dup.index_1 <- rescores_1<3
+  }else{
+    del_dup.index_1 <- rescores_1>=0
+  }
+}
 
   chroms_0_1 <- chroms_1[del_dup.index_1]
   cohort_0_1 <- cohort_1[del_dup.index_1]
@@ -166,7 +183,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
     return()
   }
 
-
+if(drop.low.amp==FALSE){
   if(cnv.type_2=="dup"){
     del_dup.index_2 <- rescores_2>=3
   }else if(cnv.type_2=="del") {
@@ -174,6 +191,15 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   }else{
     del_dup.index_2 <- rescores_2>=0
   }
+}else{
+  if(cnv.type_2=="dup"){
+    del_dup.index_2 <- rescores_2>3
+  }else if(cnv.type_2=="del") {
+    del_dup.index_2 <- rescores_2<3
+  }else{
+    del_dup.index_2 <- rescores_2>=0
+  }
+}
 
   chroms_0_2 <- chroms_2[del_dup.index_2]
   cohort_0_2 <- cohort_2[del_dup.index_2]
@@ -264,7 +290,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   cnv.type_1 = "del"
   cnv.type_2 = "del"
 
-
+if(drop.low.amp==FALSE){
   if(cnv.type_1=="dup"){
     del_dup.index_1 <- rescores_1>=3
   }else if(cnv.type_1=="del") {
@@ -272,7 +298,15 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   }else{
     del_dup.index_1 <- rescores_1>=0
   }
-
+}else{
+  if(cnv.type_1=="dup"){
+    del_dup.index_1 <- rescores_1>3
+  }else if(cnv.type_1=="del") {
+    del_dup.index_1 <- rescores_1<3
+  }else{
+    del_dup.index_1 <- rescores_1>=0
+  }
+}
   chroms_0_1 <- chroms_1[del_dup.index_1]
   cohort_0_1 <- cohort_1[del_dup.index_1]
   cohort_entropy_del_1 <- round(entropy(table(cohort_0_1),unit = "log2"),digits = 2)
@@ -290,7 +324,7 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
     return()
   }
 
-
+if(drop.low.amp==FALSE){
   if(cnv.type_2=="dup"){
     del_dup.index_2 <- rescores_2>=3
   }else if(cnv.type_2=="del") {
@@ -298,7 +332,15 @@ plot_multipanel_twin <- function(paralist,font.size.factor,orient){
   }else{
     del_dup.index_2 <- rescores_2>=0
   }
-
+}else{
+  if(cnv.type_2=="dup"){
+    del_dup.index_2 <- rescores_2>3
+  }else if(cnv.type_2=="del") {
+    del_dup.index_2 <- rescores_2<3
+  }else{
+    del_dup.index_2 <- rescores_2>=0
+  }
+}
   chroms_0_2 <- chroms_2[del_dup.index_2]
   cohort_0_2 <- cohort_2[del_dup.index_2]
   cohort_entropy_del_2 <- round(entropy(table(cohort_0_2),unit = "log2"),digits = 2)

@@ -8,7 +8,8 @@
 \S4method{TornadoPlots}{CNV_twin}(object, gene.name, title, legend.type,
   legend.names, pixel.per.cnv, color, cnv.type_1, cnv.type_2, gene.anno,
   start.gene, end.gene, color.method, sort.method, SaveAsObject,
-  multi_panel, font.size.factor, file, format, path, orient, zoomed)
+  multi_panel, font.size.factor, file, format, path, orient, zoomed,
+  drop.low.amp)
 }
 \arguments{
 \item{gene.name}{gene name. Character.}
@@ -32,6 +33,8 @@
 \item{orient}{vertical or horizontal arrange CNVs and chromosome. It should be "v" or "h".}
 
 \item{zoomed}{if true, the plot will be shown in zoomed-in sight. Boolean.}
+
+\item{drop.low.amp}{If it is TRUE (default), the amplifications with CNV<5 are not shown in plot. Boolean.}
 
 \item{CNV.input}{Grange object}
 
