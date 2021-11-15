@@ -165,7 +165,8 @@ plotlist1 <- TornadoPlots(sdt,color.method="ploidy",sort.method="length",multi_p
 9. **multi_panel**: if TRUE, a multiple panel plot will be displayed.
 10. **zoomed**: the value should be "global", "region" or "gene". It indicates how plot will be zoomed in.
 11. **orient**: if the value is "v", vertical arranged plots will be displayed. if the value is "h", horizontal arranged plots will be displayed.
-12. **font.size.factor**: rescale of fonts shown in the plots.
+12. **drop.low.amp**: if the value is TRUE, the amplifications with CN<5 will be not shown in the plots.
+13. **font.size.factor**: rescale of fonts shown in the plots.
 
 Here **plotlist1** is a list, containing output of plots.
 
