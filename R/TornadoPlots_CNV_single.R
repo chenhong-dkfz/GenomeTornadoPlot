@@ -24,7 +24,7 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title
                                                           pixel.per.cnv,color,
                                                           gene.anno,
                                                           start.gene,end.gene,
-                                                          color.method,sort.method,SaveAsObject,drop.low.amp,
+                                                          color.method,sort.method,SaveAsObject,
                                                           multi_panel,zoomed,font.size.factor,path,format,orient){
   if(missing(SaveAsObject)){SaveAsObject = TRUE}
   if(missing(format)){format = "tiff"}
@@ -35,7 +35,6 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title
   if(missing(zoomed)){zoomed = "global"}
   if(missing(font.size.factor)){font.size.factor = 1}
   if(missing(orient)){orient = "v"}
-  if(missing(drop.low.amp)){drop.low.amp = FALSE}
 
 
   paralist0 <- CNV.by.method(CNV.input=object,gene.name=gene.name,title=title,legend=legend,
@@ -43,8 +42,7 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title
                              color=color,
                              gene.anno=gene.anno,start.gene=start.gene,end.gene=end.gene,
                              color.method=color.method,sort.method=sort.method,zoomed=zoomed,
-                             SaveAsObject=SaveAsObject,format=format,path=path,orient=orient,
-                             drop.low.amp = drop.low.amp)
+                             SaveAsObject=SaveAsObject,format=format,path=path,orient=orient)
   if(SaveAsObject==TRUE){
     if(multi_panel==FALSE){
       plotlist0 <- plotCnvs.cohort(paralist=paralist0,SaveAsObject=SaveAsObject,font.size.factor=font.size.factor)

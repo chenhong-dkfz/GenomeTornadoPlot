@@ -34,7 +34,6 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   path <- unlist(paralist["path"])
   format <- unlist(paralist["format"])
   orient <- unlist(paralist["orient"])
-  drop.low.amp <- unlist(paralist["drop.low.amp"])
 
   # original
 
@@ -48,18 +47,10 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   # single side #
   # plot parameters ---------------------------------------------------------------------
 
-  if(drop.low.amp==FALSE){
-   if(cnv.type=="dup"){
-      del_dup.index <- rescore>=3
-    }else{
-      del_dup.index <- rescore<3
-    }
+  if(cnv.type=="dup"){
+    del_dup.index <- rescore>=3
   }else{
-    if(cnv.type=="dup"){
-      del_dup.index <- rescore>3
-    }else{
-      del_dup.index <- rescore<3
-    }
+    del_dup.index <- rescore<3
   }
 
   chroms_0 <- chroms[del_dup.index]
@@ -316,13 +307,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
 
   del.index <- rescore<3
-  #dup.index <- rescore>=3
-
-  if(drop.low.amp==FALSE){
-      dup.index <- rescore>=3
-  }else{
-      dup.index <- rescore>3
-  }
+  dup.index <- rescore>=3
 
   chroms_1 <- chroms[del.index]
   cnv.type_1 <- cnv.type
