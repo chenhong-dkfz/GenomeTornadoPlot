@@ -55,6 +55,7 @@ CNV.by.method <- function(CNV.input,gene.name,title,legend,
   if(missing(format)){format="tiff"}
   if(missing(SaveAsObject)){SaveAsObject=TRUE}
   if(missing(orient)){orient="v"}
+  if(missing(drop.low.amp)){drop.low.amp=TRUE}
 
   #if(sort.method=="length"){color.method = "cohort"}
   score = CNV_1$Score

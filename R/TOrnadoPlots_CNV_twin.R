@@ -31,7 +31,7 @@ setMethod("TornadoPlots",signature("CNV_twin"),function(object,gene.name,title,l
   if(missing(font.size.factor)){font.size.factor = 1}
   if(missing(zoomed)){zoomed = FALSE}
   if(missing(orient)){orient = "v"}
-  if(missing(drop.low.amp)){drop.low.amp="TRUE"}
+  if(missing(drop.low.amp)){drop.low.amp=TRUE}
 
   paralist0 <- PlotTwinsInit(twin.cnv=object,
                              title=title,legend.type=legend.type,legend.names=legend.names,

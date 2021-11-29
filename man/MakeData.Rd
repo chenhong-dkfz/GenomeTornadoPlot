@@ -31,3 +31,8 @@ MakeData(CNV, gene_name_1, gene_name_2, score.type, max.length,
 \description{
 Generate input data for tornado plot
 }
+\examples{
+sdt <- MakeData(CNV=chr17,gene_name_1 = input_gene_1,score.type = "del")
+where sdt is the intermediate file for TornadoPlot function
+
+}

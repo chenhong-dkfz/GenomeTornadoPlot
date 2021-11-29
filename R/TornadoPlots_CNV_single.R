@@ -36,7 +36,7 @@ setMethod("TornadoPlots",signature("CNV_single"),function(object,gene.name,title
   if(missing(zoomed)){zoomed = "global"}
   if(missing(font.size.factor)){font.size.factor = 1}
   if(missing(orient)){orient = "v"}
-  if(missing(drop.low.amp)){drop.low.amp="TRUE"}
+  if(missing(drop.low.amp)){drop.low.amp=TRUE}
 
   paralist0 <- CNV.by.method(CNV.input=object,gene.name=gene.name,title=title,legend=legend,
                              out.dir=out.dir,file.type=file.type,pixel.per.cnv=pixel.per.cnv,

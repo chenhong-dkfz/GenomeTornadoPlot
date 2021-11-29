@@ -48,7 +48,7 @@ server <- function(input, output, session) {
     print(plot_type)
     print(input_gene_1)
     print(input_gene_2)
-    print("x")
+    #print("x")
     sdt <- MakeData(CNV=dty,gene_name_1 = input_gene_1,gene_name_2 = input_gene_2,score.type = "del")
     plotlist1s <- TornadoPlots(sdt,cnv.type_1 = cnv.type,cnv.type_2 = cnv.type, color.method=color_method,sort.method=sort_method,SaveAsObject = T)
     out1 <<- plotlist1s[[plot_type]]

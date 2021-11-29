@@ -7,6 +7,8 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,title,
   CNV_2 <- twin.cnv@matrix_2
 
 
+
+
   t_gene_start_1 = twin.cnv@t_gene_start_1
   t_gene_end_1 = twin.cnv@t_gene_end_1
   t_gene_start_2 = twin.cnv@t_gene_start_2
@@ -42,6 +44,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,title,
   if(missing(SaveAsObject)){SaveAsObject=TRUE}
   if(missing(orient)){orient="v"}
   if(missing(zoomed)){zoomed <- FALSE}
+  if(missing(drop.low.amp)){drop.low.amp<-TRUE}
 
   gene.name_1 <- as.character(twin.cnv@gene_name_1)
   gene.name_2 <- as.character(twin.cnv@gene_name_2)
