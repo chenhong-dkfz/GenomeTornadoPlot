@@ -203,8 +203,9 @@ If what you need is just the focality score, just use the following command:
 data_genea@gene_score
 ```
 
-If following code allows user to rank scores of a gene list and they can generate the plots easily.
+If following code allows user to rank scores of a gene list and they can generate the plots easily. We use a few genes in chr 21 as example.
 ```R
+g.list <- c("ERG","TMPRSS2","RUNX1")
 x=data.frame(row.names=g.list,score=rep(1,length(g.list)))
  for(gene in g.list){
    print(gene)
