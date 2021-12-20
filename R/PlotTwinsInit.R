@@ -96,7 +96,7 @@ PlotTwinsInit <- function(twin.cnv,sort.method,color.method,title,
     if(cnv.type_1 == "del"){
       title <- paste(gene.name_1,"&",gene.name_2,": deletions")
     }else if(cnv.type_1 == "dup"){
-      title <- paste(gene.name_1,"&",gene.name_2,": duplications")
+      title <- paste(gene.name_1,"&",gene.name_2,": amplifications")
     }else{
       title <- paste(gene.name_1,"&",gene.name_2,": all CNVs")
     }

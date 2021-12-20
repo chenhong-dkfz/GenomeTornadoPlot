@@ -204,7 +204,7 @@ if(drop.low.amp==FALSE){
     }
 
   #plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-  #     ylab="Chromosomal location",main=title)
+  #     ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
 
   t_gene_start_1 = as.numeric(as.character(t_gene_start_1))
   t_gene_end_1 = as.numeric(as.character(t_gene_end_1))
@@ -217,41 +217,41 @@ if(drop.low.amp==FALSE){
       y2 = max(y - t_gene_start_1,y-t_gene_start_2)
       if(zoomed == "gene"){
         plot(c(0,x.size),c(y1-1e6,y2+1e6),type="n",xaxt="n",yaxt="n",
-             xlab="CNVs",ylab="Chromosomal location",main=title)
+             xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }else{
         plot(c(0,x.size),c(y1-1e7,y2+1e7),type="n",xaxt="n",yaxt="n",
-             xlab="CNVs",ylab="Chromosomal location",main=title)
+             xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }
 
 
-      lines(c(0,x.size), c(y-t_gene_start_1,y-t_gene_start_1), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_end_1,y-t_gene_end_1), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_start_2,y-t_gene_start_2), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_end_2,y-t_gene_end_2), lty=3, lwd=1)
+      lines(c(0,x.size), c(y-t_gene_start_1,y-t_gene_start_1), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_end_1,y-t_gene_end_1), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_start_2,y-t_gene_start_2), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_end_2,y-t_gene_end_2), lty=3, lwd=3)
     }else{ # if orient is h
       y1 = max(t_gene_end_1,t_gene_end_2)
       y2 = min(t_gene_start_1,t_gene_start_2)
 
       if(zoomed == "gene"){
         plot(c(y2-1e6,y1+1e6),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-             ylab="Chromosomal location",main=title)
+             ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }else{
         plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-             ylab="Chromosomal location",main=title)
+             ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }
 
-      lines(c(t_gene_start_1,t_gene_start_1), c(0,y.size),lty=3, lwd=1)
-      lines(c(t_gene_end_2,t_gene_end_2), c(0,y.size),lty=3, lwd=1)
-      lines(c(t_gene_start_2,t_gene_start_2), c(0,y.size),lty=3, lwd=1)
-      lines(c(t_gene_end_1,t_gene_end_1), c(0,y.size),lty=3, lwd=1)
+      lines(c(t_gene_start_1,t_gene_start_1), c(0,y.size),lty=3, lwd=3)
+      lines(c(t_gene_end_2,t_gene_end_2), c(0,y.size),lty=3, lwd=3)
+      lines(c(t_gene_start_2,t_gene_start_2), c(0,y.size),lty=3, lwd=3)
+      lines(c(t_gene_end_1,t_gene_end_1), c(0,y.size),lty=3, lwd=3)
     }
 
   }else{
     if(orient=="v"){
       plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-           ylab="Chromosomal location",main=title)}else{
+           ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)}else{
              plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",
-                  xlab="Chromosomal location",main=title)
+                  xlab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
            }
   }
 
@@ -343,17 +343,18 @@ if(drop.low.amp==FALSE){
   # dashline
 
   if(color.method == "ploidy"){
-    color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(7)
+    #color.base <- colorRampPalette(c("red2","indianred4","royalblue4","steelblue1","chartreuse3","darkgreen","grey"))(7)
+    color.base <- colorRampPalette(c("blue4","steelblue2","pink2","red2","darksalmon","darkgreen","grey"))(7)
     #if(length(color)<6){color <- color.base}
     color <- color.base
     if(n_1>=n_2){nmax=n_1}else{nmax=n_2}
-    legend.names = c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+    legend.names = c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
     df.color.ploidy <- data.frame(color=color.value, # colors according to getColor.ploidy/2
                                   score=c(1,2,3,4,5), # score according to ??
-                                  names=c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+                                  names=c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
     )
     dtt <- df.color.ploidy
-    ploidy_levels <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+    ploidy_levels <- c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
     factor_1 <- ploidy_levels[rescore_0_1]
     factor_2 <- ploidy_levels[rescore_0_2]
 
@@ -466,9 +467,9 @@ if(drop.low.amp==FALSE){
       labs_1s <- freq$factor_1
       showtop = TRUE # here we only show the pie chart with more than 5% events
       if(showtop==TRUE){
-        pie(table(factor_1),labels=labs_1s,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+        pie(table(factor_1),labels=labs_1s,col=color_1,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
       }else{
-        pie(table(factor_1),labels=labs_1,col=color_1,cex=0.85,radius = 0.9) # piechart legend
+        pie(table(factor_1),labels=labs_1,col=color_1,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
       }
 
       #par(new=T,mar=xtf2)
@@ -483,9 +484,9 @@ if(drop.low.amp==FALSE){
       }
       labs_2s <- freq$factor_2
       if(showtop==TRUE){
-        pie(table(factor_2),labels=labs_2s,col=color_2,cex=0.85,radius = 0.9) # piechart legend
+        pie(table(factor_2),labels=labs_2s,col=color_2,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
       }else{
-        pie(table(factor_2),labels=labs_2,col=color_2,cex=0.85,radius = 0.9) # piechart legend
+        pie(table(factor_2),labels=labs_2,col=color_2,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
       }
 
 
@@ -519,9 +520,9 @@ if(drop.low.amp==FALSE){
     }else{ # format = EPS
       if(orient=="v"){
         setEPS()
-        postscript(file=paste0(path,"/mixedplot.tiff"),width=12,height=8)}else{
+        postscript(file=paste0(path,"/mixedplot.eps"),width=12,height=8)}else{
           setEPS()
-          postscript(file=paste0(path,"/mixedplot.tiff"),width=8,height=12)
+          postscript(file=paste0(path,"/mixedplot.eps"),width=8,height=12)
         }
     } # end else format = EPS
   }
@@ -570,7 +571,7 @@ if(drop.low.amp==FALSE){
     }
 
 
-  #plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+  #plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
 
 
   if(zoomed!="global"){
@@ -579,38 +580,38 @@ if(drop.low.amp==FALSE){
       y2 = max(y - t_gene_start_1,y-t_gene_start_2)
       if(zoomed == "gene"){
         plot(c(0,x.size),c(y1-1e6,y2+1e6),type="n",xaxt="n",yaxt="n",
-             xlab="CNVs",ylab="Chromosomal location",main=title)
+             xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }else{
         plot(c(0,x.size),c(y1-1e7,y2+1e7),type="n",xaxt="n",yaxt="n",
-             xlab="CNVs",ylab="Chromosomal location",main=title)
+             xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }
-      lines(c(0,x.size), c(y-t_gene_start_1,y-t_gene_start_1), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_end_1,y-t_gene_end_1), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_start_2,y-t_gene_start_2), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_end_2,y-t_gene_end_2), lty=3, lwd=1)
+      lines(c(0,x.size), c(y-t_gene_start_1,y-t_gene_start_1), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_end_1,y-t_gene_end_1), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_start_2,y-t_gene_start_2), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_end_2,y-t_gene_end_2), lty=3, lwd=3)
     }else{ # if orient is h
       y1 = max(t_gene_end_1,t_gene_end_2)
       y2 = min(t_gene_start_1,t_gene_start_2)
-      #plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+      #plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       if(zoomed == "gene"){
         plot(c(y2-1e6,y1+1e6),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-             ylab="Chromosomal location",main=title)
+             ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }else{
         plot(c(y2-1e7,y1+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-             ylab="Chromosomal location",main=title)
+             ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }
-      lines(c(t_gene_start_1,t_gene_start_1), c(0,y.size),lty=3, lwd=1)
-      lines(c(t_gene_end_2,t_gene_end_2), c(0,y.size),lty=3, lwd=1)
-      lines(c(t_gene_start_2,t_gene_start_2), c(0,y.size),lty=3, lwd=1)
-      lines(c(t_gene_end_1,t_gene_end_1), c(0,y.size),lty=3, lwd=1)
+      lines(c(t_gene_start_1,t_gene_start_1), c(0,y.size),lty=3, lwd=3)
+      lines(c(t_gene_end_2,t_gene_end_2), c(0,y.size),lty=3, lwd=3)
+      lines(c(t_gene_start_2,t_gene_start_2), c(0,y.size),lty=3, lwd=3)
+      lines(c(t_gene_end_1,t_gene_end_1), c(0,y.size),lty=3, lwd=3)
     }
 
   }else{
     if(orient=="v"){
       plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-           ylab="Chromosomal location",main=title)}else{
+           ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)}else{
              plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",
-                  xlab="Chromosomal location",main=title)
+                  xlab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
            }
   }
 
@@ -673,7 +674,7 @@ if(drop.low.amp==FALSE){
 
     if(mean.pos > half.length$length){
       xtr <- "topright"
-      xtf <- c(21.5,24,4,3)
+      xtf <- c(21.5,30,4,0.5)
       text(c(pixelPerChrom/2),c(10),labels = paste("score: ",f.score_1,",",f.score_2,"; entropy: ",cohort_entropy_0_1,",",cohort_entropy_0_2),cex=1.2)
     }
 
@@ -681,12 +682,12 @@ if(drop.low.amp==FALSE){
     # legend type decision ----------------------------------------------------------------------------
 
     if(2==2 || legend=="pie"){
-      legend.color <- c("red","black","blue")
+      legend.color <- c("orange2","black","purple1")
       par(new=T,mar=xtf )
       repu <- repeats!="C2"
       repeats_common <- repeats[repu]
       repeats_common <- factor(repeats_common,levels = c("U1","C1","U2"))
-      pie(table(repeats_common),col=legend.color,cex=1,labels = c(gene.name_1,"both",gene.name_2))
+      pie(table(repeats_common),col=legend.color,cex=1*font.size.factor,labels = c(gene.name_1,"both",gene.name_2))
 
     }
   }
@@ -701,7 +702,7 @@ if(drop.low.amp==FALSE){
 
   if(SaveAsObject==TRUE){
     results <- list(g,h)}else{
-      result <- "file saved!"
+      results <- "file saved!"
     }
 
   return(results)

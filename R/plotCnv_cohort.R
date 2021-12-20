@@ -22,7 +22,7 @@ plotCnv.cohort <- function(chroms,starts,ends,y,score,chromWidth,
   }
   color.value <- GetColor(method=method,color=color,cohorts=cohorts)
   cohort.list <- sort(unique(cohorts))
-  ploidy.list <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+  ploidy.list <- c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
   ploidy.list <- 1:5
   repeat.list <- c("U1","C1","C2","U2")
   #print(color.value)

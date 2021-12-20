@@ -130,12 +130,12 @@ if(drop.low.amp==FALSE){
   text(x = 0.5, y = 0.5, paste0(gene.name_1," (chr",chroms_1[1],":",t_gene_start_1,"-",t_gene_end_1,")\n",
                                 "focality score of deletions: ",f.score_1,"\n",
                                 #"Casino score: NA (quantile)\n",
-                                "duplication entropy:",cohort_entropy_dup_1,"\n",
+                                "amplification entropy:",cohort_entropy_dup_1,"\n",
                                 "deleltion entropy: ",cohort_entropy_del_1,"\n",
                                 gene.name_2," (chr",chroms_1[1],":",t_gene_start_2,"-",t_gene_end_2,")\n",
                                 "focality score of deletions: ",f.score_2,"\n",
                                 #"Casino score: NA (quantile)\n",
-                                "duplication entropy:",cohort_entropy_dup_2,"\n",
+                                "amplification entropy:",cohort_entropy_dup_2,"\n",
                                 "deleltion entropy: ",cohort_entropy_del_2,"\n",
                                 "focal defininition threshold: 10Mb"),
        cex = 1.6, col = "black")
@@ -251,7 +251,7 @@ if(drop.low.amp==FALSE){
   pixelPerChrom <- chromWidth_0 + (pixel.per.cnv)*(cnv.number_0+1)+10 # determines space between chromsomes
   x.size <- pixelPerChrom
   y.size <- y+100
-  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=paste0(gene.name_1," & ",gene.name_2,": duplications"))
+  plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=paste0(gene.name_1," & ",gene.name_2,": amplifications"))
   chrStr <- paste("chr",toString(chroms[1]))
   text(c((chromWidth_0/2)),c(0),labels=c(chrStr))
   if(gene.anno == TRUE)    ###added RT gene.anno arg

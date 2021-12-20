@@ -29,15 +29,16 @@ GetColor <- function(method,score,color,score.values,n,greyscale,cohorts){
          "repeat" = {
            color.value <- "black"
            switch (score,
-                   "U1" = {color.value = "red"},
+                   "U1" = {color.value = "orange2"},
                    "C1" = {color.value = "black"},
-                   "U2" = {color.value = "blue"}
+                   "U2" = {color.value = "purple1"}
            )
-           color.value <- c("red","black","black","blue")
+           color.value <- c("orange2","black","black","purple1")
          },
 
          "ploidy" = {
-           color.base <- colorRampPalette(c("red2","indianred4","lightskyblue2","skyblue3","midnightblue"))(5)
+           #color.base <- colorRampPalette(c("red2","indianred4","lightskyblue2","skyblue3","midnightblue"))(5)
+           color.base <- colorRampPalette(c("blue4","steelblue2","pink2","red2","darksalmon"))(5)
            if(missing(color)){
              color1 <- color.base
            }else if(length(unique(color))!=1){

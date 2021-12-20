@@ -26,7 +26,7 @@ MakeData(CNV, gene_name_1, gene_name_2, score.type, max.length,
 
 \item{chrom}{character, chromosome id of both genes}
 
-\item{type}{character, "dup" for all duplications, "del" for all deletions. default none.}
+\item{type}{character, "dup" for all amplifications, "del" for all deletions. default none.}
 }
 \description{
 Generate input data for tornado plot

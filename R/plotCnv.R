@@ -19,7 +19,7 @@ plotCnv <- function(chroms,starts,ends,y,scores,pixel.per.cnv,sorting,cohort,
   indY <- chroms == 'Y'
 
   cohort.list <- cohort_max
-  ploidy.list <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+  ploidy.list <- c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
   ploidy.list <- 1:5
 
   if(color.method=="cohort"){

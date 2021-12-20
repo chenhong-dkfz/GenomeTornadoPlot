@@ -9,7 +9,7 @@
 #' @param end_1 numeric, end point of the first gene
 #' @param end_2 numeric, end point of the second gene
 #' @param chrom character, chromosome id of both genes
-#' @param type character, "dup" for all duplications, "del" for all deletions. default none.
+#' @param type character, "dup" for all amplifications, "del" for all deletions. default none.
 #' @examples
 #' sdt <- MakeData(CNV=chr17,gene_name_1 = input_gene_1,score.type = "del")
 #' where sdt is the intermediate file for TornadoPlot function

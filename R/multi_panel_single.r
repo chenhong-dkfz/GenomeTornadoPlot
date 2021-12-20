@@ -121,7 +121,7 @@ if(drop.low.amp==FALSE){
                                 "focality score of deletions: ",f.score,"\n",
                                 #"focality score of deletions: ",f.score," (quantile)\n",
                                 #"Casino score: NA (quantile)\n",
-                                "duplication entropy:",cohort_entropy_dup,"\n",
+                                "amplification entropy:",cohort_entropy_dup,"\n",
                                 "deleltion entropy: ",cohort_entropy_del,"\n",
                                 "focal defininition threshold: 10Mbp"),
        cex = 1.6, col = "black")
@@ -216,7 +216,7 @@ if(drop.low.amp==FALSE){
 
   nsample <- length(chroms_0)
   if(cnv.type=="dup"){
-    tcnv = "duplication"
+    tcnv = "amplifications"
   }else{
     tcnv = "deletion"
   }
@@ -337,7 +337,7 @@ if(drop.low.amp==FALSE){
   y.size <- y+100
   ndel <- length(starts_1)
   ndup <- length(starts_2)
-  title <- paste0(gene_name,": ",ndel," deletions and ",ndup," duplications")
+  title <- paste0(gene_name,": ",ndel," deletions and ",ndup," amplifications")
 
 
   # modifies
@@ -441,14 +441,14 @@ if(drop.low.amp==FALSE){
 
   color.value <- c("red2","indianred4","lightskyblue2","skyblue3","skyblue4")
   barplot(test4,
-          #main="Deletions and Duplications",
+          #main="Deletions and amplifications",
           horiz=TRUE,
           xlab="cohorts",
           #col=c("red","darkblue"),
           col=color.value,
           las=1,
           cex.main=0.5*font.size.factor,cex.axis = 0.5*font.size.factor,cex.names = 0.5*font.size.factor,
-          #legend = c("deletion","duplication"),
+          #legend = c("deletion","amplifications"),
           beside=TRUE)
 
 

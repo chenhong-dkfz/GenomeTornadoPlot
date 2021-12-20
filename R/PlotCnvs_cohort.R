@@ -124,43 +124,45 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
   nsample <- length(chroms_0)
   if(cnv.type=="dup"){
-    tcnv = "duplication"
+    tcnv = "amplifications"
   }else{
     tcnv = "deletion"
   }
   ncohort <- length(unique(cohort_0))
 
-  title <- paste0(gene_name,": ",nsample," ",tcnv," events from ",ncohort," cohorts")
+  title <- paste0(gene_name,": ",nsample," ",tcnv," events from ",ncohort," cohorts ",
+                  "(score: ",f.score," entropy: ",cohort_entropy,")")
 
+  #print(title)
   delta_x = 0
   delta_y = 0
 
   if(zoomed!="global"){
     if(orient=="v"){
       if(zoomed=="region"){
-        plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+        plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }else{
         length.gene = abs(t_gene_end - t_gene_start)
-        plot(c(0,x.size),c(y-t_gene_end-0.5*length.gene,y-t_gene_start+0.5*length.gene),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+        plot(c(0,x.size),c(y-t_gene_end-0.5*length.gene,y-t_gene_start+0.5*length.gene),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
       }
-      lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=1)}else{ # if orient is h
+      lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=3)}else{ # if orient is h
         if(zoomed=="region"){
-          plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+          plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",xlab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
         }else{
           length.gene = abs(t_gene_end - t_gene_start)
-          plot(c(t_gene_start-0.5*length.gene,t_gene_end+0.5*length.gene),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title)
+          plot(c(t_gene_start-0.5*length.gene,t_gene_end+0.5*length.gene),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",xlab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
         }
-        lines(c(t_gene_start,t_gene_start), c(0,y.size),lty=3, lwd=1)
-        lines(c(t_gene_end,t_gene_end), c(0,y.size),lty=3, lwd=1)
+        lines(c(t_gene_start,t_gene_start), c(0,y.size),lty=3, lwd=3)
+        lines(c(t_gene_end,t_gene_end), c(0,y.size),lty=3, lwd=3)
       }
 
   }else{
     if(orient=="v"){
       plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-           ylab="Chromosomal location",main=title)}else{
+           ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)}else{
              plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",
-                  xlab="Chromosomal location",main=title)
+                  xlab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
            }
   }
   chrStr <- paste("chr",toString(chroms_0[1]))
@@ -221,6 +223,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
     if(mean.pos > half.length$length){
       xtr <- "topright"
       xtf <- c(21.5,24,4,3)
+      xtf <- c(4,24,20.5,3)
+      xtf <- c(21.5,24,4,3)
+      ####
       text(c(y.size),c(pixelPerChrom/2),labels = paste("score: ",f.score," entropy: ",cohort_entropy),cex=1.2*font.size.factor)
     #  text(x,y=NULL,pos=3,labels = paste("score: ",f.score," entropy: ",cohort_entropy),cex=1.2*font.size.factor)
     }
@@ -249,6 +254,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
     if(color.method=="cohort" | color.method=="length"){
       if(legend==2 || legend=="pie"){
+        xtf <- c(3,8,20.5,24)
         par(new=T,mar=xtf)
         cohort.dim <- length(cohort_0)
         df.color.cohort <- data.frame(color=legend.color, # colors according to getColor.ploidy/2
@@ -271,9 +277,9 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
         labs_1s <- freq$factor_0
         showtop = TRUE
         if(showtop==TRUE){ # here the font size factor is changed
-          pie(table(factor_0),labels=labs_1s,col=color_1,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
+          pie(table(factor_0),labels=labs_1s,col=color_1,cex=0.85*font.size.factor,radius = 0.6) # piechart legend
         }else{
-          pie(table(factor_0),labels=labs_1,col=color_1,cex=0.85*font.size.factor,radius = 0.9) # piechart legend
+          pie(table(factor_0),labels=labs_1,col=color_1,cex=0.85*font.size.factor,radius = 0.6) # piechart legend
         }
 
 
@@ -286,7 +292,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
       tb <- table(rescore_0)
       #print(rescore_0)
-      dp.list <-c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+      dp.list <-c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
       for(i in 1:length(names(tb))){names(tb)[i] <- dp.list[as.integer(names(tb)[i])]}
       legend.color.subset <- legend.color[sort(unique(rescore_0))]
       if(legend==2 || legend=="pie"){
@@ -384,34 +390,34 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
 
   ndel <- length(starts_1)
   ndup <- length(starts_2)
-  title <- paste0(gene_name,": ",ndel," deletions and ",ndup," duplications")
+  title <- paste0(gene_name,": ",ndel," deletions and ",ndup," amplifications")
 
   if(zoomed!="global"){
     if(orient=="v"){
       if(zoomed=="region"){
-        plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+        plot(c(0,x.size),c(y-t_gene_end-1e7,y-t_gene_start+1e7),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor,cex.main=2,cex.lab=1.5)
       }else{
         length.gene = abs(t_gene_end - t_gene_start)
-        plot(c(0,x.size),c(y-t_gene_end-length.gene,y-t_gene_start+length.gene),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+        plot(c(0,x.size),c(y-t_gene_end-length.gene,y-t_gene_start+length.gene),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor,cex.main=2,cex.lab=1.5)
       }
-      lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=1)
-      lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=1)}else{ # if orient is h
+      lines(c(0,x.size), c(y-t_gene_start,y-t_gene_start), lty=3, lwd=3)
+      lines(c(0,x.size), c(y-t_gene_end,y-t_gene_end), lty=3, lwd=3)}else{ # if orient is h
         if(zoomed=="region"){
-          plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+          plot(c(t_gene_start-1e7,t_gene_end+1e7),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",xlab="Chromosomal location",main=title,cex.lab=1*font.size.factor,cex.main=2,cex.lab=1.5)
         }else{
           length.gene = abs(t_gene_end - t_gene_start)
-          plot(c(t_gene_start-0.5*length.gene,t_gene_end+0.5*length.gene),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",ylab="Chromosomal location",main=title,cex.lab=1*font.size.factor)
+          plot(c(t_gene_start-0.5*length.gene,t_gene_end+0.5*length.gene),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",xlab="Chromosomal location",main=title,cex.lab=1*font.size.factor,cex.main=2,cex.lab=1.5)
         }
-        lines(c(t_gene_start,t_gene_start), c(0,y.size),lty=3, lwd=1)
-        lines(c(t_gene_end,t_gene_end), c(0,y.size),lty=3, lwd=1)
+        lines(c(t_gene_start,t_gene_start), c(0,y.size),lty=3, lwd=3)
+        lines(c(t_gene_end,t_gene_end), c(0,y.size),lty=3, lwd=3)
       }
 
   }else{
     if(orient=="v"){
       plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",xlab="CNVs",
-           ylab="Chromosomal location",main=title)}else{
+           ylab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)}else{
              plot(c(0,x.size),c(0,y.size),type="n",xaxt="n",yaxt="n",ylab="CNVs",
-                  xlab="Chromosomal location",main=title)
+                  xlab="Chromosomal location",main=title,cex.main=2,cex.lab=1.5)
            }
   }
 
@@ -508,10 +514,10 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   }else if(color.method == "ploidy"){
     df.color.ploidy <- data.frame(color=color.value, # colors according to getColor.ploidy/2
                                   score=c(1,2,3,4,5), # score according to ??
-                                  names=c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+                                  names=c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
     )
     dtt <- df.color.ploidy
-    ploidy_levels <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+    ploidy_levels <- c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
     factor_1 <- ploidy_levels[rescores_1]
     factor_2 <- ploidy_levels[rescores_2]
   }
@@ -542,10 +548,10 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
     #xtf2 <- c(4,24,20.5,0)
     if(orient=="v"){
       text(c(pixelPerChrom_1/2),c(y-10),labels = "deletions",cex=1)
-      text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(y-10),labels = "duplications",cex=1)
+      text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(y-10),labels = "amplifications",cex=1)
     }else{
       text(c(y-1000000),c(pixelPerChrom_1/2),labels = "deletions",cex=1)
-      text(c(y-1000000),c((pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2))),labels = "duplications",cex=1)
+      text(c(y-1000000),c((pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2))),labels = "amplifications",cex=1)
 
     }
 
@@ -556,7 +562,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
     xtf <- c(21.5,5,4,22)
     xtf2 <- c(21.5,24,4,3)
     text(c(pixelPerChrom_1/2),c(10),labels = "deletions",cex=1)
-    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(10),labels = "duplications",cex=1)
+    text(c(pixelPerChrom_1+chromWidth_d+(pixelPerChrom_2/2)),c(10),labels = "amplifications",cex=1)
 
   }
 
@@ -603,14 +609,14 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
     }
 
 
-    par(fig = sub.position , mar=c(0,0,5,5), new=TRUE)
+
 
     if(zoomed=="global"&orient=="v"){
-
+      par(fig = sub.position , mar=c(0,0,5,5), new=TRUE)
       test1 <- data.frame(t(test0))
       test1$sum <- test1$X1+test1$X2
       test2 <- data.frame(matrix(ncol = 1, nrow = 5))
-      x <- c("bi-del","mo-del","CN<5","4<CN<9","CN>8")
+      x <- c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
       rownames(test2) <- x
       colnames(test2) <- "rank"
       test2$rank <- 1:nrow(test2)
@@ -624,23 +630,59 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
       test4 <- test3$sum
       names(test4) <- test3$rn
 
-      color.value <- c("red2","indianred4","lightskyblue2","skyblue3","skyblue4")
+      #color.value <- c("red2","indianred4","lightskyblue2","skyblue3","skyblue4")
+      color.value <- c("blue4","steelblue2","pink2","red2","darksalmon")
       barplot(test4,
-              #main="Deletions and Duplications",
+              #main="Deletions and amplifications",
               horiz=TRUE,
               xlab="cohorts",
               #col=c("red","darkblue"),
               col=color.value,
               las=1,
               cex.main=0.5*font.size.factor,cex.axis = 0.5*font.size.factor,cex.names = 0.5*font.size.factor,
-              #legend = c("deletion","duplication"),
+              #legend = c("deletion","amplifications"),
               beside=TRUE)
 
 
 
 
       print("pie plot legend！")
-    } else{} # no legend
+    } else{
+      legend.pos <- c(.85, .95, .3, .4)
+      par(fig = legend.pos , mar=c(0,0,1.5,1.5), new=TRUE)
+      #par(fig = sub.position , mar=c(0,0,5,5), new=TRUE)
+      test1 <- data.frame(t(test0))
+      test1$sum <- test1$X1+test1$X2
+      test2 <- data.frame(matrix(ncol = 1, nrow = 5))
+      x <- c("bi-del","mo-del","CN<=4","5<=CN<=8","CN>=9")
+      rownames(test2) <- x
+      colnames(test2) <- "rank"
+      test2$rank <- 1:nrow(test2)
+
+      test1$rn <- rownames(test1)
+      test2$rn <- rownames(test2)
+      test3 <- merge(test1,test2,by="rn",all=TRUE)
+      #test3$sum.x <- test3$sum.x + test3$sum.y
+      test3[is.na(test3$sum)==TRUE,"sum"] <- 0
+      test3<-test3[order(test3$rank),]
+      test4 <- test3$sum
+      names(test4) <- test3$rn
+
+      #color.value <- c("red2","indianred4","lightskyblue2","skyblue3","skyblue4")
+      color.value <- c("blue4","steelblue2","pink2","red2","darksalmon")
+      barplot(test4,
+              #main="Deletions and amplifications",
+              horiz=TRUE,
+              xlab="cohorts",
+              #col=c("red","darkblue"),
+              col=color.value,
+              las=1,
+              cex.main=0.5*font.size.factor,cex.axis = 0.5*font.size.factor,cex.names = 0.5*font.size.factor,
+              #legend = c("deletion","amplifications"),
+              beside=TRUE)
+
+      print("pie plot legend！")
+    } # no legend
   }
 
   dev.off()
@@ -653,7 +695,7 @@ plotCnvs.cohort <- function(paralist,SaveAsObject,font.size.factor){
   }
   if(SaveAsObject==TRUE){
     results <- list(g,h)}else{
-      result <- "file saved!"
+      results <- "file saved!"
     }
   return(results)
 
