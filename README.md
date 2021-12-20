@@ -203,6 +203,21 @@ If what you need is just the focality score, just use the following command:
 data_genea@gene_score
 ```
 
+If following code allows user to rank scores of a gene list and they can generate the plots easily.
+```R
+x=data.frame(row.names=g.list,score=rep(1,length(g.list)))
+ for(gene in g.list){
+   print(gene)
+   sdt <- MakeData(CNV=chr21,gene_name_1 = gene,score.type = "del")
+   print(sdt@gene_score)
+   x[gene,]=sdt@gene_score
+ }
+ print(x)
+```
+Users can then put the top N genes into a FOR loop to excute TornadoPlots function.
+
+
+
 If you want to go further, try printing a standard Genome Tornado Plot:
 ```R
 grid.arrange(plotlist1[[1]])
